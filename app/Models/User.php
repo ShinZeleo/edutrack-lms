@@ -53,7 +53,7 @@ class User extends Authenticatable
     /**
      * Accessor to get the role in Title Case format.
      */
-    public function getRoleTitleAttribute()
+    public function getRoleLabelAttribute()
     {
         return ucfirst($this->role);
     }
