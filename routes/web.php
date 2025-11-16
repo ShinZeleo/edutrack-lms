@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
         // other admin routes
     });
 
+    // Categories routes - Admin only
+    Route::middleware(['auth', 'role:admin'])->group(function () {
+        Route::resource('categories', CategoryController::class);
+    });
+
     // Teacher routes
     Route::middleware(['role:teacher'])->group(function () {
         Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
