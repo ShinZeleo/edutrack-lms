@@ -44,4 +44,42 @@ class Course extends Model
     {
         return $query->where('category_id', $categoryId);
     }
+
+    /**
+     * Students enrolled in this course.
+     */
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_student')
+                    ->withPivot('enrolled_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Lessons in this course.
+     */
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
+    /**
+     * Calculate progress for a specific user.
+     */
+    public function getProgressForUser($user)
+    {
+        $totalLessons = $this->lessons()->count();
+
+        if ($totalLessons === 0) {
+            return 0;
+        }
+
+        $doneLessons = $this->lessons()
+            ->join('lesson_progress', 'lessons.id', '=', 'lesson_progress.lesson_id')
+            ->where('lesson_progress.student_id', $user->id)
+            ->where('lesson_progress.is_done', true)
+            ->count();
+
+        return round(($doneLessons / $totalLessons) * 100, 2);
+    }
 }

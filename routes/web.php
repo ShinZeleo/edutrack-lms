@@ -7,6 +7,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\EnrollmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +33,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
 
     // Teacher lesson management routes (nested under courses)
     Route::resource('courses.lessons', LessonController::class)->shallow();
+});
+
+// Enrollment and progress routes for students
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
+    Route::post('/lessons/{lesson}/mark-done', [EnrollmentController::class, 'markAsDone'])->name('lessons.mark.done');
+    Route::post('/lessons/{lesson}/mark-not-done', [EnrollmentController::class, 'markAsNotDone'])->name('lessons.mark.not.done');
 });
 
 Route::middleware('auth')->group(function () {

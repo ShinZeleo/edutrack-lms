@@ -97,4 +97,22 @@ class User extends Authenticatable
     {
         return $this->role === 'student';
     }
+
+    /**
+     * Relationship: courses the student is enrolled in.
+     */
+    public function enrolledCourses()
+    {
+        return $this->belongsToMany(Course::class, 'course_student')
+                    ->withPivot('enrolled_at')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Relationship: lesson progress for this student.
+     */
+    public function lessonProgress()
+    {
+        return $this->hasMany(LessonProgress::class);
+    }
 }
