@@ -6,6 +6,7 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LessonController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +29,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 // Teacher course management routes
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
     Route::resource('courses', CourseController::class);
+
+    // Teacher lesson management routes (nested under courses)
+    Route::resource('courses.lessons', LessonController::class)->shallow();
 });
 
 Route::middleware('auth')->group(function () {
