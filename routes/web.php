@@ -5,19 +5,30 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Public/Guest routes - no authentication required
-Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
-Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+// Public course routes (guest/student access)
+Route::get('/courses', [CourseController::class, 'publicIndex'])->name('courses.public.index');
+Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.public.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Admin course management routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::resource('courses', CourseController::class);
+});
+
+// Teacher course management routes
+Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
+    Route::resource('courses', CourseController::class);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -36,17 +47,15 @@ Route::middleware('auth')->group(function () {
         Route::resource('categories', CategoryController::class);
     });
 
-    // Teacher routes
+    // Teacher routes (non-course related)
     Route::middleware(['role:teacher'])->group(function () {
         Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
-        Route::get('/teacher/courses', [TeacherController::class, 'courses'])->name('teacher.courses');
         // other teacher routes
     });
 
     // Student routes
     Route::middleware(['role:student'])->group(function () {
         Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-        Route::get('/student/courses', [StudentController::class, 'courses'])->name('student.courses');
         // other student routes
     });
 });
