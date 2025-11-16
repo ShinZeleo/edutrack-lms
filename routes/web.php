@@ -1,11 +1,19 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\CourseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Public/Guest routes - no authentication required
+Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -15,6 +23,27 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Admin routes
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+        // other admin routes
+    });
+
+    // Teacher routes
+    Route::middleware(['teacher'])->group(function () {
+        Route::get('/teacher/dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
+        Route::get('/teacher/courses', [TeacherController::class, 'courses'])->name('teacher.courses');
+        // other teacher routes
+    });
+
+    // Student routes
+    Route::middleware(['student'])->group(function () {
+        Route::get('/student/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
+        Route::get('/student/courses', [StudentController::class, 'courses'])->name('student.courses');
+        // other student routes
+    });
 });
 
 require __DIR__.'/auth.php';
