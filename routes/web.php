@@ -16,11 +16,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Course catalog route - accessible to guests and auth users
 Route::get('/courses', [CourseController::class, 'publicIndex'])->name('courses.catalog');
 
-// Profile route - requires auth
-Route::get('/profile', [ProfileController::class, 'show'])
-     ->middleware('auth')
-     ->name('profile.show');
-
 // Lesson detail route - requires auth and role:student
 Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('/courses/{course}/lessons/{lesson}', [LessonController::class, 'show'])
@@ -29,11 +24,6 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 
 // Public course detail route - accessible to guests and auth users
 Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.public.show');
-
-// Profile route - requires auth
-Route::get('/profile', [ProfileController::class, 'show'])
-     ->middleware('auth')
-     ->name('profile.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

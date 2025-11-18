@@ -58,7 +58,7 @@ class LessonController extends Controller
         $user = Auth::user();
 
         // Check if student is enrolled in the course
-        $isEnrolled = $course->students()->where('user_id', $user->id)->exists();
+        $isEnrolled = $course->students()->where('student_id', $user->id)->exists();
 
         if (!$isEnrolled) {
             return redirect()->route('courses.public.show', $course)

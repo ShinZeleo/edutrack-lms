@@ -1,52 +1,53 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">{{ $course->name }} - Lessons</h1>
-        <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Add New Lesson
-        </a>
-    </div>
-
-    @if(session('success'))
-        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-            {{ session('success') }}
+<x-app-layout>
+    <section class="py-8 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <div>
+                <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Lesson Management</p>
+                <h1 class="text-3xl font-semibold text-neutral-900">{{ $course->name }} - Lessons</h1>
+            </div>
+            <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="btn-primary">+ Tambah lesson</a>
         </div>
-    @endif
 
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <ul class="divide-y divide-gray-200">
-            @forelse($lessons as $lesson)
-                <li class="p-4 hover:bg-gray-50">
-                    <div class="flex justify-between items-center">
-                        <div>
-                            <h3 class="text-lg font-medium text-gray-900">{{ $lesson->title }}</h3>
-                            <p class="text-sm text-gray-500">Order: {{ $lesson->order }}</p>
-                        </div>
-                        <div class="flex space-x-2">
-                            <a href="{{ route('teacher.courses.lessons.edit', [$course, $lesson]) }}" 
-                               class="text-blue-600 hover:text-blue-900">
-                                Edit
-                            </a>
-                            <form action="{{ route('teacher.courses.lessons.destroy', [$course, $lesson]) }}" 
-                                  method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900"
-                                    onclick="return confirm('Are you sure you want to delete this lesson?')">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-            @empty
-                <li class="p-4 text-center text-gray-500">
-                    No lessons found. <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="text-blue-600 hover:underline">Add your first lesson</a>.
-                </li>
-            @endforelse
-        </ul>
-    </div>
-</div>
-@endsection
+        @if(session('success'))
+            <div class="rounded-2xl border border-success-50 bg-success-50 px-4 py-3 text-success-600">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="surface-card">
+            <table class="min-w-full divide-y divide-neutral-200 text-sm">
+                <thead class="bg-neutral-50 text-xs font-semibold uppercase tracking-wide text-neutral-500">
+                    <tr>
+                        <th class="px-4 py-3 text-left">Order</th>
+                        <th class="px-4 py-3 text-left">Judul</th>
+                        <th class="px-4 py-3 text-left">Ringkasan</th>
+                        <th class="px-4 py-3 text-right">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-100">
+                    @forelse($lessons as $lesson)
+                        <tr>
+                            <td class="px-4 py-3 font-semibold text-neutral-900">{{ $lesson->order }}</td>
+                            <td class="px-4 py-3 text-neutral-900">{{ $lesson->title }}</td>
+                            <td class="px-4 py-3 text-neutral-500">{{ Str::limit(strip_tags($lesson->content), 80) }}</td>
+                            <td class="px-4 py-3 text-right">
+                                <a href="{{ route('teacher.courses.lessons.edit', [$course, $lesson]) }}" class="text-primary-600 hover:text-primary-800">Edit</a>
+                                <form action="{{ route('teacher.courses.lessons.destroy', [$course, $lesson]) }}" method="POST" class="inline" onsubmit="return confirm('Hapus lesson ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="ml-3 text-danger hover:text-danger">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="px-4 py-6 text-center text-neutral-500">
+                                Belum ada lesson. <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="text-primary-600">Tambahkan sekarang</a>.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </section>
+</x-app-layout>
