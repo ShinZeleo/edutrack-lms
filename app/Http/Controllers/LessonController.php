@@ -44,13 +44,42 @@ class LessonController extends Controller
         ]);
 
         $course->lessons()->create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'order' => $request->order,
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'order' => $request->input('order'),
         ]);
 
         return redirect()->route('teacher.courses.lessons.index', $course)
                          ->with('success', 'Lesson created successfully.');
+    }
+
+    public function show(\App\Models\Course $course, \App\Models\Lesson $lesson)
+    {
+        $user = Auth::user();
+
+        // Check if student is enrolled in the course
+        $isEnrolled = $course->students()->where('user_id', $user->id)->exists();
+
+        if (!$isEnrolled) {
+            return redirect()->route('courses.public.show', $course)
+                             ->with('error', 'You must be enrolled in this course to view lessons.');
+        }
+
+        // Get all lessons for navigation
+        $lessons = $course->lessons()->ordered()->get();
+        $currentLessonIndex = $lessons->search($lesson);
+        $nextLesson = $lessons->get($currentLessonIndex + 1);
+        $prevLesson = $lessons->get($currentLessonIndex - 1);
+
+        // Get progress for this lesson
+        $progress = $lesson->progress()
+                          ->where('student_id', $user->id)
+                          ->first();
+
+        $isDone = $progress && $progress->is_done;
+        $courseProgress = $course->getProgressForUser($user);
+
+        return view('lessons.show', compact('course', 'lesson', 'nextLesson', 'prevLesson', 'isDone', 'courseProgress'));
     }
 
     public function edit(Course $course, Lesson $lesson)
@@ -77,9 +106,9 @@ class LessonController extends Controller
         ]);
 
         $lesson->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            'order' => $request->order,
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+            'order' => $request->input('order'),
         ]);
 
         return redirect()->route('teacher.courses.lessons.index', $course)

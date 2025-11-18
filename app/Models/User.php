@@ -77,7 +77,7 @@ class User extends Authenticatable
     /**
      * Check if the user is an admin.
      */
-    public function isAdmin()
+    public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
@@ -85,7 +85,7 @@ class User extends Authenticatable
     /**
      * Check if the user is a teacher.
      */
-    public function isTeacher()
+    public function isTeacher(): bool
     {
         return $this->role === 'teacher';
     }
@@ -93,17 +93,29 @@ class User extends Authenticatable
     /**
      * Check if the user is a student.
      */
-    public function isStudent()
+    public function isStudent(): bool
     {
         return $this->role === 'student';
     }
 
     /**
-     * Relationship: courses the student is enrolled in.
+     * Get courses taught by this teacher.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function courses()
+    {
+        return $this->hasMany(\App\Models\Course::class, 'teacher_id');
+    }
+
+    /**
+     * Get courses the student is enrolled in.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function enrolledCourses()
     {
-        return $this->belongsToMany(Course::class, 'course_student')
+        return $this->belongsToMany(\App\Models\Course::class, 'course_student', 'student_id', 'course_id')
                     ->withPivot('enrolled_at')
                     ->withTimestamps();
     }
@@ -113,6 +125,6 @@ class User extends Authenticatable
      */
     public function lessonProgress()
     {
-        return $this->hasMany(LessonProgress::class);
+        return $this->hasMany(\App\Models\LessonProgress::class);
     }
 }

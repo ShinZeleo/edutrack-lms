@@ -4,7 +4,7 @@
 <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-gray-800">My Courses</h1>
-        <a href="{{ route('courses.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ route('teacher.courses.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Create Course
         </a>
     </div>
@@ -47,8 +47,9 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="{{ route('courses.edit', $course) }}" class="text-blue-600 hover:text-blue-900 mr-4">Edit</a>
-                            <form action="{{ route('courses.destroy', $course) }}" method="POST" class="inline">
+                            <a href="{{ route('teacher.courses.edit', $course) }}" class="text-blue-600 hover:text-blue-900 mr-4">Edit</a>
+                            <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="text-green-600 hover:text-green-900 mr-4">Lessons</a>
+                            <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-900" 

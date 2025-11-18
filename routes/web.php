@@ -8,15 +8,32 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Course catalog route - accessible to guests and auth users
+Route::get('/courses', [CourseController::class, 'publicIndex'])->name('courses.catalog');
+
+// Profile route - requires auth
+Route::get('/profile', [ProfileController::class, 'show'])
+     ->middleware('auth')
+     ->name('profile.show');
+
+// Lesson detail route - requires auth and role:student
+Route::middleware(['auth', 'role:student'])->group(function () {
+    Route::get('/courses/{course}/lessons/{lesson}', [LessonController::class, 'show'])
+         ->name('lessons.show');
 });
 
-// Public course routes (guest/student access)
-Route::get('/courses', [CourseController::class, 'publicIndex'])->name('courses.public.index');
+// Public course detail route - accessible to guests and auth users
 Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.public.show');
+
+// Profile route - requires auth
+Route::get('/profile', [ProfileController::class, 'show'])
+     ->middleware('auth')
+     ->name('profile.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -24,15 +41,15 @@ Route::get('/dashboard', function () {
 
 // Admin course management routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::resource('courses', CourseController::class);
+    Route::resource('courses', CourseController::class)->names('admin.courses');
 });
 
 // Teacher course management routes
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
-    Route::resource('courses', CourseController::class);
+    Route::resource('courses', CourseController::class)->names('teacher.courses');
 
     // Teacher lesson management routes (nested under courses)
-    Route::resource('courses.lessons', LessonController::class)->shallow();
+    Route::resource('courses.lessons', LessonController::class)->shallow()->names('teacher.courses.lessons');
 });
 
 // Enrollment and progress routes for students

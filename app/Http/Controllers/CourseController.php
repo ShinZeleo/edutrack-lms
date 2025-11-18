@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,15 +12,16 @@ class CourseController extends Controller
 {
     public function index()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            $courses = Course::with(['category', 'teacher'])->latest()->paginate(10);
-            $categories = Category::all();
-            $teachers = User::where('role', 'teacher')->get();
+            $courses = \App\Models\Course::with(['category', 'teacher'])->latest()->paginate(10);
+            $categories = \App\Models\Category::all();
+            $teachers = \App\Models\User::where('role', 'teacher')->get();
             return view('courses.admin.index', compact('courses', 'categories', 'teachers'));
         } elseif ($user->isTeacher()) {
-            $courses = Course::where('teacher_id', $user->id)
+            $courses = \App\Models\Course::where('teacher_id', $user->id)
                             ->with(['category', 'teacher'])
                             ->latest()
                             ->paginate(10);
@@ -32,14 +33,15 @@ class CourseController extends Controller
 
     public function create()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            $categories = Category::all();
-            $teachers = User::where('role', 'teacher')->get();
+            $categories = \App\Models\Category::all();
+            $teachers = \App\Models\User::where('role', 'teacher')->get();
             return view('courses.admin.create', compact('categories', 'teachers'));
         } elseif ($user->isTeacher()) {
-            $categories = Category::all();
+            $categories = \App\Models\Category::all();
             return view('courses.teacher.create', compact('categories'));
         } else {
             abort(403);
@@ -48,6 +50,7 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $request->validate([
@@ -61,33 +64,40 @@ class CourseController extends Controller
 
         // For teacher, automatically assign their own ID as teacher_id
         // For admin, allow selection of teacher
-        $teacherId = $user->isAdmin() ? $request->teacher_id : $user->id;
+        $teacherId = $user->isAdmin() ? $request->input('teacher_id') : $user->id;
 
-        Course::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+        \App\Models\Course::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
             'is_active' => $request->has('is_active'),
-            'category_id' => $request->category_id,
+            'category_id' => $request->input('category_id'),
             'teacher_id' => $teacherId,
         ]);
 
-        return redirect()->route('courses.index')->with('success', 'Course created successfully.');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.courses.index')->with('success', 'Course created successfully.');
+        } else {
+            return redirect()->route('teacher.courses.index')->with('success', 'Course created successfully.');
+        }
     }
 
-    public function edit(Course $course)
+    public function edit(\App\Models\Course $course)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is authorized to edit this course
         if ($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id)) {
             if ($user->isAdmin()) {
-                $categories = Category::all();
-                $teachers = User::where('role', 'teacher')->get();
+                $categories = \App\Models\Category::all();
+                $teachers = \App\Models\User::where('role', 'teacher')->get();
                 return view('courses.admin.edit', compact('course', 'categories', 'teachers'));
             } elseif ($user->isTeacher()) {
-                $categories = Category::all();
+                $categories = \App\Models\Category::all();
                 return view('courses.teacher.edit', compact('course', 'categories'));
             }
         } else {
@@ -95,8 +105,9 @@ class CourseController extends Controller
         }
     }
 
-    public function update(Request $request, Course $course)
+    public function update(Request $request, \App\Models\Course $course)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is authorized to update this course
@@ -114,26 +125,33 @@ class CourseController extends Controller
         ]);
 
         $course->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
             'is_active' => $request->has('is_active'),
-            'category_id' => $request->category_id,
+            'category_id' => $request->input('category_id'),
         ]);
 
         // Only admin can change the teacher
         if ($user->isAdmin()) {
             $course->update([
-                'teacher_id' => $request->teacher_id,
+                'teacher_id' => $request->input('teacher_id'),
             ]);
         }
 
-        return redirect()->route('courses.index')->with('success', 'Course updated successfully.');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
+        } else {
+            return redirect()->route('teacher.courses.index')->with('success', 'Course updated successfully.');
+        }
     }
 
     public function destroy(Course $course)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is authorized to delete this course
@@ -142,18 +160,37 @@ class CourseController extends Controller
         }
 
         $course->delete();
-        return redirect()->route('courses.index')->with('success', 'Course deleted successfully.');
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
+        } else {
+            return redirect()->route('teacher.courses.index')->with('success', 'Course deleted successfully.');
+        }
     }
 
     // Public method for guests and students to view courses
-    public function publicIndex()
+    public function publicIndex(Request $request)
     {
-        $courses = Course::where('is_active', true)
-                        ->with(['category', 'teacher'])
-                        ->latest()
-                        ->paginate(10);
-        $categories = Category::where('is_active', true)->get();
-        return view('courses.public.index', compact('courses', 'categories'));
+        $search = $request->input('search');
+        $categoryId = $request->input('category_id');
+
+        $query = \App\Models\Course::with(['teacher', 'category', 'students'])
+                      ->where('is_active', true)
+                      ->withCount('students');
+
+        if ($search) {
+            $query->where('name', 'like', "%{$search}%");
+        }
+
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+
+        $courses = $query->latest()->paginate(12);
+        $categories = \App\Models\Category::where('is_active', true)->get();
+
+        return view('courses.catalog', compact('courses', 'categories'));
     }
 
     public function show(Course $course)

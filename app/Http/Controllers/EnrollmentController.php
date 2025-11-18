@@ -12,6 +12,7 @@ class EnrollmentController extends Controller
 {
     public function enroll(Course $course)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is a student
@@ -32,6 +33,7 @@ class EnrollmentController extends Controller
 
     public function markAsDone(Lesson $lesson)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is a student
@@ -47,7 +49,7 @@ class EnrollmentController extends Controller
         }
 
         // Create or update lesson progress
-        LessonProgress::updateOrCreate(
+        \App\Models\LessonProgress::updateOrCreate(
             [
                 'lesson_id' => $lesson->id,
                 'student_id' => $user->id,
@@ -63,6 +65,7 @@ class EnrollmentController extends Controller
 
     public function markAsNotDone(Lesson $lesson)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         // Check if user is a student
@@ -78,7 +81,7 @@ class EnrollmentController extends Controller
         }
 
         // Update lesson progress
-        $progress = LessonProgress::where('lesson_id', $lesson->id)
+        $progress = \App\Models\LessonProgress::where('lesson_id', $lesson->id)
                                   ->where('student_id', $user->id)
                                   ->first();
 

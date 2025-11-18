@@ -38,6 +38,32 @@ class ProfileController extends Controller
     }
 
     /**
+     * Display the user's profile overview.
+     */
+    public function show()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        
+        if ($user->isStudent()) {
+            $enrolledCourses = $user->enrolledCourses()
+                                   ->with(['category', 'teacher', 'lessons'])
+                                   ->get();
+            
+            return view('profile.index', compact('user', 'enrolledCourses'));
+        } elseif ($user->isTeacher()) {
+            $courses = $user->courses()
+                           ->with(['category', 'students', 'lessons'])
+                           ->withCount(['students', 'lessons'])
+                           ->get();
+            
+            return view('profile.index', compact('user', 'courses'));
+        } else {
+            return view('profile.index', compact('user'));
+        }
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse

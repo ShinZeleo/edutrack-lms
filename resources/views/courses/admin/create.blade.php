@@ -3,10 +3,10 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Create New Course</h1>
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Create Course</h1>
         
         <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('courses.store') }}" method="POST">
+            <form action="{{ route('admin.courses.store') }}" method="POST">
                 @csrf
                 
                 <div class="mb-4">
@@ -15,7 +15,7 @@
                            name="name" 
                            id="name" 
                            value="{{ old('name') }}" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror"
                            required>
                     @error('name')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -27,7 +27,7 @@
                     <textarea name="description" 
                               id="description" 
                               rows="4" 
-                              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('description') }}</textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
                     @error('description')
                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                     @enderror
@@ -40,7 +40,7 @@
                                name="start_date" 
                                id="start_date" 
                                value="{{ old('start_date') }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('start_date') border-red-500 @enderror"
                                required>
                         @error('start_date')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -53,7 +53,7 @@
                                name="end_date" 
                                id="end_date" 
                                value="{{ old('end_date') }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('end_date') border-red-500 @enderror"
                                required>
                         @error('end_date')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -66,7 +66,7 @@
                         <label for="category_id" class="block text-gray-700 font-bold mb-2">Category *</label>
                         <select name="category_id" 
                                 id="category_id" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('category_id') border-red-500 @enderror"
                                 required>
                             <option value="">Select Category</option>
                             @foreach($categories as $category)
@@ -84,11 +84,11 @@
                         <label for="teacher_id" class="block text-gray-700 font-bold mb-2">Teacher *</label>
                         <select name="teacher_id" 
                                 id="teacher_id" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('teacher_id') border-red-500 @enderror"
                                 required>
                             <option value="">Select Teacher</option>
                             @foreach($teachers as $teacher)
-                                <option value="{{ $teacher->id }}" {{ old('teacher_id', auth()->id()) == $teacher->id ? 'selected' : '' }}>
+                                <option value="{{ $teacher->id }}" {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
                                     {{ $teacher->name }} ({{ $teacher->email }})
                                 </option>
                             @endforeach
@@ -112,7 +112,7 @@
                 </div>
                 
                 <div class="flex justify-end space-x-4">
-                    <a href="{{ route('courses.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                    <a href="{{ route('admin.courses.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
                         Cancel
                     </a>
                     <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
