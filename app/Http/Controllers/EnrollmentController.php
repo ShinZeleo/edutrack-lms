@@ -42,7 +42,7 @@ class EnrollmentController extends Controller
         }
 
         // Check if student is enrolled in the course
-        $isEnrolled = $lesson->course->students()->where('user_id', $user->id)->exists();
+        $isEnrolled = $lesson->course->students->contains($user);
 
         if (!$isEnrolled) {
             abort(403, 'You must be enrolled in the course to mark lessons as done.');
@@ -74,7 +74,7 @@ class EnrollmentController extends Controller
         }
 
         // Check if student is enrolled in the course
-        $isEnrolled = $lesson->course->students()->where('user_id', $user->id)->exists();
+        $isEnrolled = $lesson->course->students->contains($user);
 
         if (!$isEnrolled) {
             abort(403, 'You must be enrolled in the course to update lesson progress.');

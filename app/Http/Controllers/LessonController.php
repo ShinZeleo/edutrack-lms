@@ -53,49 +53,57 @@ class LessonController extends Controller
                          ->with('success', 'Lesson created successfully.');
     }
 
-    public function show(\App\Models\Course $course, \App\Models\Lesson $lesson)
+    public function show(Course $course, Lesson $lesson)
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Check if student is enrolled in the course
-        $isEnrolled = $course->students()->where('student_id', $user->id)->exists();
-
+        // The route middleware already checks for enrollment, but an explicit check is good practice.
+        $isEnrolled = $course->students()->where('users.id', $user->id)->exists();
         if (!$isEnrolled) {
             return redirect()->route('courses.public.show', $course)
-                             ->with('error', 'You must be enrolled in this course to view lessons.');
+                             ->with('error', 'You must be enrolled to view this lesson.');
         }
 
-        // Get all lessons for navigation
-        $lessons = $course->lessons()->ordered()->get();
-        $currentLessonIndex = $lessons->search($lesson);
+        // Eager load all lessons for the course and their progress for the current user to prevent N+1 issues.
+        $course->load(['lessons' => function ($query) use ($user) {
+            $query->ordered()->with(['progress' => function ($progressQuery) use ($user) {
+                $progressQuery->where('student_id', $user->id);
+            }]);
+        }]);
+
+        $lessons = $course->lessons;
+        $currentLessonIndex = $lessons->search(fn($item) => $item->id === $lesson->id);
         $nextLesson = $lessons->get($currentLessonIndex + 1);
         $prevLesson = $lessons->get($currentLessonIndex - 1);
 
-        // Get progress for this lesson
-        $progress = $lesson->progress()
-                          ->where('student_id', $user->id)
-                          ->first();
-
+        // Get progress for the current lesson from the already loaded relationship.
+        $progress = $lesson->progress->first();
         $isDone = $progress && $progress->is_done;
+
         $courseProgress = $course->getProgressForUser($user);
 
-        return view('lessons.show', compact('course', 'lesson', 'nextLesson', 'prevLesson', 'isDone', 'courseProgress'));
+        return view('lessons.show', compact('course', 'lesson', 'lessons', 'nextLesson', 'prevLesson', 'isDone', 'courseProgress'));
     }
 
-    public function edit(Course $course, Lesson $lesson)
+    public function edit(Lesson $lesson)
     {
-        // Ensure teacher owns the course and lesson belongs to the course
-        if ($course->teacher_id !== Auth::id() || $lesson->course_id !== $course->id) {
+        $course = $lesson->course;
+
+        // Ensure teacher owns the course
+        if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 
         return view('lessons.edit', compact('course', 'lesson'));
     }
 
-    public function update(Request $request, Course $course, Lesson $lesson)
+    public function update(Request $request, Lesson $lesson)
     {
-        // Ensure teacher owns the course and lesson belongs to the course
-        if ($course->teacher_id !== Auth::id() || $lesson->course_id !== $course->id) {
+        $course = $lesson->course;
+
+        // Ensure teacher owns the course
+        if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 
@@ -115,10 +123,12 @@ class LessonController extends Controller
                          ->with('success', 'Lesson updated successfully.');
     }
 
-    public function destroy(Course $course, Lesson $lesson)
+    public function destroy(Lesson $lesson)
     {
-        // Ensure teacher owns the course and lesson belongs to the course
-        if ($course->teacher_id !== Auth::id() || $lesson->course_id !== $course->id) {
+        $course = $lesson->course;
+
+        // Ensure teacher owns the course
+        if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 

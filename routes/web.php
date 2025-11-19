@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
@@ -55,9 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Admin routes
-    Route::middleware(['role:admin'])->group(function () {
-        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::resource('users', UserController::class)->names('admin.users');
         // other admin routes
     });
 
