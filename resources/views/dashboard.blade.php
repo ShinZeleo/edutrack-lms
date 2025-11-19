@@ -1,139 +1,188 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-                <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Dashboard</p>
-                <h2 class="text-2xl font-semibold text-slate-900">Halo, {{ auth()->user()->name }} 👋</h2>
-                <p class="text-sm text-slate-500">Pantau progress belajar dan tindakan penting langsung dari satu layar.</p>
-            </div>
-            <div class="flex flex-wrap gap-3">
-                <a href="{{ route('courses.catalog') }}" class="pill-link pill-link--ghost text-xs sm:text-sm">Lihat katalog</a>
-                @if(auth()->user()->isTeacher() || auth()->user()->isAdmin())
-                    <a href="{{ auth()->user()->isAdmin() ? route('admin.courses.create') : route('teacher.courses.create') }}" class="pill-link pill-link--brand text-xs sm:text-sm">Buat kursus</a>
-                @endif
-            </div>
-        </div>
-    </x-slot>
-
     @php
-        $user = auth()->user();
-        $stats = [
-            [
-                'label' => 'Peran aktif',
-                'value' => ucfirst($user->role),
-                'description' => 'Hak akses & rekomendasi UI dipersonalisasi.',
-            ],
-            [
-                'label' => 'Kursus diajar',
-                'value' => $user->isTeacher() ? $user->courses()->count() : ($user->isAdmin() ? App\Models\Course::count() : '—'),
-                'description' => $user->isTeacher() ? 'Modul yang Anda kurasi saat ini.' : 'Total kursus dalam ekosistem.',
-            ],
-            [
-                'label' => 'Kursus diikuti',
-                'value' => $user->isStudent() ? $user->enrolledCourses()->count() : '—',
-                'description' => $user->isStudent() ? 'Progress otomatis tersimpan.' : 'Tersedia bagi seluruh siswa.',
-            ],
-        ];
-
-        $quickLinks = collect([
-            ['label' => 'Kelola kursus admin', 'href' => route('admin.courses.index'), 'visible' => $user->isAdmin()],
-            ['label' => 'Panel pengajar', 'href' => route('teacher.dashboard'), 'visible' => $user->isTeacher()],
-            ['label' => 'Kursus saya', 'href' => route('student.dashboard'), 'visible' => $user->isStudent()],
-            ['label' => 'Profil & keamanan', 'href' => route('profile.show'), 'visible' => true],
-        ])->filter(fn($link) => $link['visible']);
+        $user = Auth::user();
     @endphp
 
-    <div class="grid gap-6 lg:grid-cols-3">
-        <div class="glass-panel space-y-6 p-6 lg:col-span-2">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Ringkasan akun</p>
-                    <h3 class="text-xl font-semibold text-slate-900">Semua status dalam kondisi prima.</h3>
-                </div>
-                <span class="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600">Realtime</span>
-            </div>
+    <x-slot name="header">
+        <h2 class="text-xl font-semibold leading-tight text-neutral-900">
+            Dashboard
+        </h2>
+    </x-slot>
 
-            <div class="grid gap-4 md:grid-cols-3">
-                @foreach($stats as $stat)
-                    <div class="rounded-2xl border border-white/60 bg-white/70 p-5 shadow-sm">
-                        <p class="text-xs uppercase tracking-[0.3em] text-slate-500">{{ $stat['label'] }}</p>
-                        <p class="mt-3 text-3xl font-semibold text-slate-900">{{ $stat['value'] }}</p>
-                        <p class="mt-2 text-sm text-slate-500">{{ $stat['description'] }}</p>
+    <div class="py-6">
+        <div class="space-y-8">
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-4">
+                    <p class="text-xs text-neutral-500 uppercase tracking-wide">
+                        Selamat datang
+                    </p>
+                    <p class="mt-1 text-base font-semibold text-neutral-900">
+                        {{ $user->name }}
+                    </p>
+                    <p class="mt-1 text-xs text-neutral-600">
+                        Role: <span class="font-medium capitalize">{{ $user->role ?? 'user' }}</span>
+                    </p>
+                </div>
+
+                @if(isset($stats))
+                    @foreach($stats as $label => $value)
+                        <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-4">
+                            <p class="text-xs text-neutral-500 uppercase tracking-wide">
+                                {{ $label }}
+                            </p>
+                            <p class="mt-2 text-2xl font-semibold text-neutral-900">
+                                {{ $value }}
+                            </p>
+                        </div>
+                    @endforeach
+                @endif
+            </section>
+
+            @if($user->role === 'student')
+                <section class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-neutral-900">
+                            Kursus yang sedang kamu ikuti
+                        </h3>
+                        <a
+                            href="{{ route('courses.catalog') }}"
+                            class="text-sm text-emerald-700 hover:text-emerald-800"
+                        >
+                            Jelajahi kursus lain
+                        </a>
                     </div>
-                @endforeach
-            </div>
 
-            <div class="rounded-3xl bg-gradient-to-r from-primary-600 to-secondary-500 p-6 text-white">
-                <p class="text-sm uppercase tracking-[0.4em] text-white/70">Aktivitas berikutnya</p>
-                <h4 class="mt-2 text-2xl font-semibold">Selesaikan modul terbaru atau publish kurikulum baru.</h4>
-                <div class="mt-4 flex flex-wrap gap-3 text-sm">
-                    <span class="rounded-full bg-white/20 px-3 py-1">Checklist progress</span>
-                    <span class="rounded-full bg-white/20 px-3 py-1">Reminder otomatis</span>
-                    <span class="rounded-full bg-white/20 px-3 py-1">Timeline rilis</span>
-                </div>
-            </div>
-        </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @forelse($enrolledCourses ?? [] as $course)
+                            @php
+                                $progress = $course->progress_percent ?? 0;
+                            @endphp
+                            <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition flex flex-col">
+                                <div class="p-5 flex flex-col gap-3">
+                                    <h4 class="text-base font-semibold text-neutral-900">
+                                        {{ $course->name }}
+                                    </h4>
+                                    <p class="text-xs text-neutral-600 line-clamp-2">
+                                        {{ Str::limit($course->description, 120) }}
+                                    </p>
+                                    <div class="w-full">
+                                        <div class="h-2 rounded-full bg-neutral-200">
+                                            <div
+                                                class="h-2 rounded-full bg-emerald-600"
+                                                style="width: {{ $progress }}%;"
+                                            ></div>
+                                        </div>
+                                        <div class="mt-1 text-[11px] text-neutral-600 text-right">
+                                            Progres {{ $progress }}%
+                                        </div>
+                                    </div>
+                                    <a
+                                        href="{{ route('courses.public.show', $course) }}"
+                                        class="mt-2 inline-flex items-center justify-center w-full rounded-md border border-emerald-600 px-3 py-2 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
+                                    >
+                                        Lanjutkan belajar
+                                    </a>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-sm text-neutral-500">
+                                Kamu belum mengikuti kursus apa pun. Mulai dari memilih satu kursus di katalog.
+                            </p>
+                        @endforelse
+                    </div>
+                </section>
+            @elseif($user->role === 'teacher')
+                <section class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-lg font-semibold text-neutral-900">
+                            Kursus yang kamu ajar
+                        </h3>
+                        <a
+                            href="{{ route('teacher.courses.create') }}"
+                            class="text-sm text-emerald-700 hover:text-emerald-800"
+                        >
+                            Buat kursus baru
+                        </a>
+                    </div>
 
-        <div class="glass-panel flex flex-col gap-6 p-6">
-            <div>
-                <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Quick links</p>
-                <p class="text-sm text-slate-500">Akses fitur penting tanpa mencari menu.</p>
-            </div>
-            <div class="space-y-3">
-                @foreach($quickLinks as $link)
-                    <a href="{{ $link['href'] }}" class="flex items-center justify-between rounded-2xl border border-slate-100 bg-white/80 px-4 py-3 text-sm font-semibold text-slate-700 hover:border-primary-200 hover:text-primary-700">
-                        <span>{{ $link['label'] }}</span>
-                        <span>→</span>
-                    </a>
-                @endforeach
-            </div>
-            <div class="rounded-2xl border border-dashed border-slate-200 p-4 text-xs text-slate-500">
-                Gunakan tombol “Buat kursus” untuk meluncurkan pengalaman baru atau update modul yang sudah berjalan.
-            </div>
-        </div>
-    </div>
-
-    <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="glass-panel p-6">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Aktivitas terbaru</p>
-                    <h3 class="text-lg font-semibold text-slate-900">Timeline ringkas</h3>
-                </div>
-                <span class="text-xs text-slate-400">24h terakhir</span>
-            </div>
-            <ul class="mt-6 space-y-4 text-sm text-slate-600">
-                <li class="flex items-start gap-3">
-                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-primary-500"></span>
-                    Periksa kembali modul yang baru dipublikasikan untuk memastikan semua media tampil prima.
-                </li>
-                <li class="flex items-start gap-3">
-                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-secondary-500"></span>
-                    Kirim pesan sambutan ke siswa baru agar onboarding terasa personal.
-                </li>
-                <li class="flex items-start gap-3">
-                    <span class="mt-1 h-2.5 w-2.5 rounded-full bg-amber-500"></span>
-                    Jadwalkan sesi live atau Q&A untuk menjaga engagement kelas.
-                </li>
-            </ul>
-        </div>
-        <div class="glass-panel p-6">
-            <p class="text-xs uppercase tracking-[0.4em] text-primary-500">Personal planner</p>
-            <h3 class="text-lg font-semibold text-slate-900">Susun agenda minggu ini</h3>
-            <div class="mt-6 space-y-4 text-sm text-slate-600">
-                <div class="rounded-2xl border border-white/60 bg-white/80 p-4">
-                    <p class="font-semibold text-slate-900">Review progress</p>
-                    <p class="text-xs text-slate-500">Lihat statistik penyelesaian modul dan kirim reminder otomatis.</p>
-                </div>
-                <div class="rounded-2xl border border-white/60 bg-white/80 p-4">
-                    <p class="font-semibold text-slate-900">Refresh konten</p>
-                    <p class="text-xs text-slate-500">Perbarui video, PDF, atau kuis agar kursus selalu relevan.</p>
-                </div>
-                <div class="rounded-2xl border border-white/60 bg-white/80 p-4">
-                    <p class="font-semibold text-slate-900">Kolaborasi tim</p>
-                    <p class="text-xs text-slate-500">Gunakan komentar internal untuk menyatukan catatan antar pengajar.</p>
-                </div>
-            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @forelse($teacherCourses ?? [] as $course)
+                            <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition flex flex-col">
+                                <div class="p-5 flex flex-col gap-2">
+                                    <h4 class="text-base font-semibold text-neutral-900">
+                                        {{ $course->name }}
+                                    </h4>
+                                    <p class="text-xs text-neutral-600 line-clamp-2">
+                                        {{ Str::limit($course->description, 120) }}
+                                    </p>
+                                    <p class="text-[11px] text-neutral-500 mt-1">
+                                        {{ $course->students_count ?? 0 }} siswa terdaftar
+                                    </p>
+                                    <div class="mt-3 flex flex-wrap gap-2">
+                                        <a
+                                            href="{{ route('teacher.courses.edit', $course) }}"
+                                            class="inline-flex items-center justify-center rounded-md border border-neutral-300 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-50"
+                                        >
+                                            Edit kursus
+                                        </a>
+                                        <a
+                                            href="{{ route('teacher.courses.show', $course) }}"
+                                            class="inline-flex items-center justify-center rounded-md border border-emerald-600 px-3 py-1.5 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
+                                        >
+                                            Detail dan materi
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-sm text-neutral-500">
+                                Kamu belum membuat course. Mulai dengan membuat satu course terlebih dahulu.
+                            </p>
+                        @endforelse
+                    </div>
+                </section>
+            @elseif($user->role === 'admin')
+                <section class="space-y-4">
+                    <h3 class="text-lg font-semibold text-neutral-900">
+                        Administrasi platform
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <a
+                            href="{{ route('admin.users.index') }}"
+                            class="bg-white border border-neutral-200 rounded-lg shadow-sm p-4 flex flex-col gap-1 hover:border-emerald-500 hover:shadow-md transition"
+                        >
+                            <span class="text-sm font-semibold text-neutral-900">
+                                Manajemen user
+                            </span>
+                            <span class="text-xs text-neutral-600">
+                                Kelola admin, teacher, dan student.
+                            </span>
+                        </a>
+                        <a
+                            href="{{ route('admin.courses.index') }}"
+                            class="bg-white border border-neutral-200 rounded-lg shadow-sm p-4 flex flex-col gap-1 hover:border-emerald-500 hover:shadow-md transition"
+                        >
+                            <span class="text-sm font-semibold text-neutral-900">
+                                Manajemen kursus
+                            </span>
+                            <span class="text-xs text-neutral-600">
+                                Pantau dan atur seluruh kursus yang tersedia.
+                            </span>
+                        </a>
+                        <a
+                            href="{{ route('admin.categories.index') }}"
+                            class="bg-white border border-neutral-200 rounded-lg shadow-sm p-4 flex flex-col gap-1 hover:border-emerald-500 hover:shadow-md transition"
+                        >
+                            <span class="text-sm font-semibold text-neutral-900">
+                                Manajemen kategori
+                            </span>
+                            <span class="text-xs text-neutral-600">
+                                Atur kategori untuk pengelompokan kursus.
+                            </span>
+                        </a>
+                    </div>
+                </section>
+            @endif
         </div>
     </div>
 </x-app-layout>

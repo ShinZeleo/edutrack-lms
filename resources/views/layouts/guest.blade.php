@@ -15,16 +15,12 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-neutral-900 antialiased">
-        <div class="flex min-h-screen flex-col items-center justify-center bg-neutral-100 pt-6 sm:pt-0">
-            <div>
-                <a href="/" class="flex items-center gap-2">
-                    <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-600 to-secondary-500 text-white font-bold">E</span>
-                    <span class="font-semibold text-neutral-800 text-lg">EduTrack</span>
-                </a>
-            </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-8 bg-white shadow-md overflow-hidden sm:rounded-xl border border-neutral-200">
+    <body class="font-sans text-neutral-900 antialiased bg-neutral-50">
+        <div class="min-h-screen flex flex-col items-center justify-center pt-6 sm:pt-0">
+            <div class="w-full max-w-md mx-auto mt-24 p-10 bg-white border border-neutral-200 rounded-xl shadow-lg">
+                <div class="text-center mb-6">
+                    <a href="/" class="inline-block font-bold text-2xl text-neutral-900 mb-2">EduTrack</a>
+                </div>
                 {{ $slot }}
             </div>
         </div>
