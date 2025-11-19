@@ -1,95 +1,107 @@
 <x-app-layout>
-    <section class="space-y-8 py-10">
-        <div class="surface-card p-6 md:p-8">
-            <div class="flex flex-wrap items-center gap-6">
-                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-2xl font-semibold text-primary-600">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
+    <div class="mx-auto max-w-7xl px-8 py-8">
+        <!-- Header -->
+        <div class="mb-12">
+            <div class="flex items-center gap-6">
+                <!-- Avatar (96px) -->
+                <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center">
+                    <span class="text-emerald-700 font-bold text-3xl">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                 </div>
-                <div class="flex-1 space-y-1">
-                    <h1 class="text-3xl font-semibold text-neutral-900">{{ $user->name }}</h1>
-                    <p class="text-sm text-neutral-500">{{ $user->username }} • {{ $user->email }}</p>
+                <div class="flex-1">
+                    <!-- Nama User -->
+                    <h1 class="text-3xl font-bold text-neutral-900 mb-2">{{ $user->name }}</h1>
+                    <!-- Role Badge -->
+                    @php
+                        $roleColors = [
+                            'admin' => 'bg-red-100 text-red-700',
+                            'teacher' => 'bg-blue-100 text-blue-700',
+                            'student' => 'bg-emerald-100 text-emerald-700',
+                        ];
+                    @endphp
+                    <span class="inline-block px-3 py-1 rounded-md text-sm font-medium {{ $roleColors[$user->role] ?? 'bg-neutral-100 text-neutral-700' }}">
+                        {{ ucfirst($user->role) }}
+                    </span>
                 </div>
-                @php
-                    $roleColors = [
-                        'admin' => 'bg-danger/10 text-danger',
-                        'teacher' => 'bg-success-50 text-success-600',
-                        'student' => 'bg-primary-50 text-primary-700',
-                    ];
-                @endphp
-                <span class="badge {{ $roleColors[$user->role] ?? 'badge-muted' }}">{{ ucfirst($user->role) }}</span>
             </div>
         </div>
 
+        <!-- Body - Grid 3 Kolom Kursus -->
         @if($user->isStudent())
-            <div class="space-y-4">
-                <h2 class="text-xl font-semibold text-neutral-900">Kursus yang diikuti</h2>
+            <div>
+                <h2 class="text-2xl font-semibold text-neutral-900 mb-6">Kursus yang Sedang Diikuti</h2>
                 @if(isset($enrolledCourses) && $enrolledCourses->count())
-                    <div class="grid gap-4 md:grid-cols-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($enrolledCourses as $course)
                             @php $progress = $course->getProgressForUser($user); @endphp
-                            <div class="surface-card p-4 space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="text-lg font-semibold text-neutral-900">{{ $course->name }}</h3>
-                                    <span class="text-xs text-neutral-500">{{ number_format($progress, 0) }}%</span>
+                            <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-6 hover:shadow-md transition">
+                                <h3 class="text-xl font-semibold text-neutral-900 mb-2">{{ $course->name }}</h3>
+                                <p class="text-sm text-neutral-600 mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
+
+                                <!-- Progress Bar -->
+                                <div class="mb-4">
+                                    <div class="w-full bg-neutral-200 rounded-full h-2 mb-1">
+                                        <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $progress }}%"></div>
+                                    </div>
+                                    <p class="text-xs text-neutral-500">{{ number_format($progress, 0) }}% selesai</p>
                                 </div>
-                                <p class="text-xs text-neutral-500">Teacher: {{ $course->teacher->name ?? 'N/A' }}</p>
-                                <div class="progress-track">
-                                    <div class="progress-fill" style="width: {{ $progress }}%"></div>
-                                </div>
-                                <div class="flex gap-3 text-sm">
-                                    <a href="{{ route('courses.public.show', $course) }}" class="text-primary-600">Detail</a>
+
+                                <div class="flex gap-3">
+                                    <a href="{{ route('courses.public.show', $course) }}" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+                                        Detail
+                                    </a>
                                     @if($course->lessons->count() > 0)
-                                        <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="text-primary-600">Lanjutkan</a>
+                                        <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+                                            Lanjutkan
+                                        </a>
                                     @endif
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <p class="text-sm text-neutral-500">Belum ada kursus yang diikuti.</p>
+                    <div class="text-center py-12 bg-neutral-50 rounded-lg border border-neutral-200">
+                        <p class="text-neutral-600 mb-4">Belum ada kursus yang diikuti.</p>
+                        <a href="{{ route('courses.catalog') }}" class="inline-block bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition font-medium">
+                            Jelajahi Kursus
+                        </a>
+                    </div>
                 @endif
             </div>
         @elseif($user->isTeacher())
-            <div class="space-y-4">
-                <h2 class="text-xl font-semibold text-neutral-900">Kursus yang diajarkan</h2>
+            <div>
+                <h2 class="text-2xl font-semibold text-neutral-900 mb-6">Kursus yang Diajarkan</h2>
                 @if(isset($courses) && $courses->count())
-                    <div class="surface-card overflow-hidden">
-                        <table class="min-w-full divide-y divide-neutral-200 text-sm">
-                            <thead class="bg-neutral-50 text-xs uppercase tracking-wide text-neutral-500">
-                                <tr>
-                                    <th class="px-4 py-3 text-left">Course</th>
-                                    <th class="px-4 py-3 text-left">Students</th>
-                                    <th class="px-4 py-3 text-left">Lessons</th>
-                                    <th class="px-4 py-3 text-left">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-neutral-100">
-                                @foreach($courses as $course)
-                                    <tr>
-                                        <td class="px-4 py-3">
-                                            <p class="font-semibold text-neutral-900">{{ $course->name }}</p>
-                                            <p class="text-xs text-neutral-500">{{ $course->category->name ?? 'Uncategorized' }}</p>
-                                        </td>
-                                        <td class="px-4 py-3 text-neutral-600">{{ $course->students_count }} siswa</td>
-                                        <td class="px-4 py-3 text-neutral-600">{{ $course->lessons_count }} lessons</td>
-                                        <td class="px-4 py-3 text-neutral-600 space-x-3">
-                                            <a href="{{ route('teacher.courses.edit', $course) }}" class="text-primary-600">Kelola</a>
-                                            <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="text-success-600">Lesson</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($courses as $course)
+                            <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-6 hover:shadow-md transition">
+                                <h3 class="text-xl font-semibold text-neutral-900 mb-2">{{ $course->name }}</h3>
+                                <p class="text-sm text-neutral-600 mb-4">{{ $course->category->name ?? 'Uncategorized' }}</p>
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-sm text-neutral-600">{{ $course->students_count ?? 0 }} siswa</span>
+                                    <span class="text-sm text-neutral-600">{{ $course->lessons_count ?? 0 }} lessons</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+                                        Kelola
+                                    </a>
+                                    <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+                                        Lesson
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 @else
-                    <p class="text-sm text-neutral-500">Belum ada kursus yang dibuat.</p>
+                    <div class="text-center py-12 bg-neutral-50 rounded-lg border border-neutral-200">
+                        <p class="text-neutral-600">Belum ada kursus yang dibuat.</p>
+                    </div>
                 @endif
             </div>
         @else
-            <div class="surface-card p-6">
-                <h2 class="text-xl font-semibold text-neutral-900">Admin overview</h2>
-                <p class="text-sm text-neutral-600">Gunakan sidebar admin untuk mengelola users, courses, dan categories.</p>
+            <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-6">
+                <h2 class="text-2xl font-semibold text-neutral-900 mb-4">Admin Overview</h2>
+                <p class="text-neutral-600">Gunakan sidebar admin untuk mengelola users, courses, dan categories.</p>
             </div>
         @endif
-    </section>
+    </div>
 </x-app-layout>

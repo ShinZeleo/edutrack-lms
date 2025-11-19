@@ -1,79 +1,83 @@
 <x-app-layout>
-    <!-- Header -->
-    <div class="py-8">
-        <h1 class="text-4xl font-bold tracking-tight text-neutral-900">Katalog Kursus</h1>
-        <p class="mt-2 text-lg text-neutral-600">Jelajahi seluruh kursus yang tersedia di platform untuk memulai perjalanan belajar Anda.</p>
-    </div>
-
-    <!-- Filters -->
-    <section class="mb-8">
-        <div class="bg-white p-6 rounded-lg border border-neutral-200 shadow-sm">
-            <form method="GET" action="{{ route('courses.catalog') }}" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 items-end">
+    <!-- Header Panel -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-neutral-900 mb-6">Katalog Kursus</h1>
+        <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-6">
+            <form method="GET" action="{{ route('courses.catalog') }}" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 items-end">
                 <div>
                     <x-input-label for="search" value="Pencarian" />
-                    <x-text-input id="search" name="search" type="text" class="mt-1 block w-full" value="{{ request('search') }}" placeholder="Nama kursus atau mentor..." />
+                    <x-text-input id="search" name="search" type="text" class="mt-1 block w-full rounded-lg border-neutral-300" value="{{ request('search') }}" placeholder="Cari nama kursus..." />
                 </div>
                 <div>
                     <x-input-label for="category_id" value="Kategori" />
-                    <select id="category_id" name="category_id" class="mt-1 block w-full rounded-xl border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500">
+                    <select id="category_id" name="category_id" class="mt-1 block w-full rounded-lg border-neutral-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
                         <option value="">Semua Kategori</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" @selected(request('category_id') == $category->id)>{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
-                <div>
-                    <x-input-label for="sort" value="Urutkan" />
-                    <select id="sort" name="sort" class="mt-1 block w-full rounded-xl border-neutral-300 shadow-sm focus:border-primary-500 focus:ring-primary-500">
-                        <option value="latest" @selected(($sort ?? request('sort', 'latest')) === 'latest')>Terbaru</option>
-                        <option value="popular" @selected(($sort ?? request('sort')) === 'popular')>Terpopuler</option>
-                        @auth
-                            <option value="progress" @selected(($sort ?? request('sort')) === 'progress')>Progress Tertinggi</option>
-                        @endauth
-                    </select>
-                </div>
                 <div class="flex items-center gap-4">
-                    <x-primary-button class="w-full justify-center">Terapkan</x-primary-button>
-                    @if(request()->hasAny(['search','category_id','sort']))
-                        <a href="{{ route('courses.catalog') }}" class="text-sm font-medium text-neutral-600 hover:text-neutral-900">Reset</a>
+                    <x-primary-button class="w-full justify-center">Cari</x-primary-button>
+                    @if(request()->hasAny(['search','category_id']))
+                        <a href="{{ route('courses.catalog') }}" class="text-sm font-medium text-neutral-600 hover:text-neutral-900 whitespace-nowrap">Reset</a>
                     @endif
                 </div>
             </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Courses Grid -->
+    <!-- Courses Grid - 3 Columns -->
     <section>
-        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($courses as $course)
-                <div class="group relative flex flex-col rounded-xl border border-neutral-200 bg-white shadow-sm">
-                    <div class="aspect-h-3 aspect-w-4 bg-neutral-200 sm:aspect-none sm:h-48">
-                        <img src="https://source.unsplash.com/random/600x400?education&sig={{ $course->id }}" alt="{{ $course->name }}" class="h-full w-full object-cover object-center sm:h-full sm:w-full">
+                <div class="p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white">
+                    <!-- Thumbnail -->
+                    <div class="rounded-lg h-40 w-full bg-neutral-200 mb-4 overflow-hidden">
+                        <img src="https://source.unsplash.com/random/600x400?education&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
                     </div>
-                    <div class="flex flex-1 flex-col space-y-4 p-6">
-                        <h3 class="text-lg font-semibold text-neutral-900">
-                            <a href="{{ route('courses.public.show', $course) }}">
-                                <span aria-hidden="true" class="absolute inset-0"></span>
-                                {{ $course->name }}
-                            </a>
-                        </h3>
-                        <p class="text-sm text-neutral-600 flex-1">{{ Str::limit($course->description ?? 'Kursus interaktif dengan modul mendalam.', 100) }}</p>
-                        <div class="flex items-center justify-between text-sm">
-                            <p class="font-medium text-neutral-700">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
-                            <p class="inline-flex items-center rounded-full bg-primary-100 px-3 py-1 text-xs font-medium text-primary-700">{{ $course->category->name ?? 'General' }}</p>
-                        </div>
-                        @auth
-                            @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
-                                @php $progress = $course->getProgressForUser(auth()->user()); @endphp
-                                <div class="pt-2">
-                                    <div class="w-full bg-neutral-200 rounded-full h-2">
-                                        <div class="bg-primary-600 h-2 rounded-full" style="width: {{ $progress }}%"></div>
-                                    </div>
-                                    <p class="mt-1 text-right text-xs text-neutral-500">{{ number_format($progress, 0) }}% selesai</p>
+
+                    <!-- Title -->
+                    <h3 class="text-xl font-semibold text-neutral-900 mb-2">
+                        <a href="{{ route('courses.public.show', $course) }}" class="hover:text-emerald-600">
+                            {{ $course->name }}
+                        </a>
+                    </h3>
+
+                    <!-- Teacher -->
+                    <p class="text-sm text-neutral-600 mb-4">
+                        Oleh {{ $course->teacher->name ?? 'EduTrack' }}
+                    </p>
+
+                    <!-- Progress Bar (if enrolled) -->
+                    @auth
+                        @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
+                            @php $progress = $course->getProgressForUser(auth()->user()); @endphp
+                            <div class="mb-4">
+                                <div class="w-full bg-neutral-200 rounded-full h-2 mb-1">
+                                    <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $progress }}%"></div>
                                 </div>
-                            @endif
-                        @endauth
-                    </div>
+                                <p class="text-xs text-neutral-500">{{ number_format($progress, 0) }}% selesai</p>
+                            </div>
+                        @endif
+                    @endauth
+
+                    <!-- Button -->
+                    @auth
+                        @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
+                            <a href="{{ route('courses.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition text-sm font-medium">
+                                Lanjutkan
+                            </a>
+                        @else
+                            <a href="{{ route('courses.public.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition text-sm font-medium">
+                                Ikuti
+                            </a>
+                        @endif
+                    @else
+                        <a href="{{ route('courses.public.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition text-sm font-medium">
+                            Ikuti
+                        </a>
+                    @endauth
                 </div>
             @empty
                 <div class="col-span-full text-center py-24">

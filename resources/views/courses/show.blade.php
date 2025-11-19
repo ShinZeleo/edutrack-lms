@@ -1,134 +1,177 @@
 <x-app-layout>
-<div class="container mx-auto px-4 py-8 max-w-6xl">
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="p-6">
-            <!-- Header -->
-            <div class="mb-6 border-b border-border pb-6">
-                <div class="bg-gray-200 h-64 rounded-lg mb-6 flex items-center justify-center">
-                    <span class="text-gray-500 text-lg">Course Thumbnail</span>
-                </div>
-                
-                <h1 class="text-3xl font-bold text-heading mb-4">{{ $course->name }}</h1>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    <div>
-                        <span class="block text-textHint text-sm">Teacher</span>
-                        <span class="text-textSecondary font-medium">{{ $course->teacher->name ?? 'N/A' }}</span>
-                    </div>
-                    <div>
-                        <span class="block text-textHint text-sm">Category</span>
-                        <span class="text-textSecondary font-medium">{{ $course->category->name ?? 'Uncategorized' }}</span>
-                    </div>
-                    <div>
-                        <span class="block text-textHint text-sm">Duration</span>
-                        <span class="text-textSecondary font-medium">{{ $course->lessons->count() }} Lessons</span>
+    <section class="pt-6 pb-10">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <span class="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+                        {{ $course->category->name ?? 'Umum' }}
+                    </span>
+
+                    <h1 class="text-3xl md:text-4xl font-semibold text-neutral-900 leading-tight">
+                        {{ $course->name }}
+                    </h1>
+
+                    <div class="text-sm text-neutral-600 flex flex-wrap items-center gap-2">
+                        <span>Oleh <span class="font-medium">{{ $course->teacher->name ?? 'EduTrack' }}</span></span>
+                        <span class="h-1 w-1 rounded-full bg-neutral-400"></span>
+                        <span>{{ $course->students_count ?? 0 }} peserta terdaftar</span>
+                        <span class="h-1 w-1 rounded-full bg-neutral-400"></span>
+                        <span>{{ $lessons->count() }} lesson</span>
                     </div>
                 </div>
-                
-                <div class="mb-4">
-                    <p class="text-textSecondary">{{ $course->description }}</p>
+
+                <div class="aspect-video w-full rounded-xl bg-neutral-200 overflow-hidden">
+                    <img
+                        src="https://source.unsplash.com/1200x675?learning,online&sig={{ $course->id }}"
+                        alt="{{ $course->name }}"
+                        class="w-full h-full object-cover"
+                    >
                 </div>
-                
-                <div class="flex flex-wrap gap-4">
-                    <div>
-                        <span class="inline-block bg-primary-100 text-primary-800 text-sm px-3 py-1 rounded-full">
-                            {{ $course->start_date->format('M d, Y') }}
-                        </span>
-                        <span class="mx-2 text-textHint">to</span>
-                        <span class="inline-block bg-primary-100 text-primary-800 text-sm px-3 py-1 rounded-full">
-                            {{ $course->end_date->format('M d, Y') }}
-                        </span>
-                    </div>
-                    
-                    <div>
-                        <span class="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full">
-                            {{ $course->students_count }} students enrolled
-                        </span>
-                    </div>
+
+                <div class="space-y-3">
+                    <h2 class="text-xl font-semibold text-neutral-900">
+                        Deskripsi kursus
+                    </h2>
+                    <p class="text-sm text-neutral-700 leading-relaxed whitespace-pre-line">
+                        {{ $course->description }}
+                    </p>
                 </div>
-            </div>
-            
-            <!-- Action Button -->
-            <div class="mb-6">
-                @auth
-                    @if(auth()->user()->isStudent())
-                        @if($course->students->contains(auth()->user()))
-                            <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" 
-                               class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg inline-block">
-                                Continue Course
-                            </a>
-                            <span class="ml-4 text-green-600 font-medium">Enrolled</span>
-                        @else
-                            <form action="{{ route('courses.enroll', $course) }}" method="POST" class="inline">
-                                @csrf
-                                <button type="submit" 
-                                        class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg">
-                                    Enroll in Course
-                                </button>
-                            </form>
-                        @endif
-                    @else
-                        <p class="text-textHint">Only students can enroll in this course.</p>
-                    @endif
-                @else
-                    <a href="{{ route('login') }}" 
-                       class="bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 px-6 rounded-lg">
-                        Login to Enroll
-                    </a>
-                @endauth
-            </div>
-            
-            <!-- Lesson List -->
-            <div>
-                <h2 class="text-2xl font-bold text-heading mb-4">Course Content</h2>
-                
-                @if($course->lessons->count() > 0)
-                    <div class="bg-bgSection p-4 rounded-lg">
-                        <div class="space-y-3">
-                            @foreach($course->lessons()->ordered()->get() as $lesson)
-                                <div class="flex items-center justify-between p-3 bg-white rounded border border-border">
-                                    <div class="flex items-center">
-                                        <div class="w-8 h-8 flex items-center justify-center bg-primary-100 text-primary-800 rounded-full text-sm font-bold mr-3">
-                                            {{ $loop->iteration }}
+
+                <div class="space-y-3">
+                    <h2 class="text-xl font-semibold text-neutral-900">
+                        Daftar materi
+                    </h2>
+
+                    @if($lessons->count())
+                        <div class="space-y-2">
+                            @foreach($lessons as $index => $lesson)
+                                @php
+                                    $number = $index + 1;
+                                    $isDone = $lesson->is_done_for_auth ?? false;
+                                @endphp
+                                <a
+                                    href="{{ route('lessons.show', [$course, $lesson]) }}"
+                                    class="flex items-center justify-between rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm hover:border-emerald-500 hover:bg-emerald-50/40 transition"
+                                >
+                                    <div class="flex items-center gap-3">
+                                        <div class="h-7 w-7 flex items-center justify-center rounded-full bg-neutral-100 text-[11px] font-medium text-neutral-700">
+                                            {{ $number }}
                                         </div>
                                         <div>
-                                            <h4 class="font-medium text-heading">{{ $lesson->title }}</h4>
-                                            <p class="text-textHint text-sm">{{ Str::limit($lesson->content, 80) }}</p>
+                                            <div class="font-medium text-neutral-900">
+                                                {{ $lesson->title }}
+                                            </div>
+                                            <div class="text-[11px] text-neutral-500">
+                                                {{ $lesson->estimated_duration ?? 'Lesson' }} {{ $isDone ? '• Selesai' : '' }}
+                                            </div>
                                         </div>
                                     </div>
-                                    
-                                    @auth
-                                        @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
-                                            @php
-                                                $progress = $lesson->progress()
-                                                                  ->where('student_id', auth()->id())
-                                                                  ->first();
-                                                $isDone = $progress && $progress->is_done;
-                                            @endphp
-                                            
-                                            <div>
-                                                @if($isDone)
-                                                    <span class="text-green-600 font-medium text-sm flex items-center">
-                                                        <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                                        </svg>
-                                                        Done
-                                                    </span>
-                                                @else
-                                                    <span class="text-textHint text-sm">Pending</span>
-                                                @endif
-                                            </div>
-                                        @endif
-                                    @endauth
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="text-textHint">No lessons have been added to this course yet.</p>
-                @endif
+                                    @if($isDone)
+                                        <span class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+                                            Selesai
+                                        </span>
+                                    @endif
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-sm text-neutral-500">
+                            Belum ada materi yang tersedia untuk kursus ini.
+                        </p>
+                    @endif
+                </div>
             </div>
+
+            <aside class="space-y-4">
+                <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-5 space-y-4">
+                    <div>
+                        <p class="text-xs text-neutral-500 uppercase tracking-wide mb-1">
+                            Status kursus
+                        </p>
+                        <p class="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+                            {{ $course->is_active ? 'Aktif' : 'Tidak aktif' }}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-1 text-sm text-neutral-700">
+                        <div class="flex items-center justify-between">
+                            <span>Mulai</span>
+                            <span class="font-medium">
+                                {{ optional($course->start_date)->format('d M Y') ?? '-' }}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span>Selesai</span>
+                            <span class="font-medium">
+                                {{ optional($course->end_date)->format('d M Y') ?? '-' }}
+                            </span>
+                        </div>
+                    </div>
+
+                    @auth
+                        @if(Auth::user()->role === 'student')
+                            <form
+                                method="POST"
+                                action="{{ route('courses.enroll', $course) }}"
+                                class="space-y-2"
+                            >
+                                @csrf
+                                @if($isEnrolled ?? false)
+                                    <button
+                                        type="button"
+                                        disabled
+                                        class="w-full inline-flex items-center justify-center rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-600"
+                                    >
+                                        Sudah terdaftar
+                                    </button>
+
+                                    @if(isset($progressPercent))
+                                        <div class="w-full">
+                                            <div class="h-2 rounded-full bg-neutral-200">
+                                                <div
+                                                    class="h-2 rounded-full bg-emerald-600"
+                                                    style="width: {{ $progressPercent }}%;"
+                                                ></div>
+                                            </div>
+                                            <div class="mt-1 text-[11px] text-neutral-600 text-right">
+                                                Progres {{ $progressPercent }}%
+                                            </div>
+                                        </div>
+                                    @endif
+                                @else
+                                    <button
+                                        type="submit"
+                                        class="w-full inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 shadow-sm"
+                                    >
+                                        Ikuti kursus ini
+                                    </button>
+                                @endif
+                            </form>
+                        @endif
+                    @endauth
+
+                    @guest
+                        <a
+                            href="{{ route('login') }}"
+                            class="w-full inline-flex items-center justify-center rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 shadow-sm"
+                        >
+                            Login untuk mengikuti kursus
+                        </a>
+                    @endguest
+
+                    <div class="pt-2 border-t border-neutral-200 mt-2">
+                        <p class="text-xs text-neutral-500 uppercase tracking-wide mb-2">
+                            Hubungi teacher
+                        </p>
+                        <a
+                            href="#"
+                            class="inline-flex items-center gap-2 text-sm text-emerald-700 hover:text-emerald-800"
+                        >
+                            <span>Diskusikan kursus ini</span>
+                        </a>
+                    </div>
+                </div>
+            </aside>
         </div>
-    </div>
-</div>
+    </section>
 </x-app-layout>

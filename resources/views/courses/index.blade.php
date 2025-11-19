@@ -1,118 +1,159 @@
 <x-app-layout>
-<div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold text-gray-800 mb-6">Course Catalog</h1>
+    @section('title', 'Semua Kursus')
 
-    <!-- Search and Filter Section -->
-    <div class="mb-6 bg-white p-4 rounded-lg shadow">
-        <form method="GET" action="{{ route('courses.catalog') }}" class="flex flex-col md:flex-row gap-4">
-            <div class="flex-1">
-                <input type="text"
-                       name="search"
-                       placeholder="Search courses..."
-                       value="{{ request('search') }}"
-                       class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-
+    <section class="pt-6 pb-10">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-8">
             <div>
-                <select name="category_id" class="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="">All Categories</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category->id }}"
-                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <h1 class="text-3xl md:text-4xl font-semibold text-neutral-900">
+                    Semua kursus
+                </h1>
+                <p class="mt-2 text-sm text-neutral-600 max-w-xl">
+                    Jelajahi kursus yang tersedia. Gunakan pencarian dan filter kategori untuk menemukan materi yang sesuai dengan kebutuhanmu.
+                </p>
             </div>
 
-            <div>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
-                    Filter
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Courses List -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @forelse($courses as $course)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">{{ $course->name }}</h3>
-                    <p class="text-gray-600 text-sm mb-3">By {{ $course->teacher->name ?? 'N/A' }}</p>
-
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                            {{ $course->category->name ?? 'Uncategorized' }}
-                        </span>
-                        <span class="text-gray-500 text-sm">
-                            {{ $course->students_count }} students
+            <form method="GET" action="{{ route('courses.catalog') }}" class="w-full md:w-auto">
+                <div class="flex flex-col sm:flex-row gap-3 sm:items-center">
+                    <div class="relative flex-1">
+                        <input
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="Cari kursus..."
+                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                        >
+                        <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-neutral-400">
+                            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none">
+                                <path d="M9.5 4a5.5 5.5 0 1 1 0 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                <path d="m13.5 13.5 2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
                         </span>
                     </div>
 
-                    <p class="text-gray-600 mb-4 text-sm">{{ Str::limit($course->description, 120) }}</p>
-
-                    <!-- Progress for enrolled students -->
-                    @auth
-                        @if(auth()->user()->isStudent())
-                            @php
-                                $isEnrolled = $course->students->contains(auth()->user());
-                                $progress = $isEnrolled ? $course->getProgressForUser(auth()->user()) : 0;
-                            @endphp
-
-                            @if($isEnrolled)
-                                <div class="mb-3">
-                                    <div class="w-full bg-gray-200 rounded-full h-2">
-                                        <div class="bg-blue-600 h-2 rounded-full"
-                                             style="width: {{ $progress }}%"></div>
-                                    </div>
-                                    <div class="text-right text-xs text-gray-500 mt-1">
-                                        {{ number_format($progress, 0) }}% Complete
-                                    </div>
-                                </div>
-                            @endif
-                        @endif
-                    @endauth
-
-                    <div class="flex justify-between">
-                        <a href="{{ route('courses.public.show', $course) }}"
-                           class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                            View Details
-                        </a>
-
-                        @auth
-                            @if(auth()->user()->isStudent())
-                                @if($course->students->contains(auth()->user()))
-                                    <span class="text-green-600 text-sm">Enrolled</span>
-                                @else
-                                    <form action="{{ route('courses.enroll', $course) }}" method="POST" class="inline">
-                                        @csrf
-                                        <button type="submit"
-                                                class="bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 px-3 rounded">
-                                            Enroll
-                                        </button>
-                                    </form>
-                                @endif
-                            @endif
-                        @else
-                            <a href="{{ route('login') }}"
-                               class="bg-blue-600 hover:bg-blue-700 text-white text-sm py-1 px-3 rounded">
-                                Login to Enroll
-                            </a>
-                        @endauth
-                    </div>
+                    <select
+                        name="category"
+                        class="w-full sm:w-48 rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                    >
+                        <option value="">Semua kategori</option>
+                        @foreach($categories ?? [] as $category)
+                            <option
+                                value="{{ $category->id }}"
+                                @selected(request('category') == $category->id)
+                            >
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
-            </div>
-        @empty
-            <div class="col-span-full text-center py-8">
-                <p class="text-gray-500">No courses found matching your criteria.</p>
-            </div>
-        @endforelse
-    </div>
+            </form>
+        </div>
 
-    <!-- Pagination -->
-    <div class="mt-8">
-        {{ $courses->appends(request()->query())->links() }}
-    </div>
-</div>
+        @if(($courses ?? collect())->count())
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($courses as $course)
+                    <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition flex flex-col">
+                        <div class="aspect-video bg-neutral-200 rounded-t-lg overflow-hidden">
+                            <img
+                                src="https://source.unsplash.com/600x400?online,course&sig={{ $course->id }}"
+                                alt="{{ $course->name }}"
+                                class="w-full h-full object-cover"
+                            >
+                        </div>
+
+                        <div class="p-5 flex flex-col gap-3">
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="inline-flex items-center rounded-md bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+                                    {{ $course->category->name ?? 'Umum' }}
+                                </span>
+                                <span class="text-[11px] text-neutral-500">
+                                    {{ $course->is_active ? 'Aktif' : 'Tidak aktif' }}
+                                </span>
+                            </div>
+
+                            <h2 class="text-base font-semibold text-neutral-900 line-clamp-2">
+                                <a
+                                    href="{{ route('courses.public.show', $course) }}"
+                                    class="hover:text-emerald-600"
+                                >
+                                    {{ $course->name }}
+                                </a>
+                            </h2>
+
+                            <p class="text-xs text-neutral-600 line-clamp-2">
+                                {{ Str::limit($course->description, 120) }}
+                            </p>
+
+                            <div class="mt-1 flex items-center justify-between text-xs text-neutral-500">
+                                <span>Oleh {{ $course->teacher->name ?? 'EduTrack' }}</span>
+                                <span>{{ $course->students_count ?? 0 }} peserta</span>
+                            </div>
+
+                            <div class="flex flex-col gap-2 mt-2">
+                                @auth
+                                    @if(Auth::user()->role === 'student' && $course->pivot?->enrolled_at)
+                                        {{-- contoh indikator progress, sesuaikan dengan logika kamu --}}
+                                        @php
+                                            $progress = isset($course->progress_percent)
+                                                ? $course->progress_percent
+                                                : 0;
+                                        @endphp
+                                        <div class="w-full">
+                                            <div class="h-2 rounded-full bg-neutral-200">
+                                                <div
+                                                    class="h-2 rounded-full bg-emerald-600"
+                                                    style="width: {{ $progress }}%;"
+                                                ></div>
+                                            </div>
+                                            <div class="mt-1 text-[11px] text-neutral-600 text-right">
+                                                Progres {{ $progress }}%
+                                            </div>
+                                        </div>
+                                        <a
+                                            href="{{ route('courses.public.show', $course) }}"
+                                            class="inline-flex items-center justify-center w-full rounded-md border border-emerald-600 px-3 py-2 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
+                                        >
+                                            Lanjutkan belajar
+                                        </a>
+                                    @else
+                                        <a
+                                            href="{{ route('courses.public.show', $course) }}"
+                                            class="inline-flex items-center justify-center w-full rounded-md border border-emerald-600 px-3 py-2 text-xs font-medium text-emerald-700 hover:bg-emerald-50"
+                                        >
+                                            Lihat detail kursus
+                                        </a>
+                                    @endif
+                                @endauth
+
+                                @guest
+                                    <a
+                                        href="{{ route('login') }}"
+                                        class="inline-flex items-center justify-center w-full rounded-md border border-neutral-300 px-3 py-2 text-xs font-medium text-neutral-700 hover:bg-neutral-50"
+                                    >
+                                        Login untuk mengikuti
+                                    </a>
+                                @endguest
+                            </div>
+
+                            <div class="mt-2 flex items-center justify-between text-[11px] text-neutral-500">
+                                <a
+                                    href="#"
+                                    class="inline-flex items-center gap-1 text-emerald-700 hover:text-emerald-800"
+                                >
+                                    Hubungi teacher
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="mt-8">
+                {{ $courses->withQueryString()->links() }}
+            </div>
+        @else
+            <div class="py-10 text-center text-sm text-neutral-500">
+                Tidak ada kursus yang ditemukan. Coba ubah kata kunci atau filter.
+            </div>
+        @endif
+    </section>
 </x-app-layout>

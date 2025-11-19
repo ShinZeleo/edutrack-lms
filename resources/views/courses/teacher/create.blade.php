@@ -1,106 +1,107 @@
-@extends('layouts.app')
+<x-app-layout>
+    <x-slot name="header">
+        <div class="flex flex-col gap-1">
+            <p class="text-xs uppercase tracking-[0.25em] text-emerald-600">
+                Lesson baru
+            </p>
+            <h2 class="text-xl font-semibold text-neutral-900">
+                Tambah lesson untuk {{ $course->name }}
+            </h2>
+        </div>
+    </x-slot>
 
-@section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Create Course</h1>
-        
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('teacher.courses.store') }}" method="POST">
-                @csrf
-                
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-bold mb-2">Course Name *</label>
-                    <input type="text" 
-                           name="name" 
-                           id="name" 
-                           value="{{ old('name') }}" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror"
-                           required>
-                    @error('name')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                    <textarea name="description" 
-                              id="description" 
-                              rows="4" 
-                              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('description') border-red-500 @enderror">{{ old('description') }}</textarea>
-                    @error('description')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-6 md:p-8">
+                <form
+                    method="POST"
+                    action="{{ route('teacher.courses.lessons.store', $course) }}"
+                    class="space-y-5"
+                >
+                    @csrf
+
+                    {{-- Judul lesson --}}
                     <div>
-                        <label for="start_date" class="block text-gray-700 font-bold mb-2">Start Date *</label>
-                        <input type="date" 
-                               name="start_date" 
-                               id="start_date" 
-                               value="{{ old('start_date') }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('start_date') border-red-500 @enderror"
-                               required>
-                        @error('start_date')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        <label for="title" class="block text-sm font-medium text-neutral-800 mb-1">
+                            Judul lesson *
+                        </label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            value="{{ old('title') }}"
+                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >
+                        @error('title')
+                        <p class="mt-1 text-xs text-red-600">
+                            {{ $message }}
+                        </p>
                         @enderror
                     </div>
-                    
+
+                    {{-- Konten --}}
                     <div>
-                        <label for="end_date" class="block text-gray-700 font-bold mb-2">End Date *</label>
-                        <input type="date" 
-                               name="end_date" 
-                               id="end_date" 
-                               value="{{ old('end_date') }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('end_date') border-red-500 @enderror"
-                               required>
-                        @error('end_date')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        <label for="content" class="block text-sm font-medium text-neutral-800 mb-1">
+                            Konten materi *
+                        </label>
+                        <textarea
+                            name="content"
+                            id="content"
+                            rows="8"
+                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >{{ old('content') }}</textarea>
+                        @error('content')
+                        <p class="mt-1 text-xs text-red-600">
+                            {{ $message }}
+                        </p>
                         @enderror
+                        <p class="mt-1 text-xs text-neutral-500">
+                            Gunakan teks biasa. Jika perlu pemformatan, kamu bisa pakai baris baru dan penomoran manual.
+                        </p>
                     </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="category_id" class="block text-gray-700 font-bold mb-2">Category *</label>
-                    <select name="category_id" 
-                            id="category_id" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('category_id') border-red-500 @enderror"
-                            required>
-                        <option value="">Select Category</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="is_active" class="flex items-center">
-                        <input type="checkbox" 
-                               name="is_active" 
-                               id="is_active" 
-                               value="1" 
-                               {{ old('is_active', true) ? 'checked' : '' }}
-                               class="form-checkbox h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">Active</span>
-                    </label>
-                </div>
-                
-                <div class="flex justify-end space-x-4">
-                    <a href="{{ route('teacher.courses.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                        Cancel
-                    </a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Create Course
-                    </button>
-                </div>
-            </form>
+
+                    {{-- Urutan lesson --}}
+                    <div class="max-w-xs">
+                        <label for="order" class="block text-sm font-medium text-neutral-800 mb-1">
+                            Urutan lesson *
+                        </label>
+                        <input
+                            type="number"
+                            name="order"
+                            id="order"
+                            value="{{ old('order', 0) }}"
+                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >
+                        @error('order')
+                        <p class="mt-1 text-xs text-red-600">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                        <p class="mt-1 text-xs text-neutral-500">
+                            Nilai terkecil akan muncul lebih dulu di daftar materi.
+                        </p>
+                    </div>
+
+                    {{-- Tombol aksi --}}
+                    <div class="flex flex-col sm:flex-row sm:justify-end gap-3 pt-4 border-t border-neutral-200 mt-2">
+                        <a
+                            href="{{ route('teacher.courses.lessons.index', $course) }}"
+                            class="inline-flex items-center justify-center rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+                        >
+                            Batal
+                        </a>
+                        <button
+                            type="submit"
+                            class="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 shadow-sm"
+                        >
+                            Simpan lesson
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app-layout>
