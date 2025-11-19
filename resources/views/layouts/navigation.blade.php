@@ -17,7 +17,7 @@
                     <a href="{{ route('courses.catalog') }}" class="text-neutral-700 hover:text-neutral-900">
                         Kategori
                     </a>
-                    <a href="#" class="text-neutral-700 hover:text-neutral-900">
+                    <a href="{{ route('about') }}" class="text-neutral-700 hover:text-neutral-900">
                         Tentang
                     </a>
                 </div>
@@ -120,7 +120,7 @@
                 <a href="{{ route('courses.catalog') }}" class="block text-neutral-700 hover:text-neutral-900">
                     Kategori
                 </a>
-                <a href="#" class="block text-neutral-700 hover:text-neutral-900">
+                <a href="{{ route('about') }}" class="block text-neutral-700 hover:text-neutral-900">
                     Tentang
                 </a>
             </div>

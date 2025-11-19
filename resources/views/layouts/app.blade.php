@@ -42,11 +42,20 @@
             </main>
 
             <footer class="border-t border-neutral-200 bg-white">
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 text-xs text-neutral-500 flex items-center justify-between">
-                    <span>&copy; {{ date('Y') }} EduTrack. Semua hak dilindungi.</span>
-                    <span class="hidden sm:inline">
+                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 text-sm text-neutral-600">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0">
+                            <span>&copy; {{ date('Y') }} EduTrack. Semua hak dilindungi.</span>
+                        </div>
+                        <div class="flex space-x-6">
+                            <a href="{{ route('home') }}" class="hover:text-neutral-900">Beranda</a>
+                            <a href="{{ route('courses.catalog') }}" class="hover:text-neutral-900">Kursus</a>
+                            <a href="{{ route('about') }}" class="hover:text-neutral-900">Tentang</a>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center md:text-right text-xs text-neutral-500">
                         Dibangun dengan Laravel dan Tailwind CSS.
-                    </span>
+                    </div>
                 </div>
             </footer>
         </div>
