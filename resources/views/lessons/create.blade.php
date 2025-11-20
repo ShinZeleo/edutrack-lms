@@ -1,64 +1,52 @@
-@extends('layouts.app')
+<x-app-layout>
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold text-neutral-900 mb-2">Add New Lesson</h1>
+                <p class="text-lg text-neutral-600">Tambah lesson baru untuk {{ $course->name }}</p>
+            </div>
 
-@section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Add New Lesson to {{ $course->name }}</h1>
-        
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('teacher.courses.lessons.store', $course) }}" method="POST">
-                @csrf
-                
-                <div class="mb-4">
-                    <label for="title" class="block text-gray-700 font-bold mb-2">Lesson Title *</label>
-                    <input type="text" 
-                           name="title" 
-                           id="title" 
-                           value="{{ old('title') }}" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           required>
-                    @error('title')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="content" class="block text-gray-700 font-bold mb-2">Content *</label>
-                    <textarea name="content" 
-                              id="content" 
-                              rows="8" 
-                              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                              required>{{ old('content') }}</textarea>
-                    @error('content')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="order" class="block text-gray-700 font-bold mb-2">Order *</label>
-                    <input type="number" 
-                           name="order" 
-                           id="order" 
-                           value="{{ old('order', 0) }}" 
-                           min="0" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                           required>
-                    <p class="text-gray-500 text-xs mt-1">Higher numbers appear later in the course</p>
-                    @error('order')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="flex justify-end space-x-4">
-                    <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                        Cancel
-                    </a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Create Lesson
-                    </button>
-                </div>
-            </form>
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
+                <form action="{{ route('teacher.courses.lessons.store', $course) }}" method="POST" class="space-y-6">
+                    @csrf
+
+                    <div>
+                        <x-input-label for="title" :value="__('Lesson Title')" />
+                        <x-text-input id="title" name="title" type="text" :value="old('title')" required />
+                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <x-input-label for="content" :value="__('Content')" />
+                        <textarea
+                            name="content"
+                            id="content"
+                            rows="10"
+                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                            required
+                        >{{ old('content') }}</textarea>
+                        <x-input-error :messages="$errors->get('content')" class="mt-2" />
+                        <p class="mt-1 text-xs text-neutral-500">Gunakan teks biasa. Jika perlu pemformatan, kamu bisa pakai baris baru dan penomoran manual.</p>
+                    </div>
+
+                    <div class="max-w-xs">
+                        <x-input-label for="order" :value="__('Order')" />
+                        <x-text-input id="order" name="order" type="number" :value="old('order', 0)" min="0" required />
+                        <x-input-error :messages="$errors->get('order')" class="mt-2" />
+                        <p class="mt-1 text-xs text-neutral-500">Nilai terkecil akan muncul lebih dulu di daftar materi.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-neutral-200">
+                        <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
+                            Cancel
+                        </a>
+                        <x-primary-button>
+                            Create Lesson
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app-layout>

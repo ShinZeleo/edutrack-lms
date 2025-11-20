@@ -1,104 +1,87 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex flex-col gap-1">
-            <p class="text-xs uppercase tracking-[0.25em] text-emerald-600">
-                Lesson baru
-            </p>
-            <h2 class="text-xl font-semibold text-neutral-900">
-                Tambah lesson untuk {{ $course->name }}
-            </h2>
-        </div>
-    </x-slot>
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <p class="text-sm font-semibold text-emerald-600 uppercase tracking-wide mb-1">Teacher</p>
+                <h1 class="text-4xl font-bold text-neutral-900 mb-2">Buat Kursus Baru</h1>
+                <p class="text-lg text-neutral-600">Buat kursus baru untuk mengajar siswa</p>
+            </div>
 
-    <div class="py-6">
-        <div class="max-w-3xl mx-auto">
-            <div class="bg-white border border-neutral-200 rounded-xl shadow-sm p-6 md:p-8">
-                <form
-                    method="POST"
-                    action="{{ route('teacher.courses.lessons.store', $course) }}"
-                    class="space-y-5"
-                >
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
+                <form action="{{ route('teacher.courses.store') }}" method="POST" class="space-y-6">
                     @csrf
 
-                    {{-- Judul lesson --}}
                     <div>
-                        <label for="title" class="block text-sm font-medium text-neutral-800 mb-1">
-                            Judul lesson *
-                        </label>
-                        <input
-                            type="text"
-                            name="title"
-                            id="title"
-                            value="{{ old('title') }}"
-                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
-                            required
-                        >
-                        @error('title')
-                        <p class="mt-1 text-xs text-red-600">
-                            {{ $message }}
-                        </p>
-                        @enderror
+                        <x-input-label for="name" :value="__('Course Name')" />
+                        <x-text-input id="name" name="name" type="text" :value="old('name')" required />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
-                    {{-- Konten --}}
                     <div>
-                        <label for="content" class="block text-sm font-medium text-neutral-800 mb-1">
-                            Konten materi *
-                        </label>
+                        <x-input-label for="description" :value="__('Description')" />
                         <textarea
-                            name="content"
-                            id="content"
-                            rows="8"
-                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
-                            required
-                        >{{ old('content') }}</textarea>
-                        @error('content')
-                        <p class="mt-1 text-xs text-red-600">
-                            {{ $message }}
-                        </p>
-                        @enderror
-                        <p class="mt-1 text-xs text-neutral-500">
-                            Gunakan teks biasa. Jika perlu pemformatan, kamu bisa pakai baris baru dan penomoran manual.
-                        </p>
+                            name="description"
+                            id="description"
+                            rows="6"
+                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                        >{{ old('description') }}</textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
-                    {{-- Urutan lesson --}}
-                    <div class="max-w-xs">
-                        <label for="order" class="block text-sm font-medium text-neutral-800 mb-1">
-                            Urutan lesson *
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <x-input-label for="start_date" :value="__('Start Date')" />
+                            <x-text-input id="start_date" name="start_date" type="date" :value="old('start_date')" required />
+                            <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="end_date" :value="__('End Date')" />
+                            <x-text-input id="end_date" name="end_date" type="date" :value="old('end_date')" required />
+                            <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <x-input-label for="category_id" :value="__('Category')" />
+                        <select
+                            name="category_id"
+                            id="category_id"
+                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                            required
+                        >
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <label for="is_active" class="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                id="is_active"
+                                value="1"
+                                {{ old('is_active', true) ? 'checked' : '' }}
+                                class="h-5 w-5 rounded border-neutral-300 text-emerald-600 focus:ring-emerald-500"
+                            >
+                            <span class="text-sm font-semibold text-neutral-900">Active</span>
                         </label>
-                        <input
-                            type="number"
-                            name="order"
-                            id="order"
-                            value="{{ old('order', 0) }}"
-                            class="w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-800 shadow-sm focus:border-emerald-500 focus:ring-emerald-500"
-                            required
-                        >
-                        @error('order')
-                        <p class="mt-1 text-xs text-red-600">
-                            {{ $message }}
-                        </p>
-                        @enderror
-                        <p class="mt-1 text-xs text-neutral-500">
-                            Nilai terkecil akan muncul lebih dulu di daftar materi.
-                        </p>
                     </div>
 
-                    {{-- Tombol aksi --}}
-                    <div class="flex flex-col sm:flex-row sm:justify-end gap-3 pt-4 border-t border-neutral-200 mt-2">
-                        <a
-                            href="{{ route('teacher.courses.lessons.index', $course) }}"
-                            class="inline-flex items-center justify-center rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
-                        >
-                            Batal
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-neutral-200">
+                        <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
+                            Cancel
                         </a>
-                        <button
-                            type="submit"
-                            class="inline-flex items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 shadow-sm"
-                        >
-                            Simpan lesson
-                        </button>
+                        <x-primary-button>
+                            Create Course
+                        </x-primary-button>
                     </div>
                 </form>
             </div>

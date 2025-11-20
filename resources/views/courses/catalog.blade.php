@@ -33,8 +33,8 @@
             @forelse($courses as $course)
                 <div class="p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white">
                     <!-- Thumbnail -->
-                    <div class="rounded-lg h-40 w-full bg-neutral-200 mb-4 overflow-hidden">
-                        <img src="https://source.unsplash.com/random/600x400?education&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
+                    <div class="rounded-lg h-40 w-full bg-gradient-to-br from-emerald-400 to-blue-500 mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
                     </div>
 
                     <!-- Title -->

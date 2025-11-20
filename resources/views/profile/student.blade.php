@@ -1,93 +1,155 @@
 <x-app-layout>
-<div class="container mx-auto px-4 py-8 max-w-4xl">
-    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-        <div class="p-6 border-b border-slate-200">
-            <h1 class="text-2xl font-bold text-slate-800">Student Profile</h1>
-        </div>
-
-        <div class="p-6">
-            <!-- Personal Information -->
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
             <div class="mb-8">
-                <h2 class="text-xl font-semibold text-slate-800 mb-4">Personal Information</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-slate-600 text-sm font-medium mb-1">Name</label>
-                        <p class="text-slate-800">{{ $user->name }}</p>
+                <h1 class="text-4xl font-bold text-neutral-900 mb-2">Halo, {{ $user->name }}!</h1>
+                <p class="text-lg text-neutral-600">Pantau progress belajar dan kelola kursus Anda</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-neutral-600 mb-1">Total Kursus</p>
+                            <p class="text-3xl font-bold text-emerald-600">{{ $enrolledCourses->count() }}</p>
+                        </div>
+                        <div class="h-12 w-12 rounded-full bg-emerald-100 flex items-center justify-center">
+                            <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-slate-600 text-sm font-medium mb-1">Username</label>
-                        <p class="text-slate-800">{{ $user->username }}</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-neutral-600 mb-1">Progress Rata-rata</p>
+                            @php
+                                $avgProgress = $enrolledCourses->count() > 0
+                                    ? $enrolledCourses->avg(function($course) use ($user) {
+                                        return $course->getProgressForUser($user) ?? 0;
+                                    })
+                                    : 0;
+                            @endphp
+                            <p class="text-3xl font-bold text-blue-600">{{ number_format($avgProgress, 0) }}%</p>
+                        </div>
+                        <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
+                            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-slate-600 text-sm font-medium mb-1">Email</label>
-                        <p class="text-slate-800">{{ $user->email }}</p>
-                    </div>
-                    <div>
-                        <label class="block text-slate-600 text-sm font-medium mb-1">Role</label>
-                        <span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">
-                            {{ $user->getRoleLabelAttribute() }}
-                        </span>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-neutral-600 mb-1">Kursus Selesai</p>
+                            @php
+                                $completedCourses = $enrolledCourses->filter(function($course) use ($user) {
+                                    $progress = $course->getProgressForUser($user) ?? 0;
+                                    return $progress >= 100;
+                                })->count();
+                            @endphp
+                            <p class="text-3xl font-bold text-purple-600">{{ $completedCourses }}</p>
+                        </div>
+                        <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enrolled Courses -->
-            <div>
-                <h2 class="text-xl font-semibold text-slate-800 mb-4">My Enrolled Courses</h2>
+            <!-- Kursus Sedang Diikuti -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-neutral-900">Kursus Sedang Diikuti</h2>
+                    <a href="{{ route('courses.catalog') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1">
+                        Jelajahi Kursus
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
 
                 @if($enrolledCourses->count() > 0)
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($enrolledCourses as $course)
                             @php
-                                $progress = $course->getProgressForUser($user);
+                                $progress = $course->getProgressForUser($user) ?? 0;
                             @endphp
-                            <div class="border border-slate-200 rounded-lg p-4 hover:bg-slate-50 transition-colors">
-                                <div class="flex justify-between items-start mb-3">
-                                    <div class="flex-1">
-                                        <h3 class="text-lg font-bold text-slate-800">{{ $course->name }}</h3>
-                                        <p class="text-slate-600 text-sm">By {{ $course->teacher->name }}</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                                            {{ number_format($progress, 0) }}% Complete
-                                        </span>
-                                    </div>
+                            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden hover:shadow-xl transition">
+                                <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}"
+                                        alt="{{ $course->name }}"
+                                        class="w-full h-full object-cover"
+                                    />
                                 </div>
+                                <div class="p-6">
+                                    <h3 class="text-lg font-bold text-neutral-900 mb-2 line-clamp-2">{{ $course->name }}</h3>
+                                    <p class="text-sm text-neutral-600 mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
 
-                                <div class="mb-3">
-                                    <div class="w-full bg-slate-200 rounded-full h-2">
-                                        <div class="bg-blue-600 h-2 rounded-full" 
-                                             style="width: {{ $progress }}%"></div>
+                                    <!-- Progress Bar -->
+                                    <div class="mb-4">
+                                        <div class="flex items-center justify-between text-sm mb-2">
+                                            <span class="font-semibold text-neutral-700">Progress</span>
+                                            <span class="text-emerald-600 font-bold">{{ number_format($progress, 0) }}%</span>
+                                        </div>
+                                        <div class="w-full bg-neutral-200 rounded-full h-2.5">
+                                            <div class="bg-emerald-600 h-2.5 rounded-full transition-all duration-300" style="width: {{ $progress }}%"></div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="flex space-x-3">
-                                    <a href="{{ route('courses.public.show', $course) }}" 
-                                       class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                        View Course
-                                    </a>
-
-                                    @if($course->lessons->count() > 0)
-                                        <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" 
-                                           class="text-green-600 hover:text-green-800 text-sm font-medium">
-                                            Continue Learning
+                                    <div class="flex gap-3">
+                                        <a href="{{ route('courses.public.show', $course) }}" class="flex-1 text-center px-4 py-2.5 border-2 border-neutral-300 rounded-lg text-sm font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 transition">
+                                            Detail
                                         </a>
-                                    @endif
+                                        @if($course->lessons->count() > 0)
+                                            <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm">
+                                                Lanjutkan
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 @else
-                    <div class="text-center py-8">
-                        <p class="text-slate-500 mb-4">You haven't enrolled in any courses yet.</p>
-                        <a href="{{ route('courses.catalog') }}" 
-                           class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
-                            Browse Courses
+                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-12 text-center">
+                        <svg class="h-20 w-20 mx-auto text-neutral-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                        <h3 class="text-xl font-semibold text-neutral-900 mb-2">Belum ada kursus</h3>
+                        <p class="text-neutral-600 mb-6">Mulai perjalanan belajar Anda dengan mengikuti kursus pertama.</p>
+                        <a href="{{ route('courses.catalog') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition shadow-sm">
+                            Jelajahi Kursus
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
                         </a>
                     </div>
                 @endif
             </div>
+
+            <!-- Rekomendasi Kursus -->
+            <div>
+                <h2 class="text-2xl font-bold text-neutral-900 mb-6">Rekomendasi Kursus</h2>
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-8 text-center">
+                    <p class="text-neutral-600 mb-4">Temukan kursus baru yang sesuai dengan minat Anda</p>
+                    <a href="{{ route('courses.catalog') }}" class="inline-flex items-center gap-2 px-6 py-3 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-semibold transition">
+                        Lihat Semua Kursus
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 </x-app-layout>

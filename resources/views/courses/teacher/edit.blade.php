@@ -1,107 +1,102 @@
-@extends('layouts.app')
+<x-app-layout>
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-4xl font-bold text-neutral-900 mb-2">Edit Course</h1>
+                <p class="text-lg text-neutral-600">Perbarui informasi kursus Anda</p>
+            </div>
 
-@section('content')
-<div class="container mx-auto px-4 py-8">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-6">Edit Course</h1>
-        
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('teacher.courses.update', $course) }}" method="POST">
-                @csrf
-                @method('PUT')
-                
-                <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-bold mb-2">Course Name *</label>
-                    <input type="text" 
-                           name="name" 
-                           id="name" 
-                           value="{{ old('name', $course->name) }}" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror"
-                           required>
-                    @error('name')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                    <textarea name="description" 
-                              id="description" 
-                              rows="4" 
-                              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('description') border-red-500 @enderror">{{ old('description', $course->description) }}</textarea>
-                    @error('description')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
+                <form action="{{ route('teacher.courses.update', $course) }}" method="POST" class="space-y-6">
+                    @csrf
+                    @method('PUT')
+
                     <div>
-                        <label for="start_date" class="block text-gray-700 font-bold mb-2">Start Date *</label>
-                        <input type="date" 
-                               name="start_date" 
-                               id="start_date" 
-                               value="{{ old('start_date', $course->start_date->format('Y-m-d')) }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('start_date') border-red-500 @enderror"
-                               required>
-                        @error('start_date')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        <x-input-label for="name" :value="__('Course Name')" />
+                        <x-text-input id="name" name="name" type="text" :value="old('name', $course->name)" required />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
-                    
+
                     <div>
-                        <label for="end_date" class="block text-gray-700 font-bold mb-2">End Date *</label>
-                        <input type="date" 
-                               name="end_date" 
-                               id="end_date" 
-                               value="{{ old('end_date', $course->end_date->format('Y-m-d')) }}" 
-                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('end_date') border-red-500 @enderror"
-                               required>
-                        @error('end_date')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        <x-input-label for="description" :value="__('Description')" />
+                        <textarea
+                            name="description"
+                            id="description"
+                            rows="6"
+                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm placeholder:text-neutral-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                        >{{ old('description', $course->description) }}</textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="category_id" class="block text-gray-700 font-bold mb-2">Category *</label>
-                    <select name="category_id" 
-                            id="category_id" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 @error('category_id') border-red-500 @enderror"
-                            required>
-                        <option value="">Select Category</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ old('category_id', $course->category_id) == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('category_id')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-                
-                <div class="mb-4">
-                    <label for="is_active" class="flex items-center">
-                        <input type="checkbox" 
-                               name="is_active" 
-                               id="is_active" 
-                               value="1" 
-                               {{ old('is_active', $course->is_active) ? 'checked' : '' }}
-                               class="form-checkbox h-5 w-5 text-blue-600">
-                        <span class="ml-2 text-gray-700">Active</span>
-                    </label>
-                </div>
-                
-                <div class="flex justify-end space-x-4">
-                    <a href="{{ route('teacher.courses.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
-                        Cancel
-                    </a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Update Course
-                    </button>
-                </div>
-            </form>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <x-input-label for="start_date" :value="__('Start Date')" />
+                            <x-text-input
+                                id="start_date"
+                                name="start_date"
+                                type="date"
+                                :value="old('start_date', $course->start_date ? $course->start_date->format('Y-m-d') : '')"
+                                required
+                            />
+                            <x-input-error :messages="$errors->get('start_date')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <x-input-label for="end_date" :value="__('End Date')" />
+                            <x-text-input
+                                id="end_date"
+                                name="end_date"
+                                type="date"
+                                :value="old('end_date', $course->end_date ? $course->end_date->format('Y-m-d') : '')"
+                                required
+                            />
+                            <x-input-error :messages="$errors->get('end_date')" class="mt-2" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <x-input-label for="category_id" :value="__('Category')" />
+                        <select
+                            name="category_id"
+                            id="category_id"
+                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                            required
+                        >
+                            <option value="">Select Category</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" {{ old('category_id', $course->category_id) == $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+                    </div>
+
+                    <div>
+                        <label for="is_active" class="flex items-center gap-3 cursor-pointer">
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                id="is_active"
+                                value="1"
+                                {{ old('is_active', $course->is_active) ? 'checked' : '' }}
+                                class="h-5 w-5 rounded border-neutral-300 text-emerald-600 focus:ring-emerald-500"
+                            >
+                            <span class="text-sm font-semibold text-neutral-900">Active</span>
+                        </label>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-neutral-200">
+                        <a href="{{ route('teacher.courses.index') }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
+                            Cancel
+                        </a>
+                        <x-primary-button>
+                            Update Course
+                        </x-primary-button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+</x-app-layout>
