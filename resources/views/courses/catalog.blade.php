@@ -1,5 +1,4 @@
 <x-app-layout>
-    <!-- Header Panel -->
     <div class="mb-8">
         <h1 class="text-4xl font-bold text-neutral-900 mb-6">Katalog Kursus</h1>
         <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-6">
@@ -27,29 +26,24 @@
         </div>
     </div>
 
-    <!-- Courses Grid - 3 Columns -->
     <section>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($courses as $course)
                 <div class="p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white">
-                    <!-- Thumbnail -->
                     <div class="rounded-lg h-40 w-full bg-gradient-to-br from-emerald-400 to-blue-500 mb-4 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
                     </div>
 
-                    <!-- Title -->
                     <h3 class="text-xl font-semibold text-neutral-900 mb-2">
                         <a href="{{ route('courses.public.show', $course) }}" class="hover:text-emerald-600">
                             {{ $course->name }}
                         </a>
                     </h3>
 
-                    <!-- Teacher -->
                     <p class="text-sm text-neutral-600 mb-4">
                         Oleh {{ $course->teacher->name ?? 'EduTrack' }}
                     </p>
 
-                    <!-- Progress Bar (if enrolled) -->
                     @auth
                         @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
                             @php $progress = $course->getProgressForUser(auth()->user()); @endphp
@@ -62,7 +56,6 @@
                         @endif
                     @endauth
 
-                    <!-- Button -->
                     @auth
                         @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
                             <a href="{{ route('courses.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition text-sm font-medium">
@@ -88,7 +81,6 @@
         </div>
     </section>
 
-    <!-- Pagination -->
     <div class="mt-12">
         {{ $courses->links() }}
     </div>

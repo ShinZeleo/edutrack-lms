@@ -7,7 +7,7 @@
 
         <title>{{ config('app.name', 'EduTrack') }}</title>
 
-        <!-- Fonts -->
+        
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
@@ -15,7 +15,7 @@
             rel="stylesheet"
         >
 
-        <!-- Scripts -->
+        
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-neutral-800 bg-neutral-50">
@@ -30,7 +30,7 @@
                 </header>
             @endisset
 
-            <!-- Page Content -->
+            
             <main class="flex-1">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
                     @isset($slot)
@@ -44,7 +44,7 @@
             <footer class="border-t border-neutral-200 bg-neutral-50">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-                        <!-- Brand -->
+                        
                         <div class="space-y-4">
                             <div class="flex items-center gap-2">
                                 <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -57,7 +57,7 @@
                             </p>
                         </div>
 
-                        <!-- Links -->
+                        
                         <div>
                             <h3 class="font-semibold text-neutral-900 mb-4">Tentang</h3>
                             <ul class="space-y-2 text-sm text-neutral-600">
@@ -86,7 +86,7 @@
                         </div>
                     </div>
 
-                    <!-- Social Media & Copyright -->
+                    
                     <div class="border-t border-neutral-200 pt-8">
                         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                             <div class="flex items-center gap-4">

@@ -14,7 +14,7 @@
             <form method="POST" action="{{ route('register') }}" class="space-y-5">
                 @csrf
 
-                <!-- Role Selection -->
+                
                 <div>
                     <x-input-label for="role" :value="__('Pilih Role')" class="text-sm font-semibold text-neutral-700 mb-2" />
                     <div class="grid grid-cols-2 gap-3">

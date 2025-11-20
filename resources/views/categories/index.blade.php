@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div>
                     <h1 class="text-4xl font-bold text-neutral-900">Kategori</h1>
@@ -21,7 +21,7 @@
                 </div>
             @endif
 
-            <!-- Table -->
+            
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full">

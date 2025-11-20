@@ -1,13 +1,13 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Halo, {{ $user->name }}!</h1>
                 <p class="text-lg text-neutral-600">Pantau progress belajar dan kelola kursus Anda</p>
             </div>
 
-            <!-- Stats Cards -->
+            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
                     <div class="flex items-center justify-between">
@@ -65,7 +65,7 @@
                 </div>
             </div>
 
-            <!-- Kursus Sedang Diikuti -->
+            
             <div class="mb-8">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-2xl font-bold text-neutral-900">Kursus Sedang Diikuti</h2>
@@ -95,7 +95,7 @@
                                     <h3 class="text-lg font-bold text-neutral-900 mb-2 line-clamp-2">{{ $course->name }}</h3>
                                     <p class="text-sm text-neutral-600 mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
 
-                                    <!-- Progress Bar -->
+                                    
                                     <div class="mb-4">
                                         <div class="flex items-center justify-between text-sm mb-2">
                                             <span class="font-semibold text-neutral-700">Progress</span>
@@ -137,7 +137,7 @@
                 @endif
             </div>
 
-            <!-- Rekomendasi Kursus -->
+            
             <div>
                 <h2 class="text-2xl font-bold text-neutral-900 mb-6">Rekomendasi Kursus</h2>
                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-8 text-center">

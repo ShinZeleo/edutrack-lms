@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div>
                     <p class="text-sm font-semibold text-emerald-600 uppercase tracking-wide mb-1">Teacher</p>
@@ -15,7 +15,7 @@
                 </a>
             </div>
 
-            <!-- Courses Grid -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($courses as $course)
                     <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">

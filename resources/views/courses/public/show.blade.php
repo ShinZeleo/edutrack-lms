@@ -1,10 +1,10 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header Section -->
+            
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-8">
                 <div class="grid lg:grid-cols-3 gap-8 p-8">
-                    <!-- Left: Course Info -->
+                    
                     <div class="lg:col-span-2 space-y-6">
                         <div class="flex flex-wrap items-center gap-3">
                             <span class="inline-flex items-center rounded-lg bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
 
-                    <!-- Right: Action Card -->
+                    
                     <div class="lg:col-span-1">
                         <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-6 text-white shadow-xl">
                             <p class="text-xs uppercase tracking-widest text-emerald-100 mb-2">Aksi</p>
@@ -134,9 +134,9 @@
                 </div>
             </div>
 
-            <!-- Content Grid -->
+            
             <div class="grid lg:grid-cols-3 gap-8">
-                <!-- Left: Lesson List -->
+                
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
                         <div class="flex items-center gap-2 mb-6">
@@ -187,7 +187,7 @@
                     </div>
                 </div>
 
-                <!-- Right: Course Info -->
+                
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 sticky top-24">
                         <div class="flex items-center gap-2 mb-6">

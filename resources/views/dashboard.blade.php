@@ -5,13 +5,13 @@
 
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Dashboard</h1>
                 <p class="text-lg text-neutral-600">Selamat datang, {{ $user->name }}!</p>
             </div>
 
-            <!-- Welcome Card -->
+            
             <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-xl p-8 mb-8 text-white">
                 <div class="flex items-center justify-between">
                     <div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <!-- Stats -->
+            
             @if(isset($stats))
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     @foreach($stats as $label => $value)
@@ -38,7 +38,7 @@
                 </div>
             @endif
 
-            <!-- Student Section -->
+            
             @if($user->role === 'student')
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">
@@ -97,7 +97,7 @@
                     </div>
                 </section>
 
-            <!-- Teacher Section -->
+            
             @elseif($user->role === 'teacher')
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">
@@ -153,7 +153,7 @@
                     </div>
                 </section>
 
-            <!-- Admin Section -->
+            
             @elseif($user->role === 'admin')
                 <section class="space-y-6">
                     <h2 class="text-2xl font-bold text-neutral-900">Administrasi Platform</h2>

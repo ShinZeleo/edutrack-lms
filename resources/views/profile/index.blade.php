@@ -1,16 +1,16 @@
 <x-app-layout>
     <div class="mx-auto max-w-7xl px-8 py-8">
-        <!-- Header -->
+        
         <div class="mb-12">
             <div class="flex items-center gap-6">
-                <!-- Avatar (96px) -->
+                
                 <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center">
                     <span class="text-emerald-700 font-bold text-3xl">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                 </div>
                 <div class="flex-1">
-                    <!-- Nama User -->
+                    
                     <h1 class="text-3xl font-bold text-neutral-900 mb-2">{{ $user->name }}</h1>
-                    <!-- Role Badge -->
+                    
                     @php
                         $roleColors = [
                             'admin' => 'bg-red-100 text-red-700',
@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <!-- Body - Grid 3 Kolom Kursus -->
+        
         @if($user->isStudent())
             <div>
                 <h2 class="text-2xl font-semibold text-neutral-900 mb-6">Kursus yang Sedang Diikuti</h2>
@@ -37,7 +37,7 @@
                                 <h3 class="text-xl font-semibold text-neutral-900 mb-2">{{ $course->name }}</h3>
                                 <p class="text-sm text-neutral-600 mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
 
-                                <!-- Progress Bar -->
+                                
                                 <div class="mb-4">
                                     <div class="w-full bg-neutral-200 rounded-full h-2 mb-1">
                                         <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $progress }}%"></div>

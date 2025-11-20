@@ -1,16 +1,16 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-4">Semua Kursus</h1>
                 <p class="text-lg text-neutral-600">Jelajahi berbagai kursus berkualitas untuk meningkatkan skill Anda</p>
             </div>
 
-            <!-- Search and Filters -->
+            
             <div class="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-8">
                 <form method="GET" action="{{ route('courses.catalog') }}" class="space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
-                    <!-- Search Bar -->
+                    
                     <div class="flex-1">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    <!-- Category Filter -->
+                    
                     <div class="md:w-64">
                         <select
                             name="category"
@@ -43,7 +43,7 @@
                         </select>
                     </div>
 
-                    <!-- Sort -->
+                    
                     <div class="md:w-48">
                         <select
                             name="sort"
@@ -55,7 +55,7 @@
                         </select>
                     </div>
 
-                    <!-- Submit Button -->
+                    
                     <button
                         type="submit"
                         class="w-full md:w-auto px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition shadow-sm hover:shadow-md"
@@ -65,7 +65,7 @@
                 </form>
             </div>
 
-            <!-- Courses Grid -->
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 @forelse($courses as $course)
                     <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
@@ -136,7 +136,7 @@
                 @endforelse
             </div>
 
-            <!-- Pagination -->
+            
             @if(isset($courses) && method_exists($courses, 'links'))
                 <div class="mt-8">
                     {{ $courses->links() }}

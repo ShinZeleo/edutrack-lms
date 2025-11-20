@@ -1,7 +1,7 @@
 <nav x-data="{ open: false, dropdownOpen: false }" class="bg-white border-b border-neutral-200 shadow-sm sticky top-0 z-50">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
-            <!-- Logo -->
+            
             <div class="flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-2 font-bold text-xl tracking-tight text-emerald-600 hover:text-emerald-700 transition">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -11,7 +11,7 @@
                 </a>
             </div>
 
-            <!-- Desktop navigation -->
+            
             <div class="hidden md:flex items-center gap-8">
                 <div class="flex items-center gap-6 text-sm font-medium">
                     @guest
@@ -113,7 +113,7 @@
                             Register
                         </a>
                     @else
-                        <!-- Notifications -->
+                        
                         <button class="relative p-2 text-neutral-600 hover:text-emerald-600 transition rounded-lg hover:bg-neutral-100">
                             <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -121,7 +121,7 @@
                             <span class="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
                         </button>
 
-                        <!-- Avatar Dropdown -->
+                        
                         <div class="relative" x-data="{ open: false }">
                             <button
                                 type="button"
@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            <!-- Mobile hamburger -->
+            
             <div class="flex md:hidden items-center gap-2">
                 @auth
                     <button class="relative p-2 text-neutral-600 hover:text-emerald-600 transition rounded-lg">
@@ -207,7 +207,7 @@
         </div>
     </div>
 
-    <!-- Mobile menu -->
+    
     <div x-cloak x-show="open" class="md:hidden border-t border-neutral-200 bg-white">
         <div class="px-4 pt-3 pb-4 space-y-3">
             <div class="space-y-2 text-sm">

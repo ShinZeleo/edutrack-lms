@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
+            
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Edit Course</h1>
                 <p class="text-lg text-neutral-600">Perbarui informasi kursus Anda</p>

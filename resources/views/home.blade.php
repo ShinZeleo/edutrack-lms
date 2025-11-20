@@ -1,10 +1,8 @@
 <x-app-layout>
-    <!-- Hero Section -->
     <section class="relative bg-gradient-to-br from-emerald-50 via-white to-blue-50 pt-20 pb-24 overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left: Text Content -->
                 <div class="text-center lg:text-left">
                     <p class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-semibold text-emerald-700 mb-6">
                         <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
@@ -42,7 +40,6 @@
                         </a>
                     </div>
 
-                    <!-- Stats -->
                     <div class="grid grid-cols-3 gap-6 text-center lg:text-left">
                         <div>
                             <div class="text-2xl font-bold text-emerald-600">{{ $stats['activeCourses'] ?? 0 }}+</div>
@@ -59,7 +56,6 @@
                     </div>
                 </div>
 
-                <!-- Right: Hero Image -->
                 <div class="relative hidden lg:block">
                     <div class="relative z-10">
                         <img
@@ -74,7 +70,6 @@
         </div>
     </section>
 
-    <!-- Kategori populer -->
     <section class="py-12 border-t border-neutral-200 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
@@ -116,7 +111,6 @@
         </div>
     </section>
 
-    <!-- Kursus Populer -->
     <section id="featured-courses" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
@@ -205,7 +199,6 @@
         </div>
     </section>
 
-    <!-- Fitur Platform -->
     <section class="py-20 bg-gradient-to-b from-neutral-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
@@ -263,7 +256,6 @@
         </div>
     </section>
 
-    <!-- Testimonial -->
     <section class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
@@ -276,7 +268,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
                 <div class="bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
@@ -301,7 +292,6 @@
                     </blockquote>
                 </div>
 
-                <!-- Testimonial 2 -->
                 <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
@@ -326,7 +316,6 @@
                     </blockquote>
                 </div>
 
-                <!-- Testimonial 3 -->
                 <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-100 rounded-2xl p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
