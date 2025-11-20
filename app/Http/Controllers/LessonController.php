@@ -88,6 +88,8 @@ class LessonController extends Controller
 
     public function edit(Lesson $lesson)
     {
+        // Eager load course to avoid extra query
+        $lesson->load('course');
         $course = $lesson->course;
 
         // Ensure teacher owns the course
@@ -100,6 +102,8 @@ class LessonController extends Controller
 
     public function update(Request $request, Lesson $lesson)
     {
+        // Eager load course to avoid extra query
+        $lesson->load('course');
         $course = $lesson->course;
 
         // Ensure teacher owns the course
@@ -125,6 +129,8 @@ class LessonController extends Controller
 
     public function destroy(Lesson $lesson)
     {
+        // Eager load course to avoid extra query
+        $lesson->load('course');
         $course = $lesson->course;
 
         // Ensure teacher owns the course

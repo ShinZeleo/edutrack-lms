@@ -41,8 +41,8 @@ class EnrollmentController extends Controller
             abort(403, 'Only students can mark lessons as done.');
         }
 
-        // Check if student is enrolled in the course
-        $isEnrolled = $lesson->course->students->contains($user);
+        // Check if student is enrolled in the course (avoid N+1 query)
+        $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
             abort(403, 'You must be enrolled in the course to mark lessons as done.');
@@ -73,8 +73,8 @@ class EnrollmentController extends Controller
             abort(403, 'Only students can update lesson progress.');
         }
 
-        // Check if student is enrolled in the course
-        $isEnrolled = $lesson->course->students->contains($user);
+        // Check if student is enrolled in the course (avoid N+1 query)
+        $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
             abort(403, 'You must be enrolled in the course to update lesson progress.');

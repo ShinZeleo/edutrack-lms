@@ -57,14 +57,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Admin routes
-    Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::middleware(['role:admin'])->prefix('admin')->group(function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::resource('users', UserController::class)->names('admin.users');
         // other admin routes
     });
 
     // Categories routes - Admin only
-    Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::middleware(['role:admin'])->group(function () {
         Route::resource('categories', CategoryController::class);
     });
 

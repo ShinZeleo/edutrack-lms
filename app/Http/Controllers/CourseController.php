@@ -77,8 +77,6 @@ class CourseController extends Controller
             'teacher_id' => $teacherId,
         ]);
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
         if ($user->isAdmin()) {
             return redirect()->route('admin.courses.index')->with('success', 'Course created successfully.');
         } else {
@@ -141,8 +139,6 @@ class CourseController extends Controller
             ]);
         }
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
         if ($user->isAdmin()) {
             return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully.');
         } else {
@@ -161,8 +157,7 @@ class CourseController extends Controller
         }
 
         $course->delete();
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
+
         if ($user->isAdmin()) {
             return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully.');
         } else {
