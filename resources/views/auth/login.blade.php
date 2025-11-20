@@ -1,14 +1,15 @@
 <x-guest-layout>
-    <div class="w-full max-w-md mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl border border-neutral-200 p-8">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-xl border border-neutral-200 p-6 sm:p-8">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-4">
                     <svg class="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold text-neutral-900 mb-2">Login</h1>
-                <p class="text-neutral-600">Masuk ke akun Anda untuk melanjutkan</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 mb-2">Login</h1>
+                <p class="text-sm sm:text-base text-neutral-600">Masuk ke akun Anda untuk melanjutkan</p>
             </div>
 
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -54,7 +55,7 @@
                     <span>Ingat saya</span>
                 </label>
 
-                <button type="submit" class="w-full bg-emerald-600 text-white px-6 py-3.5 rounded-lg hover:bg-emerald-700 transition font-semibold shadow-sm hover:shadow-md">
+                <button type="submit" class="w-full bg-emerald-600 text-white px-6 py-3.5 rounded-lg hover:bg-emerald-700 transition font-semibold shadow-sm hover:shadow-md active:scale-[0.98]">
                     Login
                 </button>
             </form>

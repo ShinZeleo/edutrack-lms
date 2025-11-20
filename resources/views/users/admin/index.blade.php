@@ -1,13 +1,12 @@
 <x-app-layout>
-    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
                 <div>
-                    <h1 class="text-4xl font-bold text-neutral-900">User Management</h1>
-                    <p class="text-lg text-neutral-600 mt-1">Kelola semua pengguna platform</p>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900">User Management</h1>
+                    <p class="text-base sm:text-lg text-neutral-600 mt-1">Kelola semua pengguna platform</p>
                 </div>
-                <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg transition">
+                <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition text-sm sm:text-base">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -15,9 +14,8 @@
                 </a>
             </div>
 
-            
-            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6 mb-8">
-                <form method="GET" action="{{ route('admin.users.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
+            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8">
+                <form method="GET" action="{{ route('admin.users.index') }}" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4">
                     <div class="flex-1">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -42,62 +40,61 @@
                             <option value="student" @selected(request('role') == 'student')>Student</option>
                         </select>
                     </div>
-                    <div class="flex gap-3">
-                        <button type="submit" class="px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition">
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                        <button type="submit" class="px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition text-sm sm:text-base shadow-sm hover:shadow-md">
                             Filter
                         </button>
-                        <a href="{{ route('admin.users.index') }}" class="px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
+                        <a href="{{ route('admin.users.index') }}" class="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition text-sm sm:text-base text-center">
                             Reset
                         </a>
                     </div>
                 </form>
             </div>
 
-            
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full min-w-[640px]">
                         <thead class="bg-neutral-50 border-b border-neutral-200">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">User</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Role</th>
-                                <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Status</th>
-                                <th class="px-6 py-4 text-right text-xs font-semibold text-neutral-700 uppercase tracking-wider">Actions</th>
+                                <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">User</th>
+                                <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Role</th>
+                                <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Status</th>
+                                <th class="px-4 sm:px-6 py-3 sm:py-4 text-right text-xs font-semibold text-neutral-700 uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-neutral-200">
                             @forelse($users as $user)
                                 <tr class="hover:bg-neutral-50 transition">
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-4">
-                                            <div class="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold">
+                                    <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                        <div class="flex items-center gap-3 sm:gap-4">
+                                            <div class="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
                                                 {{ strtoupper(substr($user->name, 0, 1)) }}
                                             </div>
                                             <div>
-                                                <div class="font-semibold text-neutral-900">{{ $user->name }}</div>
-                                                <div class="text-sm text-neutral-600">{{ $user->email }}</div>
+                                                <div class="font-semibold text-sm sm:text-base text-neutral-900">{{ $user->name }}</div>
+                                                <div class="text-xs sm:text-sm text-neutral-600">{{ $user->email }}</div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $user->isAdmin() ? 'bg-red-100 text-red-700' : ($user->isTeacher() ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700') }}">
+                                    <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                        <span class="inline-flex items-center rounded-full px-2 sm:px-3 py-1 text-xs font-semibold {{ $user->isAdmin() ? 'bg-red-100 text-red-700' : ($user->isTeacher() ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700') }}">
                                             {{ ucfirst($user->role) }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-700' }}">
+                                    <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                        <span class="inline-flex items-center rounded-full px-2 sm:px-3 py-1 text-xs font-semibold {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-700' }}">
                                             {{ $user->is_active ? 'Active' : 'Inactive' }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <div class="flex items-center justify-end gap-3">
-                                            <a href="{{ route('admin.users.edit', $user) }}" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
+                                    <td class="px-4 sm:px-6 py-3 sm:py-4 text-right">
+                                        <div class="flex flex-col sm:flex-row items-end sm:items-center justify-end gap-2 sm:gap-3">
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-xs sm:text-sm font-semibold transition shadow-sm hover:shadow-md">
                                                 Edit
                                             </a>
                                             <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition">
+                                                <button type="submit" class="px-3 sm:px-4 py-1.5 sm:py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs sm:text-sm font-semibold transition shadow-sm hover:shadow-md">
                                                     Delete
                                                 </button>
                                             </form>

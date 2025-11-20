@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-8">
-                <div class="grid lg:grid-cols-3 gap-8 p-8">
-                    
+
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-6 sm:mb-8">
+                <div class="grid lg:grid-cols-3 gap-6 sm:gap-8 p-4 sm:p-6 lg:p-8">
+
                     <div class="lg:col-span-2 space-y-6">
                         <div class="flex flex-wrap items-center gap-3">
                             <span class="inline-flex items-center rounded-lg bg-emerald-100 px-3 py-1.5 text-xs font-semibold text-emerald-700">
@@ -19,7 +19,7 @@
                         </div>
 
                         <div>
-                            <h1 class="text-4xl font-bold text-neutral-900 mb-4">{{ $course->name }}</h1>
+                            <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-3 sm:mb-4">{{ $course->name }}</h1>
                             <div class="flex items-center gap-2 text-neutral-600 mb-4">
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -28,7 +28,7 @@
                             </div>
                         </div>
 
-                        <p class="text-lg text-neutral-700 leading-relaxed">{{ $course->description }}</p>
+                        <p class="text-base sm:text-lg text-neutral-700 leading-relaxed">{{ $course->description }}</p>
 
                         <div class="grid grid-cols-3 gap-4 pt-4 border-t border-neutral-200">
                             <div>
@@ -57,9 +57,9 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="lg:col-span-1">
-                        <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-6 text-white shadow-xl">
+                        <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-4 sm:p-6 text-white shadow-xl">
                             <p class="text-xs uppercase tracking-widest text-emerald-100 mb-2">Aksi</p>
                             <h2 class="text-2xl font-bold mb-6">{{ $isEnrolled ?? false ? 'Lanjutkan Belajar' : 'Ikuti Kursus' }}</h2>
 
@@ -134,11 +134,11 @@
                 </div>
             </div>
 
-            
-            <div class="grid lg:grid-cols-3 gap-8">
-                
+
+            <div class="grid lg:grid-cols-3 gap-6 sm:gap-8">
+
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
+                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8">
                         <div class="flex items-center gap-2 mb-6">
                             <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -187,7 +187,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 sticky top-24">
                         <div class="flex items-center gap-2 mb-6">

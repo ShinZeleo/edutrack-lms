@@ -1,13 +1,12 @@
 <x-app-layout>
-    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="flex items-center justify-between mb-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
                 <div>
-                    <h1 class="text-4xl font-bold text-neutral-900 mb-2">Halo, {{ Auth::user()->name }}!</h1>
-                    <p class="text-lg text-neutral-600">Kelola kursus dan pantau perkembangan siswa Anda</p>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2">Halo, {{ Auth::user()->name }}!</h1>
+                    <p class="text-base sm:text-lg text-neutral-600">Kelola kursus dan pantau perkembangan siswa Anda</p>
                 </div>
-                <a href="{{ route('teacher.courses.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition">
+                <a href="{{ route('teacher.courses.create') }}" class="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition text-sm sm:text-base">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
@@ -15,8 +14,7 @@
                 </a>
             </div>
 
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -60,49 +58,48 @@
                 </div>
             </div>
 
-            
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-neutral-900 mb-6">Kursus Saya</h2>
+            <div class="mb-6 sm:mb-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-4 sm:mb-6">Kursus Saya</h2>
 
                 @if($courses->count() > 0)
                     <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden">
                         <div class="overflow-x-auto">
-                            <table class="w-full">
+                            <table class="w-full min-w-[640px]">
                                 <thead class="bg-neutral-50 border-b border-neutral-200">
                                     <tr>
-                                        <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Nama Kursus</th>
-                                        <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Jumlah Siswa</th>
-                                        <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Status</th>
-                                        <th class="px-6 py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Aksi</th>
+                                        <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Nama Kursus</th>
+                                        <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Jumlah Siswa</th>
+                                        <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Status</th>
+                                        <th class="px-4 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-neutral-700 uppercase tracking-wider">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-neutral-200">
                                     @foreach($courses as $course)
                                         <tr class="hover:bg-neutral-50 transition">
-                                            <td class="px-6 py-4">
-                                                <div class="font-semibold text-neutral-900">{{ $course->name }}</div>
-                                                <div class="text-sm text-neutral-500">{{ $course->category->name ?? 'Umum' }}</div>
+                                            <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                                <div class="font-semibold text-sm sm:text-base text-neutral-900">{{ $course->name }}</div>
+                                                <div class="text-xs sm:text-sm text-neutral-500">{{ $course->category->name ?? 'Umum' }}</div>
                                             </td>
-                                            <td class="px-6 py-4">
+                                            <td class="px-4 sm:px-6 py-3 sm:py-4">
                                                 <div class="flex items-center gap-2 text-neutral-700">
                                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                                     </svg>
-                                                    <span class="font-medium">{{ $course->students_count ?? 0 }}</span>
+                                                    <span class="font-medium text-sm sm:text-base">{{ $course->students_count ?? 0 }}</span>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <span class="inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold {{ $course->is_active ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-700' }}">
+                                            <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                                <span class="inline-flex items-center gap-1 rounded-full px-2 sm:px-3 py-1 text-xs font-semibold {{ $course->is_active ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-700' }}">
                                                     <span class="h-1.5 w-1.5 rounded-full {{ $course->is_active ? 'bg-green-500' : 'bg-neutral-400' }}"></span>
                                                     {{ $course->is_active ? 'Aktif' : 'Tidak Aktif' }}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-4">
-                                                <div class="flex items-center gap-2">
-                                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
+                                            <td class="px-4 sm:px-6 py-3 sm:py-4">
+                                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+                                                    <a href="{{ route('teacher.courses.edit', $course) }}" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-xs sm:text-sm font-semibold transition shadow-sm hover:shadow-md">
                                                         Edit
                                                     </a>
-                                                    <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="px-3 py-1.5 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 text-sm font-semibold transition">
+                                                    <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="px-3 py-1.5 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 text-xs sm:text-sm font-semibold transition">
                                                         Lesson
                                                     </a>
                                                 </div>
@@ -130,7 +127,7 @@
                 @endif
             </div>
 
-            
+
             @if(isset($courses) && method_exists($courses, 'hasPages') && $courses->hasPages())
                 <div class="mt-8">
                     {{ $courses->links() }}

@@ -1,20 +1,21 @@
 <x-guest-layout>
-    <div class="w-full max-w-md mx-auto">
-        <div class="bg-white rounded-2xl shadow-xl border border-neutral-200 p-8">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-xl border border-neutral-200 p-6 sm:p-8">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 mb-4">
                     <svg class="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold text-neutral-900 mb-2">Daftar Akun Baru</h1>
-                <p class="text-neutral-600">Pilih role dan lengkapi data Anda</p>
+                <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 mb-2">Daftar Akun Baru</h1>
+                <p class="text-sm sm:text-base text-neutral-600">Pilih role dan lengkapi data Anda</p>
             </div>
 
             <form method="POST" action="{{ route('register') }}" class="space-y-5">
                 @csrf
 
-                
+
                 <div>
                     <x-input-label for="role" :value="__('Pilih Role')" class="text-sm font-semibold text-neutral-700 mb-2" />
                     <div class="grid grid-cols-2 gap-3">
@@ -70,7 +71,7 @@
                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                 </div>
 
-                <button type="submit" class="w-full bg-emerald-600 text-white px-6 py-3.5 rounded-lg hover:bg-emerald-700 transition font-semibold shadow-sm hover:shadow-md">
+                <button type="submit" class="w-full bg-emerald-600 text-white px-6 py-3.5 rounded-lg hover:bg-emerald-700 transition font-semibold shadow-sm hover:shadow-md active:scale-[0.98]">
                     Daftar
                 </button>
             </form>

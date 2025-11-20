@@ -3,7 +3,7 @@
         $course = $course ?? $lesson->course;
     @endphp
 
-    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             {{-- Breadcrumb --}}
             <nav class="mb-6 text-sm text-neutral-600 flex flex-wrap items-center gap-2">
@@ -24,8 +24,8 @@
             </nav>
 
             {{-- Header --}}
-            <header class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 mb-8">
-                <h1 class="text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-4">
+            <header class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-3 sm:mb-4">
                     {{ $lesson->title }}
                 </h1>
 
@@ -63,15 +63,15 @@
             </header>
 
             {{-- Content --}}
-            <article class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 mb-8 prose prose-lg max-w-none">
-                <div class="text-base text-neutral-700 leading-relaxed">
+            <article class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 prose prose-lg max-w-none">
+                <div class="text-base sm:text-lg text-neutral-700 leading-relaxed">
                     {!! nl2br(e($lesson->content)) !!}
                 </div>
             </article>
 
             {{-- Action Bar --}}
-            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6">
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                     <form
                         action="{{ route('lessons.mark.' . ($isDone ?? false ? 'not.done' : 'done'), $lesson) }}"
                         method="POST"

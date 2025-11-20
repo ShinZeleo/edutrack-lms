@@ -1,14 +1,12 @@
 <x-app-layout>
-    <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <div class="mb-8">
-                <h1 class="text-4xl font-bold text-neutral-900 mb-2">Halo, {{ $user->name }}!</h1>
-                <p class="text-lg text-neutral-600">Pantau progress belajar dan kelola kursus Anda</p>
+            <div class="mb-6 sm:mb-8">
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 mb-2">Halo, {{ $user->name }}!</h1>
+                <p class="text-base sm:text-lg text-neutral-600">Pantau progress belajar dan kelola kursus Anda</p>
             </div>
 
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
                     <div class="flex items-center justify-between">
                         <div>
@@ -65,11 +63,11 @@
                 </div>
             </div>
 
-            
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-2xl font-bold text-neutral-900">Kursus Sedang Diikuti</h2>
-                    <a href="{{ route('courses.catalog') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1">
+
+            <div class="mb-6 sm:mb-8">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
+                    <h2 class="text-xl sm:text-2xl font-bold text-neutral-900">Kursus Sedang Diikuti</h2>
+                    <a href="{{ route('courses.catalog') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1 text-sm sm:text-base transition">
                         Jelajahi Kursus
                         <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -78,7 +76,7 @@
                 </div>
 
                 @if($enrolledCourses->count() > 0)
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         @foreach($enrolledCourses as $course)
                             @php
                                 $progress = $course->getProgressForUser($user) ?? 0;
@@ -91,13 +89,13 @@
                                         class="w-full h-full object-cover"
                                     />
                                 </div>
-                                <div class="p-6">
-                                    <h3 class="text-lg font-bold text-neutral-900 mb-2 line-clamp-2">{{ $course->name }}</h3>
-                                    <p class="text-sm text-neutral-600 mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
+                                <div class="p-4 sm:p-6">
+                                    <h3 class="text-base sm:text-lg font-bold text-neutral-900 mb-2 line-clamp-2">{{ $course->name }}</h3>
+                                    <p class="text-xs sm:text-sm text-neutral-600 mb-3 sm:mb-4">Oleh {{ $course->teacher->name ?? 'EduTrack' }}</p>
 
-                                    
+
                                     <div class="mb-4">
-                                        <div class="flex items-center justify-between text-sm mb-2">
+                                        <div class="flex items-center justify-between text-xs sm:text-sm mb-2">
                                             <span class="font-semibold text-neutral-700">Progress</span>
                                             <span class="text-emerald-600 font-bold">{{ number_format($progress, 0) }}%</span>
                                         </div>
@@ -106,12 +104,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex gap-3">
-                                        <a href="{{ route('courses.public.show', $course) }}" class="flex-1 text-center px-4 py-2.5 border-2 border-neutral-300 rounded-lg text-sm font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 transition">
+                                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                                        <a href="{{ route('courses.public.show', $course) }}" class="flex-1 text-center px-4 py-2.5 border-2 border-neutral-300 rounded-lg text-xs sm:text-sm font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 transition">
                                             Detail
                                         </a>
                                         @if($course->lessons->count() > 0)
-                                            <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm">
+                                            <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md">
                                                 Lanjutkan
                                             </a>
                                         @endif
@@ -137,9 +135,8 @@
                 @endif
             </div>
 
-            
-            <div>
-                <h2 class="text-2xl font-bold text-neutral-900 mb-6">Rekomendasi Kursus</h2>
+            <div class="mt-6 sm:mt-8">
+                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-4 sm:mb-6">Rekomendasi Kursus</h2>
                 <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-8 text-center">
                     <p class="text-neutral-600 mb-4">Temukan kursus baru yang sesuai dengan minat Anda</p>
                     <a href="{{ route('courses.catalog') }}" class="inline-flex items-center gap-2 px-6 py-3 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-semibold transition">

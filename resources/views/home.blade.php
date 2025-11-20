@@ -1,5 +1,5 @@
 <x-app-layout>
-    <section class="relative bg-gradient-to-br from-emerald-50 via-white to-blue-50 pt-20 pb-24 overflow-hidden">
+    <section class="relative bg-gradient-to-br from-emerald-50 via-white to-blue-50 pt-16 pb-20 sm:pt-20 sm:pb-24 overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -11,15 +11,15 @@
                         Platform Kursus Daring Terpercaya
                     </p>
 
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-6">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-4 sm:mb-6">
                         Belajar Skill Baru Dengan <span class="text-emerald-600">Lebih Mudah</span>
                     </h1>
 
-                    <p class="text-lg md:text-xl text-neutral-600 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
+                    <p class="text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0 px-4 sm:px-0">
                         Akses kursus berkualitas dari mentor ahli. Bangun portofolio dan tingkatkan karier melalui pembelajaran terstruktur.
                     </p>
 
-                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-12">
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-8 sm:mb-12 px-4 sm:px-0">
                         <a
                             href="{{ route('courses.catalog') }}"
                             class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-emerald-600 text-white text-base font-semibold hover:bg-emerald-700 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5"
@@ -40,7 +40,7 @@
                         </a>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-6 text-center lg:text-left">
+                    <div class="grid grid-cols-3 gap-4 sm:gap-6 text-center lg:text-left px-4 sm:px-0">
                         <div>
                             <div class="text-2xl font-bold text-emerald-600">{{ $stats['activeCourses'] ?? 0 }}+</div>
                             <div class="text-sm text-neutral-600">Kursus Tersedia</div>
@@ -70,7 +70,7 @@
         </div>
     </section>
 
-    <section class="py-12 border-t border-neutral-200 bg-neutral-50">
+    <section class="py-12 sm:py-16 border-t border-neutral-200 bg-neutral-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-8">
                 <div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 @forelse($categories ?? [] as $category)
                     <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition overflow-hidden flex flex-col">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
@@ -111,13 +111,13 @@
         </div>
     </section>
 
-    <section id="featured-courses" class="py-20 bg-white">
+    <section id="featured-courses" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-3 sm:mb-4">
                     Kursus Populer
                 </h2>
-                <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto px-4 sm:px-0">
                     Pilih dari berbagai kursus berkualitas yang telah membantu ribuan siswa meningkatkan skill mereka.
                 </p>
             </div>
@@ -137,9 +137,9 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="p-6 flex flex-col gap-4">
+                        <div class="p-4 sm:p-6 flex flex-col gap-3 sm:gap-4">
                             <div>
-                                <h3 class="text-lg font-bold text-neutral-900 line-clamp-2 mb-2 group-hover:text-emerald-600 transition">
+                                <h3 class="text-base sm:text-lg font-bold text-neutral-900 line-clamp-2 mb-2 group-hover:text-emerald-600 transition">
                                     <a href="{{ route('courses.public.show', $course) }}">
                                         {{ $course->name }}
                                     </a>
@@ -164,10 +164,10 @@
                                 </div>
                             </div>
 
-                            <a
-                                href="{{ route('courses.public.show', $course) }}"
-                                class="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-lg bg-emerald-600 px-4 py-3 text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md"
-                            >
+                        <a
+                            href="{{ route('courses.public.show', $course) }}"
+                            class="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-lg bg-emerald-600 px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md"
+                        >
                                 Lihat Kursus
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -199,56 +199,56 @@
         </div>
     </section>
 
-    <section class="py-20 bg-gradient-to-b from-neutral-50 to-white">
+    <section class="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-neutral-50 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+            <div class="text-center mb-8 sm:mb-12 lg:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-3 sm:mb-4">
                     Fitur Platform
                 </h2>
-                <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg text-neutral-600 max-w-2xl mx-auto px-4 sm:px-0">
                     Platform pembelajaran yang dirancang untuk memberikan pengalaman belajar terbaik.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
-                    <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-emerald-100 text-emerald-600 mb-6 group-hover:bg-emerald-600 group-hover:text-white transition">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-6 sm:p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
+                    <div class="inline-flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-emerald-100 text-emerald-600 mb-4 sm:mb-6 group-hover:bg-emerald-600 group-hover:text-white transition">
                         <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">
+                    <h3 class="text-lg sm:text-xl font-bold text-neutral-900 mb-2 sm:mb-3">
                         Materi Terstruktur
                     </h3>
-                    <p class="text-neutral-600 leading-relaxed">
+                    <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">
                         Materi pembelajaran disusun secara sistematis dari dasar hingga tingkat lanjut, memudahkan proses belajar.
                     </p>
                 </div>
 
-                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
-                    <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-blue-100 text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition">
+                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-6 sm:p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
+                    <div class="inline-flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-blue-100 text-blue-600 mb-4 sm:mb-6 group-hover:bg-blue-600 group-hover:text-white transition">
                         <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">
+                    <h3 class="text-lg sm:text-xl font-bold text-neutral-900 mb-2 sm:mb-3">
                         Mentor Ahli
                     </h3>
-                    <p class="text-neutral-600 leading-relaxed">
+                    <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">
                         Belajar langsung dari mentor berpengalaman di bidangnya, siap membantu dan membimbing perjalanan belajar Anda.
                     </p>
                 </div>
 
-                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
-                    <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-purple-100 text-purple-600 mb-6 group-hover:bg-purple-600 group-hover:text-white transition">
+                <div class="bg-white border-2 border-neutral-200 rounded-2xl p-6 sm:p-8 text-center hover:border-emerald-500 hover:shadow-xl transition-all group">
+                    <div class="inline-flex items-center justify-center h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-purple-100 text-purple-600 mb-4 sm:mb-6 group-hover:bg-purple-600 group-hover:text-white transition">
                         <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-neutral-900 mb-3">
+                    <h3 class="text-lg sm:text-xl font-bold text-neutral-900 mb-2 sm:mb-3">
                         Progress Otomatis
                     </h3>
-                    <p class="text-neutral-600 leading-relaxed">
+                    <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">
                         Sistem pelacakan progres otomatis membantu Anda memantau perkembangan belajar secara real-time.
                     </p>
                 </div>
@@ -256,19 +256,19 @@
         </div>
     </section>
 
-    <section class="py-20 bg-white">
+    <section class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+            <div class="text-center mb-8 sm:mb-12">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-3 sm:mb-4">
                     Apa Kata Mereka
                 </h2>
-                <p class="text-lg text-neutral-600">
+                <p class="text-base sm:text-lg text-neutral-600 px-4 sm:px-0">
                     Testimoni dari siswa yang telah merasakan manfaat platform ini.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-100 rounded-2xl p-6 shadow-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-100 rounded-2xl p-4 sm:p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
                             src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face"
@@ -287,12 +287,12 @@
                             </svg>
                         @endfor
                     </div>
-                    <blockquote class="text-neutral-700 leading-relaxed">
+                    <blockquote class="text-sm sm:text-base text-neutral-700 leading-relaxed">
                         "Platform ini membuat proses belajar terasa lebih terarah. Fitur progres dan pemecahan materi per lesson sangat membantu saya mengatur waktu belajar."
                     </blockquote>
                 </div>
 
-                <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100 rounded-2xl p-6 shadow-sm">
+                <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-100 rounded-2xl p-4 sm:p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
                             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
@@ -311,12 +311,12 @@
                             </svg>
                         @endfor
                     </div>
-                    <blockquote class="text-neutral-700 leading-relaxed">
+                    <blockquote class="text-sm sm:text-base text-neutral-700 leading-relaxed">
                         "Materi yang disajikan sangat lengkap dan mudah dipahami. Mentor juga sangat responsif dalam menjawab pertanyaan."
                     </blockquote>
                 </div>
 
-                <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-100 rounded-2xl p-6 shadow-sm">
+                <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-100 rounded-2xl p-4 sm:p-6 shadow-sm">
                     <div class="flex items-center gap-4 mb-4">
                         <img
                             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
@@ -335,7 +335,7 @@
                             </svg>
                         @endfor
                     </div>
-                    <blockquote class="text-neutral-700 leading-relaxed">
+                    <blockquote class="text-sm sm:text-base text-neutral-700 leading-relaxed">
                         "Sangat membantu dalam meningkatkan skill saya. Progress tracking yang otomatis membuat saya lebih termotivasi untuk menyelesaikan kursus."
                     </blockquote>
                 </div>
