@@ -88,29 +88,30 @@
                 </div>
             </div>
 
-            @php
-                $defaultCategories = [
-                    ['name' => 'Web Development', 'description' => 'Bangun aplikasi web modern dan responsif.'],
-                    ['name' => 'Data & Analytics', 'description' => 'Kelola dan analisis data untuk pengambilan keputusan.'],
-                    ['name' => 'UI/UX & Design', 'description' => 'Rancang pengalaman pengguna yang nyaman dan menarik.'],
-                    ['name' => 'Programming Fundamentals', 'description' => 'Kuasai dasar pemrograman sebelum masuk ke topik lanjut.'],
-                ];
-            @endphp
-
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                @foreach($defaultCategories as $category)
-                    <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition p-5 flex flex-col">
-                        <div class="inline-flex items-center justify-center h-10 w-10 rounded-lg bg-emerald-50 text-emerald-600 mb-4">
-                            <span class="text-lg">★</span>
+                @forelse($categories ?? [] as $category)
+                    <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition overflow-hidden flex flex-col">
+                        <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
+                            <img
+                                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop&sig={{ $category->id }}"
+                                alt="{{ $category->name }}"
+                                class="w-full h-full object-cover"
+                            />
                         </div>
-                        <h3 class="text-base font-semibold text-neutral-900 mb-1">
-                            {{ $category['name'] }}
-                        </h3>
-                        <p class="text-sm text-neutral-600">
-                            {{ $category['description'] }}
-                        </p>
+                        <div class="p-5 flex flex-col">
+                            <h3 class="text-base font-semibold text-neutral-900 mb-1">
+                                {{ $category->name }}
+                            </h3>
+                            <p class="text-sm text-neutral-600">
+                                {{ $category->description ?? 'Kategori kursus berkualitas.' }}
+                            </p>
+                        </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="col-span-full text-center py-8">
+                        <p class="text-neutral-500">Belum ada kategori tersedia.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>

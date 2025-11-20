@@ -24,11 +24,6 @@ class Category extends Model
         return $query->where('is_active', true);
     }
 
-    /**
-     * Get courses in this category.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function courses()
     {
         return $this->hasMany(\App\Models\Course::class);

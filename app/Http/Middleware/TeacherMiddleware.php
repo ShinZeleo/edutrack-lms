@@ -9,9 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeacherMiddleware
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() || Auth::user()->role !== 'teacher') {

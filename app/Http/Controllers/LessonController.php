@@ -11,7 +11,6 @@ class LessonController extends Controller
 {
     public function index(Course $course)
     {
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
@@ -22,7 +21,6 @@ class LessonController extends Controller
 
     public function create(Course $course)
     {
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
@@ -32,7 +30,6 @@ class LessonController extends Controller
 
     public function store(Request $request, Course $course)
     {
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
@@ -55,17 +52,14 @@ class LessonController extends Controller
 
     public function show(Course $course, Lesson $lesson)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // The route middleware already checks for enrollment, but an explicit check is good practice.
         $isEnrolled = $course->students()->where('users.id', $user->id)->exists();
         if (!$isEnrolled) {
             return redirect()->route('courses.public.show', $course)
                              ->with('error', 'You must be enrolled to view this lesson.');
         }
 
-        // Eager load all lessons for the course and their progress for the current user to prevent N+1 issues.
         $course->load(['lessons' => function ($query) use ($user) {
             $query->ordered()->with(['progress' => function ($progressQuery) use ($user) {
                 $progressQuery->where('student_id', $user->id);
@@ -77,7 +71,6 @@ class LessonController extends Controller
         $nextLesson = $lessons->get($currentLessonIndex + 1);
         $prevLesson = $lessons->get($currentLessonIndex - 1);
 
-        // Get progress for the current lesson from the already loaded relationship.
         $progress = $lesson->progress->first();
         $isDone = $progress && $progress->is_done;
 
@@ -88,11 +81,9 @@ class LessonController extends Controller
 
     public function edit(Lesson $lesson)
     {
-        // Eager load course to avoid extra query
         $lesson->load('course');
         $course = $lesson->course;
 
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
@@ -102,11 +93,9 @@ class LessonController extends Controller
 
     public function update(Request $request, Lesson $lesson)
     {
-        // Eager load course to avoid extra query
         $lesson->load('course');
         $course = $lesson->course;
 
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
@@ -129,11 +118,9 @@ class LessonController extends Controller
 
     public function destroy(Lesson $lesson)
     {
-        // Eager load course to avoid extra query
         $lesson->load('course');
         $course = $lesson->course;
 
-        // Ensure teacher owns the course
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }

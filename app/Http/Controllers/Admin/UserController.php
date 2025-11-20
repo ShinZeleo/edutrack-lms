@@ -12,9 +12,6 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $query = User::query();
@@ -36,17 +33,11 @@ class UserController extends Controller
         return view('users.admin.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('users.admin.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -68,25 +59,16 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user)
     {
         return redirect()->route('admin.users.edit', $user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(User $user)
     {
         return view('users.admin.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, User $user)
     {
         $request->validate([
@@ -115,17 +97,12 @@ class UserController extends Controller
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
-        // Ensure the user exists and has an id
         if (!$user || !$user->exists || !$user->getKey()) {
             return back()->with('error', 'User not found.');
         }
 
-        // Prevent admin from deleting themselves
         if (Auth::check() && $user->getKey() === Auth::id()) {
             return back()->with('error', 'You cannot delete your own account.');
         }

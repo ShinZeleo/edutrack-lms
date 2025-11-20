@@ -36,13 +36,10 @@ class HomeController extends Controller
             'activeStudents' => User::role('student')->active()->count(),
         ];
 
-        // Calculate progress for each course if user is authenticated and is a student
         if (auth()->check() && auth()->user()->isStudent()) {
             $user = auth()->user();
             foreach($courses as $course) {
-                // Use the existing helper method for progress calculation
                 $course->progress = $course->getProgressForUser($user);
-                // Check if user is enrolled using the already loaded students collection
                 $course->isEnrolled = $course->students->contains($user);
             }
         }

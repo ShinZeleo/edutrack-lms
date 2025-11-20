@@ -13,7 +13,6 @@ class CourseController extends Controller
 {
     public function index()
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($user->isAdmin()) {
@@ -34,7 +33,6 @@ class CourseController extends Controller
 
     public function create()
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         if ($user->isAdmin()) {
@@ -51,7 +49,6 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
         $request->validate([
@@ -63,8 +60,6 @@ class CourseController extends Controller
             'category_id' => 'required|exists:categories,id',
         ]);
 
-        // For teacher, automatically assign their own ID as teacher_id
-        // For admin, allow selection of teacher
         $teacherId = $user->isAdmin() ? $request->input('teacher_id') : $user->id;
 
         \App\Models\Course::create([
@@ -86,10 +81,8 @@ class CourseController extends Controller
 
     public function edit(\App\Models\Course $course)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Check if user is authorized to edit this course
         if ($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id)) {
             if ($user->isAdmin()) {
                 $categories = \App\Models\Category::all();
@@ -106,10 +99,8 @@ class CourseController extends Controller
 
     public function update(Request $request, \App\Models\Course $course)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Check if user is authorized to update this course
         if (!($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id))) {
             abort(403);
         }
@@ -132,7 +123,6 @@ class CourseController extends Controller
             'category_id' => $request->input('category_id'),
         ]);
 
-        // Only admin can change the teacher
         if ($user->isAdmin()) {
             $course->update([
                 'teacher_id' => $request->input('teacher_id'),
@@ -148,10 +138,8 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Check if user is authorized to delete this course
         if (!($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id))) {
             abort(403);
         }
@@ -165,7 +153,6 @@ class CourseController extends Controller
         }
     }
 
-    // Public method for guests and students to view courses
     public function publicIndex(Request $request)
     {
         $search = $request->input('search');
@@ -183,7 +170,6 @@ class CourseController extends Controller
             $query->where('category_id', $categoryId);
         }
 
-        /** @var \App\Models\User|null $user */
         $user = Auth::user();
         if ($user && $user->isStudent()) {
             $progressSub = DB::table('lesson_progress')
@@ -219,7 +205,6 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        // Check if course is active
         if (!$course->is_active) {
             abort(404);
         }

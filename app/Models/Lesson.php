@@ -21,9 +21,6 @@ class Lesson extends Model
         return $this->belongsTo(Course::class);
     }
 
-    /**
-     * Progress records for this lesson.
-     */
     public function progress()
     {
         return $this->hasMany(LessonProgress::class);

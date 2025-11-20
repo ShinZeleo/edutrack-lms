@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,9 +18,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -37,35 +31,28 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Display the user's profile overview.
-     */
     public function show()
     {
-        /** @var \App\Models\User $user */
         $user = Auth::user();
-        
+
         if ($user->isStudent()) {
             $enrolledCourses = $user->enrolledCourses()
                                    ->with(['category', 'teacher', 'lessons'])
                                    ->get();
-            
+
             return view('profile.index', compact('user', 'enrolledCourses'));
         } elseif ($user->isTeacher()) {
             $courses = $user->courses()
                            ->with(['category', 'students', 'lessons'])
                            ->withCount(['students', 'lessons'])
                            ->get();
-            
+
             return view('profile.index', compact('user', 'courses'));
         } else {
             return view('profile.index', compact('user'));
         }
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [

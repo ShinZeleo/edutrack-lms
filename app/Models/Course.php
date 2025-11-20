@@ -46,9 +46,6 @@ class Course extends Model
         return $query->where('category_id', $categoryId);
     }
 
-    /**
-     * Students enrolled in this course.
-     */
     public function students()
     {
         return $this->belongsToMany(\App\Models\User::class, 'course_student', 'course_id', 'student_id')
@@ -56,18 +53,12 @@ class Course extends Model
                     ->withTimestamps();
     }
 
-    /**
-     * Lessons in this course.
-     */
     public function lessons()
     {
         return $this->hasMany(\App\Models\Lesson::class);
     }
 
 
-    /**
-     * Calculate progress for a specific user.
-     */
     public function getProgressForUser($user)
     {
         $totalLessons = $this->lessons()->count();
