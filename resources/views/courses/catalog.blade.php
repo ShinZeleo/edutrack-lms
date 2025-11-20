@@ -86,9 +86,18 @@
             </div>
         </section>
 
-        <div class="mt-8 sm:mt-12">
-            {{ $courses->links() }}
-        </div>
+        @if($courses->hasPages())
+            <div class="mt-8 sm:mt-12">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4">
+                    <div class="text-sm text-neutral-600 order-2 sm:order-1">
+                        Menampilkan <span class="font-semibold text-neutral-900">{{ $courses->firstItem() }}</span> sampai <span class="font-semibold text-neutral-900">{{ $courses->lastItem() }}</span> dari <span class="font-semibold text-neutral-900">{{ $courses->total() }}</span> hasil
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    {{ $courses->links('vendor.pagination.tailwind') }}
+                </div>
+            </div>
+        @endif
         </div>
     </div>
 </x-app-layout>

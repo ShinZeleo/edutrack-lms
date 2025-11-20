@@ -84,7 +84,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-                @forelse($categories ?? [] as $category)
+                @forelse(($categories ?? [])->take(4) as $category)
                     <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition overflow-hidden flex flex-col">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
                             <img
@@ -122,7 +122,7 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 @forelse($courses ?? [] as $course)
                     <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
@@ -164,10 +164,10 @@
                                 </div>
                             </div>
 
-                        <a
-                            href="{{ route('courses.public.show', $course) }}"
-                            class="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-lg bg-emerald-600 px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md"
-                        >
+                            <a
+                                href="{{ route('courses.public.show', $course) }}"
+                                class="mt-2 inline-flex items-center justify-center gap-2 w-full rounded-lg bg-emerald-600 px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md"
+                            >
                                 Lihat Kursus
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -183,18 +183,25 @@
                         <p class="text-neutral-500 text-lg">Belum ada kursus tersedia saat ini.</p>
                     </div>
                 @endforelse
-            </div>
 
-            <div class="mt-12 text-center">
-                <a
-                    href="{{ route('courses.catalog') }}"
-                    class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-emerald-600 text-emerald-700 font-semibold hover:bg-emerald-50 transition"
-                >
-                    Lihat Semua Kursus
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
+                @if(count($courses ?? []) > 0)
+                    <a
+                        href="{{ route('courses.catalog') }}"
+                        class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center p-6 sm:p-8 group hover:border-emerald-500 min-h-[400px]"
+                    >
+                        <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 text-emerald-600 mb-4 group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-neutral-900 mb-2 group-hover:text-emerald-600 transition text-center">
+                            Lihat Semua Kursus
+                        </h3>
+                        <p class="text-sm text-neutral-600 text-center max-w-xs">
+                            Jelajahi lebih banyak kursus berkualitas untuk meningkatkan skill Anda
+                        </p>
+                    </a>
+                @endif
             </div>
         </div>
     </section>
