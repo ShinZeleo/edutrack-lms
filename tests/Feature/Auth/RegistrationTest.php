@@ -28,6 +28,13 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $user = \App\Models\User::where('email', 'test@example.com')->first();
+        if ($user && $user->isStudent()) {
+            $response->assertRedirect(route('student.dashboard', absolute: false));
+        } elseif ($user && $user->isTeacher()) {
+            $response->assertRedirect(route('teacher.dashboard', absolute: false));
+        } else {
+            $response->assertRedirect(route('dashboard', absolute: false));
+        }
     }
 }

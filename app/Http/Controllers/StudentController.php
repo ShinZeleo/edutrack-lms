@@ -10,7 +10,13 @@ class StudentController extends Controller
     public function dashboard()
     {
         $user = Auth::user();
-        $enrolledCourses = $user->courses()->with('teacher')->get();
+        $enrolledCourses = $user->enrolledCourses()
+            ->with(['teacher', 'category'])
+            ->get()
+            ->map(function ($course) use ($user) {
+                $course->progress_percent = $course->getProgressForUser($user);
+                return $course;
+            });
         return view('profile.student', compact('user', 'enrolledCourses'));
     }
 

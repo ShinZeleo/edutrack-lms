@@ -27,7 +27,17 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+
+        $authenticatedUser = \App\Models\User::where('email', $user->email)->first();
+        if ($authenticatedUser->isStudent()) {
+            $response->assertRedirect(route('student.dashboard', absolute: false));
+        } elseif ($authenticatedUser->isTeacher()) {
+            $response->assertRedirect(route('teacher.dashboard', absolute: false));
+        } elseif ($authenticatedUser->isAdmin()) {
+            $response->assertRedirect(route('admin.dashboard', absolute: false));
+        } else {
+            $response->assertRedirect(route('dashboard', absolute: false));
+        }
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
