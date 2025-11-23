@@ -29,15 +29,17 @@
                             </svg>
                             Lihat Kursus
                         </a>
-                        <a
-                            href="{{ route('register') }}"
-                            class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border-2 border-neutral-300 text-base font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 bg-white transition-all"
-                        >
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                            </svg>
-                            Register
-                        </a>
+                        @guest
+                            <a
+                                href="{{ route('register') }}"
+                                class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border-2 border-neutral-300 text-base font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 bg-white transition-all"
+                            >
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                                </svg>
+                                Register
+                            </a>
+                        @endguest
                     </div>
 
                     <div class="grid grid-cols-3 gap-4 sm:gap-6 text-center lg:text-left px-4 sm:px-0">
