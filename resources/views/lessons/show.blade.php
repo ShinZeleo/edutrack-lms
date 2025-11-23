@@ -69,36 +69,57 @@
                 </div>
             </article>
 
+            {{-- Flash Messages --}}
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 text-sm">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             {{-- Action Bar --}}
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6">
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-                    <form
-                        action="{{ route('lessons.mark.' . ($isDone ?? false ? 'not.done' : 'done'), $lesson) }}"
-                        method="POST"
-                        class="flex-1"
-                    >
-                        @csrf
-                        <button
-                            type="submit"
-                            class="w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold
-                                {{ ($isDone ?? false)
-                                    ? 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200'
-                                    : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                                }} shadow-sm hover:shadow-md transition"
+                    @if($isDone ?? false)
+                        <form
+                            action="{{ route('lessons.mark.not.done', $lesson) }}"
+                            method="POST"
+                            class="flex-1"
                         >
-                            @if($isDone ?? false)
+                            @csrf
+                            <button
+                                type="submit"
+                                class="w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold bg-neutral-100 text-neutral-800 hover:bg-neutral-200 shadow-sm hover:shadow-md transition"
+                            >
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                                 Tandai Belum Selesai
-                            @else
+                            </button>
+                        </form>
+                    @else
+                        <form
+                            action="{{ route('lessons.mark.done', $lesson) }}"
+                            method="POST"
+                            class="flex-1"
+                        >
+                            @csrf
+                            <button
+                                type="submit"
+                                class="w-full inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm hover:shadow-md transition"
+                            >
                                 <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
                                 Tandai Selesai
-                            @endif
-                        </button>
-                    </form>
+                            </button>
+                        </form>
+                    @endif
 
                     @if(isset($nextLesson) && $nextLesson)
                         <a
@@ -145,21 +166,28 @@
                         @php
                             $number = $index + 1;
                             $current = $item->id === $lesson->id;
-                            $done = $item->is_done_for_auth ?? false;
+                            $progress = $item->progress->first();
+                            $done = $progress && $progress->is_done;
                         @endphp
 
                         <a
                             href="{{ route('lessons.show', [$course, $item]) }}"
                             class="flex items-center justify-between rounded-lg border
-                                {{ $current ? 'border-emerald-500 bg-emerald-50/60' : 'border-neutral-200 bg-white hover:border-emerald-400 hover:bg-emerald-50/30' }}
-                                px-4 py-3 text-sm transition"
+                                {{ $current ? 'border-emerald-500 bg-emerald-50/60' : ($done ? 'border-emerald-200 bg-emerald-50/40' : 'border-neutral-200 bg-white') }}
+                                hover:border-emerald-400 hover:bg-emerald-50/30 px-4 py-3 text-sm transition"
                         >
                             <div class="flex items-center gap-3">
                                 <div class="h-7 w-7 flex items-center justify-center rounded-full
-                                    {{ $current ? 'bg-emerald-600 text-white' : 'bg-neutral-100 text-neutral-700' }}
+                                    {{ $done ? 'bg-emerald-600 text-white' : ($current ? 'bg-emerald-600 text-white' : 'bg-neutral-100 text-neutral-700') }}
                                     text-[11px] font-semibold"
                                 >
-                                    {{ $number }}
+                                    @if($done)
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    @else
+                                        {{ $number }}
+                                    @endif
                                 </div>
                                 <div>
                                     <div class="font-medium {{ $current ? 'text-emerald-800' : 'text-neutral-900' }}">

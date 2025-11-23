@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\LessonProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EnrollmentController extends Controller
 {
@@ -31,55 +32,79 @@ class EnrollmentController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user->isStudent()) {
-            abort(403, 'Only students can mark lessons as done.');
+        if (!$user || !$user->isStudent()) {
+            return redirect()->back()->with('error', 'Hanya siswa yang dapat menandai lesson sebagai selesai.');
+        }
+
+        // Load course relationship if not already loaded
+        if (!$lesson->relationLoaded('course')) {
+            $lesson->load('course');
         }
 
         $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
-            abort(403, 'You must be enrolled in the course to mark lessons as done.');
+            return redirect()->back()->with('error', 'Anda harus terdaftar di kursus ini untuk menandai lesson sebagai selesai.');
         }
 
-        \App\Models\LessonProgress::updateOrCreate(
-            [
-                'lesson_id' => $lesson->id,
-                'student_id' => $user->id,
-            ],
-            [
-                'is_done' => true,
-                'done_at' => now(),
-            ]
-        );
+        try {
+            \App\Models\LessonProgress::updateOrCreate(
+                [
+                    'lesson_id' => $lesson->id,
+                    'student_id' => $user->id,
+                ],
+                [
+                    'is_done' => true,
+                    'done_at' => now(),
+                ]
+            );
 
-        return redirect()->back()->with('success', 'Lesson marked as done.');
+            return redirect()->route('lessons.show', [$lesson->course, $lesson])
+                            ->with('success', 'Lesson berhasil ditandai sebagai selesai.');
+        } catch (\Exception $e) {
+            \Log::error('Error marking lesson as done: ' . $e->getMessage());
+            return redirect()->route('lessons.show', [$lesson->course, $lesson])
+                            ->with('error', 'Terjadi kesalahan saat menandai lesson. Silakan coba lagi.');
+        }
     }
 
     public function markAsNotDone(Lesson $lesson)
     {
         $user = Auth::user();
 
-        if (!$user->isStudent()) {
-            abort(403, 'Only students can update lesson progress.');
+        if (!$user || !$user->isStudent()) {
+            return redirect()->back()->with('error', 'Hanya siswa yang dapat mengubah status lesson.');
+        }
+
+        // Load course relationship if not already loaded
+        if (!$lesson->relationLoaded('course')) {
+            $lesson->load('course');
         }
 
         $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
-            abort(403, 'You must be enrolled in the course to update lesson progress.');
+            return redirect()->back()->with('error', 'Anda harus terdaftar di kursus ini untuk mengubah status lesson.');
         }
 
-        $progress = \App\Models\LessonProgress::where('lesson_id', $lesson->id)
-                                  ->where('student_id', $user->id)
-                                  ->first();
+        try {
+            $progress = \App\Models\LessonProgress::where('lesson_id', $lesson->id)
+                                      ->where('student_id', $user->id)
+                                      ->first();
 
-        if ($progress) {
-            $progress->update([
-                'is_done' => false,
-                'done_at' => null,
-            ]);
+            if ($progress) {
+                $progress->update([
+                    'is_done' => false,
+                    'done_at' => null,
+                ]);
+            }
+
+            return redirect()->route('lessons.show', [$lesson->course, $lesson])
+                            ->with('success', 'Lesson berhasil ditandai sebagai belum selesai.');
+        } catch (\Exception $e) {
+            \Log::error('Error marking lesson as not done: ' . $e->getMessage());
+            return redirect()->route('lessons.show', [$lesson->course, $lesson])
+                            ->with('error', 'Terjadi kesalahan saat mengubah status lesson. Silakan coba lagi.');
         }
-
-        return redirect()->back()->with('success', 'Lesson marked as not done.');
     }
 }

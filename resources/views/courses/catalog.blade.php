@@ -63,7 +63,7 @@
 
                     @auth
                         @if(auth()->user()->isStudent() && $course->students->contains(auth()->user()))
-                            <a href="{{ route('courses.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2.5 rounded-lg hover:bg-emerald-700 transition text-sm font-semibold shadow-sm hover:shadow-md">
+                            <a href="{{ route('courses.public.show', $course) }}" class="block w-full text-center bg-emerald-600 text-white px-4 py-2.5 rounded-lg hover:bg-emerald-700 transition text-sm font-semibold shadow-sm hover:shadow-md">
                                 Lanjutkan
                             </a>
                         @else
