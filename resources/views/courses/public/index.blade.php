@@ -1,16 +1,16 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
+
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-4">Semua Kursus</h1>
                 <p class="text-lg text-neutral-600">Jelajahi berbagai kursus berkualitas untuk meningkatkan skill Anda</p>
             </div>
 
-            
+
             <div class="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-8">
                 <form method="GET" action="{{ route('courses.catalog') }}" class="space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
-                    
+
                     <div class="flex-1">
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -28,7 +28,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="md:w-64">
                         <select
                             name="category"
@@ -43,7 +43,7 @@
                         </select>
                     </div>
 
-                    
+
                     <div class="md:w-48">
                         <select
                             name="sort"
@@ -55,7 +55,7 @@
                         </select>
                     </div>
 
-                    
+
                     <button
                         type="submit"
                         class="w-full md:w-auto px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition shadow-sm hover:shadow-md"
@@ -65,13 +65,28 @@
                 </form>
             </div>
 
-            
+
+            @php
+                // Array variasi gambar untuk course (10 variasi berbeda)
+                $courseImages = [
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
+                ];
+            @endphp
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                @forelse($courses as $course)
+                @forelse($courses as $index => $course)
                     <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
                             <img
-                                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}"
+                                src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
                                 alt="{{ $course->name }}"
                                 class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                             />
@@ -136,7 +151,7 @@
                 @endforelse
             </div>
 
-            
+
             @if(isset($courses) && method_exists($courses, 'links'))
                 <div class="mt-8">
                     {{ $courses->links() }}

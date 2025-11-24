@@ -5,13 +5,13 @@
 
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
+
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Dashboard</h1>
                 <p class="text-lg text-neutral-600">Selamat datang, {{ $user->name }}!</p>
             </div>
 
-            
+
             <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-xl p-8 mb-8 text-white">
                 <div class="flex items-center justify-between">
                     <div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            
+
             @if(isset($stats))
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     @foreach($stats as $label => $value)
@@ -38,7 +38,7 @@
                 </div>
             @endif
 
-            
+
             @if($user->role === 'student')
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">
@@ -51,15 +51,30 @@
                         </a>
                     </div>
 
+                    @php
+                        // Array variasi gambar untuk course (10 variasi berbeda)
+                        $courseImages = [
+                            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
+                        ];
+                    @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @forelse($enrolledCourses ?? [] as $course)
+                        @forelse($enrolledCourses ?? [] as $index => $course)
                             @php
                                 $progress = $course->progress_percent ?? 0;
                             @endphp
                             <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
                                 <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden">
                                     <img
-                                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}"
+                                        src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
                                         alt="{{ $course->name }}"
                                         class="w-full h-full object-cover"
                                     />
@@ -97,7 +112,7 @@
                     </div>
                 </section>
 
-            
+
             @elseif($user->role === 'teacher')
                 <section class="space-y-6">
                     <div class="flex items-center justify-between">
@@ -110,12 +125,27 @@
                         </a>
                     </div>
 
+                    @php
+                        // Array variasi gambar untuk course (10 variasi berbeda)
+                        $teacherCourseImages = [
+                            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                            'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
+                        ];
+                    @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @forelse($teacherCourses ?? [] as $course)
+                        @forelse($teacherCourses ?? [] as $index => $course)
                             <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
                                 <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden">
                                     <img
-                                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}"
+                                        src="{{ $teacherCourseImages[$index % count($teacherCourseImages)] }}&sig={{ $course->id }}"
                                         alt="{{ $course->name }}"
                                         class="w-full h-full object-cover"
                                     />
@@ -153,7 +183,7 @@
                     </div>
                 </section>
 
-            
+
             @elseif($user->role === 'admin')
                 <section class="space-y-6">
                     <h2 class="text-2xl font-bold text-neutral-900">Administrasi Platform</h2>

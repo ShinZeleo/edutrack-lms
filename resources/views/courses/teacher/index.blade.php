@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
+
             <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
                 <div>
                     <p class="text-sm font-semibold text-emerald-600 uppercase tracking-wide mb-1">Teacher</p>
@@ -15,13 +15,28 @@
                 </a>
             </div>
 
-            
+
+            @php
+                // Array variasi gambar untuk course (10 variasi berbeda)
+                $courseImages = [
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
+                ];
+            @endphp
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @forelse($courses as $course)
+                @forelse($courses as $index => $course)
                     <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden">
                             <img
-                                src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}"
+                                src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
                                 alt="{{ $course->name }}"
                                 class="w-full h-full object-cover"
                             />

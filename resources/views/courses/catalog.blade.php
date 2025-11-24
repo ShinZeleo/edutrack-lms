@@ -29,11 +29,26 @@
         </div>
 
         <section class="mt-8">
+            @php
+                // Array variasi gambar untuk course (10 variasi berbeda)
+                $courseImages = [
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
+                ];
+            @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            @forelse($courses as $course)
+            @forelse($courses as $index => $course)
                 <div class="p-4 sm:p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white">
                     <div class="rounded-lg h-40 w-full bg-gradient-to-br from-emerald-400 to-blue-500 mb-4 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
+                        <img src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
                     </div>
 
                     <h3 class="text-lg sm:text-xl font-semibold text-neutral-900 mb-2 line-clamp-2">
