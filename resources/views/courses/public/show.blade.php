@@ -88,7 +88,30 @@
                                 @else
                                     @if(auth()->user()->isStudent())
                                         @if($isEnrolled ?? false)
-                                            @if($firstLesson)
+                                            @php
+                                                $progress = isset($studentProgress) ? $studentProgress : 0;
+                                                $certificate = \App\Models\Certificate::where('student_id', auth()->id())
+                                                    ->where('course_id', $course->id)
+                                                    ->first();
+                                            @endphp
+                                            @if($progress >= 100)
+                                                @if($certificate)
+                                                    <a href="{{ route('certificates.download', $certificate) }}" class="flex items-center justify-center gap-2 w-full bg-emerald-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition shadow-lg mb-3">
+                                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                        </svg>
+                                                        Download Sertifikat
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('courses.certificate', $course) }}" class="flex items-center justify-center gap-2 w-full bg-emerald-600 text-white px-4 py-3 rounded-lg font-semibold hover:bg-emerald-700 transition shadow-lg mb-3">
+                                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                                                        </svg>
+                                                        Generate Sertifikat
+                                                    </a>
+                                                @endif
+                                            @endif
+                                            @if($firstLesson && $progress < 100)
                                                 <a href="{{ route('lessons.show', [$course, $firstLesson]) }}" class="flex items-center justify-center gap-2 w-full bg-white text-emerald-700 px-4 py-3 rounded-lg font-semibold hover:bg-emerald-50 transition shadow-lg">
                                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -96,7 +119,7 @@
                                                     </svg>
                                                     Lanjutkan Belajar
                                                 </a>
-                                            @else
+                                            @elseif(!$firstLesson)
                                                 <div class="w-full bg-emerald-800 text-emerald-200 px-4 py-3 rounded-lg font-semibold text-center">
                                                     Lesson belum tersedia
                                                 </div>

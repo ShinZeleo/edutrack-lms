@@ -122,7 +122,25 @@
                                         <a href="{{ route('courses.public.show', $course) }}" class="flex-1 text-center px-4 py-2.5 border-2 border-neutral-300 rounded-lg text-xs sm:text-sm font-semibold text-neutral-700 hover:border-emerald-600 hover:text-emerald-600 transition">
                                             Detail
                                         </a>
-                                        @if($course->lessons->count() > 0)
+                                        @if($progress >= 100)
+                                            @php
+                                                $certificate = \App\Models\Certificate::where('student_id', $user->id)
+                                                    ->where('course_id', $course->id)
+                                                    ->first();
+                                            @endphp
+                                            @if($certificate)
+                                                <a href="{{ route('certificates.download', $certificate) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md flex items-center justify-center gap-1">
+                                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                                    </svg>
+                                                    Sertifikat
+                                                </a>
+                                            @else
+                                                <a href="{{ route('courses.certificate', $course) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md">
+                                                    Generate Sertifikat
+                                                </a>
+                                            @endif
+                                        @elseif($course->lessons->count() > 0)
                                             <a href="{{ route('lessons.show', [$course, $course->lessons()->ordered()->first()]) }}" class="flex-1 text-center px-4 py-2.5 bg-emerald-600 rounded-lg text-xs sm:text-sm font-semibold text-white hover:bg-emerald-700 transition shadow-sm hover:shadow-md">
                                                 Lanjutkan
                                             </a>

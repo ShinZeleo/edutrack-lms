@@ -9,6 +9,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,6 +43,9 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::post('/courses/{course}/enroll', [EnrollmentController::class, 'enroll'])->name('courses.enroll');
     Route::post('/lessons/{lesson}/mark-done', [EnrollmentController::class, 'markAsDone'])->name('lessons.mark.done');
     Route::post('/lessons/{lesson}/mark-not-done', [EnrollmentController::class, 'markAsNotDone'])->name('lessons.mark.not.done');
+    Route::get('/courses/{course}/certificate', [CertificateController::class, 'generate'])->name('courses.certificate');
+    Route::get('/certificates/{certificate}/download', [CertificateController::class, 'download'])->name('certificates.download');
+    Route::get('/certificates/{certificate}/view', [CertificateController::class, 'view'])->name('certificates.view');
 });
 
 Route::middleware('auth')->group(function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,6 +56,22 @@ class EnrollmentController extends Controller
                     'done_at' => now(),
                 ]
             );
+
+            $course = $lesson->course;
+            $progress = $course->getProgressForUser($user);
+
+            if ($progress >= 100) {
+                Certificate::firstOrCreate(
+                    [
+                        'student_id' => $user->id,
+                        'course_id' => $course->id,
+                    ],
+                    [
+                        'certificate_number' => 'CERT-' . strtoupper(uniqid()),
+                        'issued_at' => now(),
+                    ]
+                );
+            }
 
             return redirect()->route('lessons.show', [$lesson->course, $lesson])
                             ->with('success', 'Lesson berhasil ditandai sebagai selesai.');
