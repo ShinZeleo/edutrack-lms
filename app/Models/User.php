@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Course;
+use App\Models\LessonProgress;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,18 +67,18 @@ class User extends Authenticatable
 
     public function courses()
     {
-        return $this->hasMany(\App\Models\Course::class, 'teacher_id');
+        return $this->hasMany(Course::class, 'teacher_id');
     }
 
     public function enrolledCourses()
     {
-        return $this->belongsToMany(\App\Models\Course::class, 'course_student', 'student_id', 'course_id')
+        return $this->belongsToMany(Course::class, 'course_student', 'student_id', 'course_id')
                     ->withPivot('enrolled_at')
                     ->withTimestamps();
     }
 
     public function lessonProgress()
     {
-        return $this->hasMany(\App\Models\LessonProgress::class);
+        return $this->hasMany(LessonProgress::class);
     }
 }

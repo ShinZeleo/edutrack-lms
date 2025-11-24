@@ -35,7 +35,6 @@ class Course extends Model
         return $this->belongsTo(User::class, 'teacher_id');
     }
 
-
     public function scopeActive($query)
     {
         return $query->where('is_active', true);
@@ -48,16 +47,15 @@ class Course extends Model
 
     public function students()
     {
-        return $this->belongsToMany(\App\Models\User::class, 'course_student', 'course_id', 'student_id')
+        return $this->belongsToMany(User::class, 'course_student', 'course_id', 'student_id')
                     ->withPivot('enrolled_at')
                     ->withTimestamps();
     }
 
     public function lessons()
     {
-        return $this->hasMany(\App\Models\Lesson::class);
+        return $this->hasMany(Lesson::class);
     }
-
 
     public function getProgressForUser($user)
     {

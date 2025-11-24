@@ -16,12 +16,12 @@ class CourseController extends Controller
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            $courses = \App\Models\Course::with(['category', 'teacher'])->latest()->paginate(10);
-            $categories = \App\Models\Category::all();
-            $teachers = \App\Models\User::where('role', 'teacher')->get();
+            $courses = Course::with(['category', 'teacher'])->latest()->paginate(10);
+            $categories = Category::all();
+            $teachers = User::where('role', 'teacher')->get();
             return view('courses.admin.index', compact('courses', 'categories', 'teachers'));
         } elseif ($user->isTeacher()) {
-            $courses = \App\Models\Course::where('teacher_id', $user->id)
+            $courses = Course::where('teacher_id', $user->id)
                             ->with(['category', 'teacher'])
                             ->latest()
                             ->paginate(10);
@@ -36,11 +36,11 @@ class CourseController extends Controller
         $user = Auth::user();
 
         if ($user->isAdmin()) {
-            $categories = \App\Models\Category::all();
-            $teachers = \App\Models\User::where('role', 'teacher')->get();
+            $categories = Category::all();
+            $teachers = User::where('role', 'teacher')->get();
             return view('courses.admin.create', compact('categories', 'teachers'));
         } elseif ($user->isTeacher()) {
-            $categories = \App\Models\Category::all();
+            $categories = Category::all();
             return view('courses.teacher.create', compact('categories'));
         } else {
             abort(403);
@@ -62,7 +62,7 @@ class CourseController extends Controller
 
         $teacherId = $user->isAdmin() ? $request->input('teacher_id') : $user->id;
 
-        \App\Models\Course::create([
+        Course::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'start_date' => $request->input('start_date'),
@@ -79,17 +79,17 @@ class CourseController extends Controller
         }
     }
 
-    public function edit(\App\Models\Course $course)
+    public function edit(Course $course)
     {
         $user = Auth::user();
 
         if ($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id)) {
             if ($user->isAdmin()) {
-                $categories = \App\Models\Category::all();
-                $teachers = \App\Models\User::where('role', 'teacher')->get();
+                $categories = Category::all();
+                $teachers = User::where('role', 'teacher')->get();
                 return view('courses.admin.edit', compact('course', 'categories', 'teachers'));
             } elseif ($user->isTeacher()) {
-                $categories = \App\Models\Category::all();
+                $categories = Category::all();
                 return view('courses.teacher.edit', compact('course', 'categories'));
             }
         } else {
@@ -97,7 +97,7 @@ class CourseController extends Controller
         }
     }
 
-    public function update(Request $request, \App\Models\Course $course)
+    public function update(Request $request, Course $course)
     {
         $user = Auth::user();
 
@@ -158,7 +158,7 @@ class CourseController extends Controller
         $search = $request->input('search');
         $categoryId = $request->input('category_id');
 
-        $query = \App\Models\Course::with(['teacher', 'category', 'students'])
+        $query = Course::with(['teacher', 'category', 'students'])
                       ->where('is_active', true)
                       ->withCount(['students', 'lessons']);
 
@@ -198,7 +198,7 @@ class CourseController extends Controller
         }
 
         $courses = $query->paginate(12)->withQueryString();
-        $categories = \App\Models\Category::where('is_active', true)->get();
+        $categories = Category::where('is_active', true)->get();
 
         return view('courses.catalog', compact('courses', 'categories', 'sort'));
     }

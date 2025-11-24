@@ -127,7 +127,6 @@
                 @endif
             </div>
 
-
             @if(isset($courses) && method_exists($courses, 'hasPages') && $courses->hasPages())
                 <div class="mt-8">
                     {{ $courses->links() }}

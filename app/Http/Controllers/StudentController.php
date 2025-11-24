@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
@@ -18,10 +17,5 @@ class StudentController extends Controller
                 return $course;
             });
         return view('profile.student', compact('user', 'enrolledCourses'));
-    }
-
-    public function courses()
-    {
-        return view('student.courses');
     }
 }

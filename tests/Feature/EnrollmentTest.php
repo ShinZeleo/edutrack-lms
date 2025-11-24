@@ -19,7 +19,6 @@ class EnrollmentTest extends TestCase
     {
         parent::setUp();
 
-        // Create test data
         $this->category = Category::factory()->create(['is_active' => true]);
         $this->teacher = User::factory()->create(['role' => 'teacher', 'is_active' => true]);
         $this->student = User::factory()->create(['role' => 'student', 'is_active' => true]);
@@ -74,17 +73,13 @@ class EnrollmentTest extends TestCase
     #[Test]
     public function student_can_enroll_multiple_times_without_duplicate()
     {
-        // First enrollment
         $this->actingAs($this->student)
             ->post(route('courses.enroll', $this->course));
-
-        // Second enrollment attempt
         $response = $this->actingAs($this->student)
             ->post(route('courses.enroll', $this->course));
 
         $response->assertRedirect();
 
-        // Should only have one enrollment record
         $this->assertEquals(1, $this->course->students()->where('users.id', $this->student->id)->count());
     }
 
@@ -96,7 +91,6 @@ class EnrollmentTest extends TestCase
             'order' => 1,
         ]);
 
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
         $response = $this->actingAs($this->student)
@@ -128,7 +122,6 @@ class EnrollmentTest extends TestCase
             'order' => 1,
         ]);
 
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
         $response = $this->actingAs($this->student)
@@ -166,10 +159,8 @@ class EnrollmentTest extends TestCase
             'order' => 1,
         ]);
 
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
-        // Mark as done first
         LessonProgress::create([
             'lesson_id' => $lesson->id,
             'student_id' => $this->student->id,
@@ -177,7 +168,6 @@ class EnrollmentTest extends TestCase
             'done_at' => now(),
         ]);
 
-        // Mark as not done
         $response = $this->actingAs($this->student)
             ->post(route('lessons.mark.not.done', $lesson));
 
@@ -208,15 +198,12 @@ class EnrollmentTest extends TestCase
     #[Test]
     public function course_progress_is_calculated_correctly()
     {
-        // Create 4 lessons
         $lessons = Lesson::factory()->count(4)->create([
             'course_id' => $this->course->id,
         ]);
 
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
-        // Mark 2 lessons as done
         LessonProgress::create([
             'lesson_id' => $lessons[0]->id,
             'student_id' => $this->student->id,
@@ -232,14 +219,12 @@ class EnrollmentTest extends TestCase
 
         $progress = $this->course->getProgressForUser($this->student);
 
-        // 2 out of 4 = 50%
         $this->assertEquals(50.0, $progress);
     }
 
     #[Test]
     public function course_progress_is_zero_when_no_lessons()
     {
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
         $progress = $this->course->getProgressForUser($this->student);
@@ -254,7 +239,6 @@ class EnrollmentTest extends TestCase
             'course_id' => $this->course->id,
         ]);
 
-        // Enroll student
         $this->course->students()->attach($this->student->id, ['enrolled_at' => now()]);
 
         $progress = $this->course->getProgressForUser($this->student);

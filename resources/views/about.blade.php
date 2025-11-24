@@ -1,7 +1,6 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 mb-4">Tentang EduTrack LMS</h1>
                 <p class="text-lg text-neutral-600 max-w-3xl mx-auto">
@@ -9,7 +8,6 @@
                 </p>
             </div>
 
-            
             <div class="mb-12 rounded-2xl overflow-hidden shadow-xl">
                 <img
                     src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop"
@@ -18,7 +16,7 @@
                 />
             </div>
 
-            
+
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 md:p-10 mb-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-12 w-12 rounded-xl bg-emerald-100 flex items-center justify-center">
@@ -43,7 +41,7 @@
                 </div>
             </div>
 
-            
+
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 md:p-10 mb-8">
                 <div class="flex items-center gap-3 mb-6">
                     <div class="h-12 w-12 rounded-xl bg-blue-100 flex items-center justify-center">
@@ -92,7 +90,6 @@
                 </ul>
             </div>
 
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl shadow-lg border-2 border-emerald-200 p-8 text-center">
                     <div class="text-4xl font-bold text-emerald-700 mb-2">1000+</div>
@@ -108,7 +105,6 @@
                 </div>
             </div>
 
-            
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 md:p-10">
                 <h2 class="text-2xl font-bold text-neutral-900 mb-8 text-center">Mengapa Memilih EduTrack LMS?</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

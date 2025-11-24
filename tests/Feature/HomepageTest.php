@@ -24,7 +24,6 @@ class HomepageTest extends TestCase
     #[Test]
     public function homepage_displays_5_most_popular_courses()
     {
-        // Create 7 courses with different enrollment counts
         $course1 = Course::factory()->create([
             'teacher_id' => $this->teacher->id,
             'category_id' => $this->category->id,
@@ -67,41 +66,25 @@ class HomepageTest extends TestCase
             'is_active' => true,
         ]);
 
-        // Create students and enroll them
         $students = User::factory()->count(10)->create(['role' => 'student']);
 
-        // Course1: 10 students (most popular)
         $course1->students()->attach($students->pluck('id')->toArray());
-
-        // Course2: 8 students
         $course2->students()->attach($students->take(8)->pluck('id')->toArray());
-
-        // Course3: 6 students
         $course3->students()->attach($students->take(6)->pluck('id')->toArray());
-
-        // Course4: 4 students
         $course4->students()->attach($students->take(4)->pluck('id')->toArray());
-
-        // Course5: 2 students
         $course5->students()->attach($students->take(2)->pluck('id')->toArray());
-
-        // Course6: 1 student
         $course6->students()->attach($students->first()->id);
-
-        // Course7: 0 students
 
         $response = $this->get(route('home'));
 
         $response->assertOk();
 
-        // Should show top 5: course1, course2, course3, course4, course5
         $response->assertSee($course1->name);
         $response->assertSee($course2->name);
         $response->assertSee($course3->name);
         $response->assertSee($course4->name);
         $response->assertSee($course5->name);
 
-        // Should NOT show course6 and course7
         $response->assertDontSee($course6->name);
         $response->assertDontSee($course7->name);
     }

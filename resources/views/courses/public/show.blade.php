@@ -57,7 +57,6 @@
                         </div>
                     </div>
 
-
                     <div class="lg:col-span-1">
                         <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-4 sm:p-6 text-white shadow-xl">
                             <p class="text-xs uppercase tracking-widest text-emerald-100 mb-2">Aksi</p>
@@ -134,7 +133,6 @@
                 </div>
             </div>
 
-
             <div class="grid lg:grid-cols-3 gap-6 sm:gap-8">
 
                 <div class="lg:col-span-2">
@@ -186,7 +184,6 @@
                         </ol>
                     </div>
                 </div>
-
 
                 <div class="lg:col-span-1">
                     <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 sticky top-24">

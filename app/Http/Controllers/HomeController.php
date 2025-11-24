@@ -14,7 +14,7 @@ class HomeController extends Controller
         $search = $request->input('search');
         $categoryId = $request->input('category_id');
 
-        $query = \App\Models\Course::with(['teacher', 'category', 'students'])
+        $query = Course::with(['teacher', 'category', 'students'])
                       ->where('is_active', true)
                       ->withCount('students');
 
@@ -27,7 +27,7 @@ class HomeController extends Controller
         }
 
         $courses = $query->orderByDesc('students_count')->limit(5)->get();
-        $categories = \App\Models\Category::where('is_active', true)->get();
+        $categories = Category::where('is_active', true)->get();
 
         $stats = [
             'activeCourses' => Course::where('is_active', true)->count(),

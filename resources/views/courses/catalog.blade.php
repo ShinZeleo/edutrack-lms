@@ -30,7 +30,6 @@
 
         <section class="mt-8">
             @php
-                // Array variasi gambar untuk course (10 variasi berbeda)
                 $courseImages = [
                     'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
                     'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',

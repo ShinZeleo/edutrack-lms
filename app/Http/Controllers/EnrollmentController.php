@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\LessonProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class EnrollmentController extends Controller
 {
@@ -36,7 +34,6 @@ class EnrollmentController extends Controller
             return redirect()->back()->with('error', 'Hanya siswa yang dapat menandai lesson sebagai selesai.');
         }
 
-        // Load course relationship if not already loaded
         if (!$lesson->relationLoaded('course')) {
             $lesson->load('course');
         }
@@ -76,7 +73,6 @@ class EnrollmentController extends Controller
             return redirect()->back()->with('error', 'Hanya siswa yang dapat mengubah status lesson.');
         }
 
-        // Load course relationship if not already loaded
         if (!$lesson->relationLoaded('course')) {
             $lesson->load('course');
         }

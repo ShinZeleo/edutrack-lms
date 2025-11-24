@@ -350,7 +350,6 @@ edutrack-lms/
 ├── database/
 │   ├── migrations/
 │   └── seeders/
-│       ├── AdminUserSeeder.php
 │       └── DemoSeeder.php
 ├── resources/
 │   ├── views/

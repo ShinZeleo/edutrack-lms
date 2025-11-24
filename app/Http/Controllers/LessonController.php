@@ -60,12 +60,10 @@ class LessonController extends Controller
                              ->with('error', 'You must be enrolled to view this lesson.');
         }
 
-        // Load progress for the current lesson
         $lesson->load(['progress' => function ($progressQuery) use ($user) {
             $progressQuery->where('student_id', $user->id);
         }]);
 
-        // Load all lessons with their progress
         $course->load(['lessons' => function ($query) use ($user) {
             $query->ordered()->with(['progress' => function ($progressQuery) use ($user) {
                 $progressQuery->where('student_id', $user->id);
@@ -77,7 +75,6 @@ class LessonController extends Controller
         $nextLesson = $lessons->get($currentLessonIndex + 1);
         $prevLesson = $lessons->get($currentLessonIndex - 1);
 
-        // Check if current lesson is done
         $progress = $lesson->progress->first();
         $isDone = $progress && $progress->is_done;
 

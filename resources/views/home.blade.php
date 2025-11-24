@@ -86,16 +86,15 @@
             </div>
 
             @php
-                // Array variasi gambar untuk kategori (8 variasi berbeda)
                 $categoryImages = [
-                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop', // Laptop/coding
-                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop', // Coding workspace
-                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop', // Business/analytics
-                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop', // Team collaboration
-                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop', // Data visualization
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop', // Code editor
-                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop', // Development
-                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop', // Technology
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop',
+                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=300&fit=crop',
                 ];
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
@@ -138,18 +137,17 @@
             </div>
 
             @php
-                // Array variasi gambar untuk course (10 variasi berbeda)
                 $courseImages = [
-                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop', // Laptop/coding
-                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop', // Coding workspace
-                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop', // Business/analytics
-                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop', // Team collaboration
-                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop', // Data visualization
-                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop', // Code editor
-                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop', // Development
-                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop', // Technology
-                    'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop', // Programming
-                    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop', // Web development
+                    'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=600&h=400&fit=crop',
+                    'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=400&fit=crop',
                 ];
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

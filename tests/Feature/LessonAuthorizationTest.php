@@ -230,11 +230,9 @@ class LessonAuthorizationTest extends TestCase
     #[Test]
     public function teacher_cannot_access_lesson_from_wrong_course()
     {
-        // Try to access lesson2 (from course2) as teacher1
         $response = $this->actingAs($this->teacher1)
             ->get(route('teacher.courses.lessons.edit', $this->lesson2));
 
-        // Should fail because lesson2 belongs to course2 (teacher2), not course1 (teacher1)
         $response->assertStatus(403);
     }
 }

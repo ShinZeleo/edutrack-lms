@@ -1,13 +1,12 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            
             <div class="mb-8">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Profil</h1>
                 <p class="text-lg text-neutral-600">Kelola informasi akun dan pengaturan Anda</p>
             </div>
 
-            
+
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8 mb-8">
                 <div class="flex items-center gap-6 mb-8">
                     <div class="h-24 w-24 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-3xl font-bold">
@@ -24,7 +23,6 @@
             </div>
 
             <div class="space-y-8">
-                {{-- Informasi profil --}}
                 <section class="bg-white border-2 border-neutral-200 rounded-2xl shadow-lg p-8">
                     <header class="mb-6 flex items-center gap-3">
                         <div class="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center">
@@ -47,7 +45,6 @@
                     </div>
                 </section>
 
-                {{-- Ubah password --}}
                 <section class="bg-white border-2 border-neutral-200 rounded-2xl shadow-lg p-8">
                     <header class="mb-6 flex items-center gap-3">
                         <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -70,7 +67,6 @@
                     </div>
                 </section>
 
-                {{-- Hapus akun --}}
                 <section class="bg-white border-2 border-red-200 rounded-2xl shadow-lg p-8">
                     <header class="mb-6 flex items-center gap-3">
                         <div class="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">

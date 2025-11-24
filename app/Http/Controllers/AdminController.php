@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class AdminController extends Controller
 {
     public function dashboard()
@@ -20,10 +18,5 @@ class AdminController extends Controller
         $categories = \App\Models\Category::latest()->get();
 
         return view('admin.dashboard', compact('stats', 'recentUsers', 'recentCourses', 'categories'));
-    }
-
-    public function users()
-    {
-        return view('admin.users');
     }
 }
