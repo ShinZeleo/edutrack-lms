@@ -2,6 +2,12 @@
 
 <div align="center">
 
+![EduTrack LMS Banner](docs/screenshots/banner.png)
+
+</div>
+
+<div align="center">
+
 ![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
@@ -43,29 +49,29 @@
 
 ## 📋 Daftar Isi
 
-![About](https://img.shields.io/badge/📌-Tentang%20Proyek-blue?style=flat-square) [Tentang Proyek](#-tentang-proyek)
+![About](https://img.shields.io/badge/📌-Tentang%20Proyek-blue?style=flat-square) [](#-tentang-proyek)
 
-![Features](https://img.shields.io/badge/✨-Fitur-purple?style=flat-square) [Fitur](#-fitur)
+![Features](https://img.shields.io/badge/✨-Fitur-purple?style=flat-square) [](#-fitur)
 
-![Tech](https://img.shields.io/badge/🛠-Teknologi-orange?style=flat-square) [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+![Tech](https://img.shields.io/badge/🛠-Teknologi-orange?style=flat-square) [](#-teknologi-yang-digunakan)
 
-![Requirements](https://img.shields.io/badge/💻-Persyaratan%20Sistem-green?style=flat-square) [Persyaratan Sistem](#-persyaratan-sistem)
+![Requirements](https://img.shields.io/badge/💻-Persyaratan%20Sistem-green?style=flat-square) [](#-persyaratan-sistem)
 
-![Installation](https://img.shields.io/badge/🚀-Instalasi-red?style=flat-square) [Instalasi](#-instalasi)
+![Installation](https://img.shields.io/badge/🚀-Instalasi-red?style=flat-square) [](#-instalasi)
 
-![Configuration](https://img.shields.io/badge/⚙️-Konfigurasi-yellow?style=flat-square) [Konfigurasi](#-konfigurasi)
+![Configuration](https://img.shields.io/badge/⚙️-Konfigurasi-yellow?style=flat-square) [](#-konfigurasi)
 
-![Structure](https://img.shields.io/badge/📁-Struktur%20Proyek-cyan?style=flat-square) [Struktur Proyek](#-struktur-proyek)
+![Structure](https://img.shields.io/badge/📁-Struktur%20Proyek-cyan?style=flat-square) [](#-struktur-proyek)
 
-![Usage](https://img.shields.io/badge/📖-Penggunaan-pink?style=flat-square) [Penggunaan](#-penggunaan)
+![Usage](https://img.shields.io/badge/📖-Penggunaan-pink?style=flat-square) [](#-penggunaan)
 
-![Testing](https://img.shields.io/badge/🧪-Testing-indigo?style=flat-square) [Testing](#-testing)
+![Testing](https://img.shields.io/badge/🧪-Testing-indigo?style=flat-square) [](#-testing)
 
-![Contributing](https://img.shields.io/badge/🤝-Kontribusi-teal?style=flat-square) [Kontribusi](#-kontribusi)
+![Contributing](https://img.shields.io/badge/🤝-Kontribusi-teal?style=flat-square) [](#-kontribusi)
 
-![License](https://img.shields.io/badge/📝-License-gray?style=flat-square) [License](#-license)
+![License](https://img.shields.io/badge/📝-License-gray?style=flat-square) [](#-license)
 
-![Contact](https://img.shields.io/badge/👤-Kontak-brown?style=flat-square) [Kontak](#-kontak)
+![Contact](https://img.shields.io/badge/👤-Kontak-brown?style=flat-square) [](#-kontak)
 
 ---
 
@@ -141,48 +147,48 @@ EduTrack LMS adalah sistem manajemen pembelajaran (Learning Management System) y
 
 ### 🔧 Backend
 
-![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel 12.0** - PHP Framework
+![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - PHP Framework
 
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white) **PHP 8.2+** - Programming Language
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)  - Programming Language
 
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white) **MySQL** - Database Management System
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)  - Database Management System
 
-![Eloquent](https://img.shields.io/badge/Eloquent-ORM-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Eloquent ORM** - Database Abstraction Layer
+![Eloquent](https://img.shields.io/badge/Eloquent-ORM-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - Database Abstraction Layer
 
 ### 🎨 Frontend
 
-![Blade](https://img.shields.io/badge/Blade-Templates-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Blade Templates** - Templating Engine
+![Blade](https://img.shields.io/badge/Blade-Templates-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - Templating Engine
 
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) **Tailwind CSS** - Utility-first CSS Framework
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)  - Utility-first CSS Framework
 
-![Alpine.js](https://img.shields.io/badge/Alpine.js-3.4-77C1D5?style=flat-square&logo=alpine.js&logoColor=white) **Alpine.js** - Lightweight JavaScript Framework
+![Alpine.js](https://img.shields.io/badge/Alpine.js-3.4-77C1D5?style=flat-square&logo=alpine.js&logoColor=white)  - Lightweight JavaScript Framework
 
-![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite&logoColor=white) **Vite** - Build Tool dan Development Server
+![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite&logoColor=white)  - Build Tool dan Development Server
 
 ### 🛠️ Development Tools
 
-![Laravel Breeze](https://img.shields.io/badge/Breeze-Auth-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel Breeze** - Authentication Scaffolding
+![Laravel Breeze](https://img.shields.io/badge/Breeze-Auth-FF2D20?style=flat-square&logo=laravel&logoColor=white)
 
-![Laravel Pint](https://img.shields.io/badge/Pint-Code%20Style-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel Pint** - Code Style Fixer
+![Laravel Pint](https://img.shields.io/badge/Pint-Code%20Style-FF2D20?style=flat-square&logo=laravel&logoColor=white)
 
-![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-3EAAAF?style=flat-square&logo=phpunit&logoColor=white) **PHPUnit** - Testing Framework
+![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-3EAAAF?style=flat-square&logo=phpunit&logoColor=white)
 
 
 ---
 
 ## 💻 Persyaratan Sistem
 
-![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4?style=flat-square&logo=php&logoColor=white) **PHP**: >= 8.2
+![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4?style=flat-square&logo=php&logoColor=white)
 
-![Composer](https://img.shields.io/badge/Composer-%3E%3D%202.0-885630?style=flat-square&logo=composer&logoColor=white) **Composer**: >= 2.0
+![Composer](https://img.shields.io/badge/Composer-%3E%3D%202.0-885630?style=flat-square&logo=composer&logoColor=white)
 
-![Node.js](https://img.shields.io/badge/Node.js-%3E%3D%2018.x-339933?style=flat-square&logo=node.js&logoColor=white) **Node.js**: >= 18.x
+![Node.js](https://img.shields.io/badge/Node.js-%3E%3D%2018.x-339933?style=flat-square&logo=node.js&logoColor=white)
 
-![NPM](https://img.shields.io/badge/NPM-%3E%3D%209.x-CB3837?style=flat-square&logo=npm&logoColor=white) **NPM**: >= 9.x
+![NPM](https://img.shields.io/badge/NPM-%3E%3D%209.x-CB3837?style=flat-square&logo=npm&logoColor=white)
 
-![MySQL](https://img.shields.io/badge/MySQL-%3E%3D%208.0-4479A1?style=flat-square&logo=mysql&logoColor=white) **MySQL**: >= 8.0
+![MySQL](https://img.shields.io/badge/MySQL-%3E%3D%208.0-4479A1?style=flat-square&logo=mysql&logoColor=white)
 
-![Apache](https://img.shields.io/badge/Apache-D22128?style=flat-square&logo=apache&logoColor=white) **Apache**
+![Apache](https://img.shields.io/badge/Apache-D22128?style=flat-square&logo=apache&logoColor=white)
 
 ---
 
@@ -191,7 +197,7 @@ EduTrack LMS adalah sistem manajemen pembelajaran (Learning Management System) y
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/edutrack-lms.git
+git clone https://github.com/ShinZeleo/edutrack-lms.git
 cd edutrack-lms
 ```
 
@@ -269,16 +275,16 @@ composer run dev
 Setelah menjalankan seeder, Anda dapat login dengan:
 
 **👨‍💼 Admin:**
-- ![Email](https://img.shields.io/badge/Email-admin%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `admin@edutrack.com`
-- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
+- ![Email](https://img.shields.io/badge/Email-admin%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white)
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white)
 
 **👨‍🏫 Teacher:**
-- ![Email](https://img.shields.io/badge/Email-teacher%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `teacher@edutrack.com`
-- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
+- ![Email](https://img.shields.io/badge/Email-teacher%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white)
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white)
 
 **👨‍🎓 Student:**
-- ![Email](https://img.shields.io/badge/Email-student%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `student@edutrack.com`
-- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
+- ![Email](https://img.shields.io/badge/Email-student%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white)
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white)
 
 ### Environment Variables
 
@@ -373,11 +379,11 @@ edutrack-lms/
 
 ### 📄 File Penting
 
-![composer.json](https://img.shields.io/badge/composer.json-PHP%20Dependencies-885630?style=flat-square&logo=composer&logoColor=white) **composer.json** - Dependencies PHP
+![composer.json](https://img.shields.io/badge/composer.json-PHP%20Dependencies-885630?style=flat-square&logo=composer&logoColor=white)  - Dependencies PHP
 
-![package.json](https://img.shields.io/badge/package.json-Node%20Dependencies-CB3837?style=flat-square&logo=npm&logoColor=white) **package.json** - Dependencies Node.js
+![package.json](https://img.shields.io/badge/package.json-Node%20Dependencies-CB3837?style=flat-square&logo=npm&logoColor=white)  - Dependencies Node.js
 
-![.env.example](https://img.shields.io/badge/.env.example-Configuration-FF6B6B?style=flat-square&logo=gear&logoColor=white) **.env.example** - Template konfigurasi environment
+![.env.example](https://img.shields.io/badge/.env.example-Configuration-FF6B6B?style=flat-square&logo=gear&logoColor=white)  - Template konfigurasi environment
 
 ---
 
@@ -458,9 +464,9 @@ Kontribusi sangat diterima! Untuk berkontribusi:
 
 ## 👤 Kontak
 
-![GitHub](https://img.shields.io/badge/GitHub-ShinZeleo-181717?style=for-the-badge&logo=github&logoColor=white) **Developer**: [@ShinZeleo](https://github.com/ShinZeleo)
+![GitHub](https://img.shields.io/badge/GitHub-ShinZeleo-181717?style=for-the-badge&logo=github&logoColor=white) [@ShinZeleo](https://github.com/ShinZeleo)
 
-![Project](https://img.shields.io/badge/Project-Link-FF6B6B?style=for-the-badge&logo=link&logoColor=white) **Project Link**: [https://github.com/ShinZeleo/edutrack-lms](https://github.com/ShinZeleo/edutrack-lms)
+![Project](https://img.shields.io/badge/Project-Link-FF6B6B?style=for-the-badge&logo=link&logoColor=white) : [https://github.com/ShinZeleo/edutrack-lms](https://github.com/ShinZeleo/edutrack-lms)
 
 
 ---
