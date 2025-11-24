@@ -5,11 +5,13 @@
 ![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+
 
 **Platform pembelajaran online yang dirancang untuk memberikan pengalaman belajar terbaik dengan manajemen konten yang komprehensif**
 
-[Fitur](#-fitur) • [Instalasi](#-instalasi) • [Dokumentasi](#-dokumentasi) • [Kontribusi](#-kontribusi)
+[![Fitur](https://img.shields.io/badge/📋-Fitur-blue?style=flat-square)](#-fitur) • [![Instalasi](https://img.shields.io/badge/🚀-Instalasi-green?style=flat-square)](#-instalasi) • [![Dokumentasi](https://img.shields.io/badge/📖-Dokumentasi-purple?style=flat-square)](#-dokumentasi) • [![Kontribusi](https://img.shields.io/badge/🤝-Kontribusi-orange?style=flat-square)](#-kontribusi)
 
 </div>
 
@@ -41,18 +43,29 @@
 
 ## 📋 Daftar Isi
 
-- [Tentang Proyek](#-tentang-proyek)
-- [Fitur](#-fitur)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
-- [Persyaratan Sistem](#-persyaratan-sistem)
-- [Instalasi](#-instalasi)
-- [Konfigurasi](#-konfigurasi)
-- [Struktur Proyek](#-struktur-proyek)
-- [Penggunaan](#-penggunaan)
-- [Testing](#-testing)
-- [Kontribusi](#-kontribusi)
-- [License](#-license)
-- [Kontak](#-kontak)
+![About](https://img.shields.io/badge/📌-Tentang%20Proyek-blue?style=flat-square) [Tentang Proyek](#-tentang-proyek)
+
+![Features](https://img.shields.io/badge/✨-Fitur-purple?style=flat-square) [Fitur](#-fitur)
+
+![Tech](https://img.shields.io/badge/🛠-Teknologi-orange?style=flat-square) [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+
+![Requirements](https://img.shields.io/badge/💻-Persyaratan%20Sistem-green?style=flat-square) [Persyaratan Sistem](#-persyaratan-sistem)
+
+![Installation](https://img.shields.io/badge/🚀-Instalasi-red?style=flat-square) [Instalasi](#-instalasi)
+
+![Configuration](https://img.shields.io/badge/⚙️-Konfigurasi-yellow?style=flat-square) [Konfigurasi](#-konfigurasi)
+
+![Structure](https://img.shields.io/badge/📁-Struktur%20Proyek-cyan?style=flat-square) [Struktur Proyek](#-struktur-proyek)
+
+![Usage](https://img.shields.io/badge/📖-Penggunaan-pink?style=flat-square) [Penggunaan](#-penggunaan)
+
+![Testing](https://img.shields.io/badge/🧪-Testing-indigo?style=flat-square) [Testing](#-testing)
+
+![Contributing](https://img.shields.io/badge/🤝-Kontribusi-teal?style=flat-square) [Kontribusi](#-kontribusi)
+
+![License](https://img.shields.io/badge/📝-License-gray?style=flat-square) [License](#-license)
+
+![Contact](https://img.shields.io/badge/👤-Kontak-brown?style=flat-square) [Kontak](#-kontak)
 
 ---
 
@@ -60,113 +73,129 @@
 
 EduTrack LMS adalah sistem manajemen pembelajaran (Learning Management System) yang komprehensif yang dirancang untuk memfasilitasi proses pembelajaran online antara guru dan siswa. Platform ini menyediakan workflow CMS terpadu dengan tampilan modern, responsif, dan mudah digunakan.
 
-### Tujuan
-- Menyediakan proses pembelajaran terpandu lengkap dengan manajemen konten
-- Memfasilitasi interaksi antara guru dan siswa
-- Menyediakan pelacakan progres pembelajaran yang akurat
-- Memberikan pengalaman pengguna yang modern dan intuitif
+### 🎯 Tujuan
+- 📚 Menyediakan proses pembelajaran terpandu lengkap dengan manajemen konten
+- 👥 Memfasilitasi interaksi antara guru dan siswa
+- 📊 Menyediakan pelacakan progres pembelajaran yang akurat
+- 🎨 Memberikan pengalaman pengguna yang modern dan intuitif
 
-### Nilai Utama
-- ✅ Workflow CMS terpadu
-- ✅ Tampilan clean dengan hierarki visual jelas
-- ✅ Komponen responsif dan aksesibilitas tinggi
-- ✅ Arsitektur modular yang mudah diuji dan dikembangkan
+### ⭐ Nilai Utama
+- ✅ **Workflow CMS Terpadu** - Sistem manajemen konten yang terintegrasi
+- ✅ **Tampilan Clean** - Hierarki visual yang jelas dan mudah dipahami
+- ✅ **Responsif & Aksesibel** - Optimal di semua perangkat dan aksesibilitas tinggi
+- ✅ **Arsitektur Modular** - Mudah diuji, dikembangkan, dan dirawat
 
 ---
 
 ## ✨ Fitur
 
 ### 👥 Manajemen Pengguna
-- **Multi-role System**: Admin, Teacher, Student, dan Guest
-- **User Management**: CRUD lengkap untuk pengguna dengan filter dan pencarian
-- **Role-based Access Control**: Setiap role memiliki akses dan fitur yang berbeda
-- **Profile Management**: Pengguna dapat mengelola profil mereka sendiri
+- 🔐 **Multi-role System** - Admin, Teacher, Student, dan Guest
+- 👤 **User Management** - CRUD lengkap untuk pengguna dengan filter dan pencarian
+- 🛡️ **Role-based Access Control** - Setiap role memiliki akses dan fitur yang berbeda
+- ⚙️ **Profile Management** - Pengguna dapat mengelola profil mereka sendiri
 
 ### 📚 Manajemen Kursus
-- **Course CRUD**: Buat, edit, dan hapus kursus dengan mudah
-- **Category Management**: Organisasi kursus berdasarkan kategori
-- **Course Status**: Aktif/Nonaktif untuk kontrol publikasi
-- **Date Range**: Penjadwalan kursus dengan tanggal mulai dan akhir
-- **Teacher Assignment**: Penugasan teacher ke kursus tertentu
+- ➕ **Course CRUD** - Buat, edit, dan hapus kursus dengan mudah
+- 🏷️ **Category Management** - Organisasi kursus berdasarkan kategori
+- 🔄 **Course Status** - Aktif/Nonaktif untuk kontrol publikasi
+- 📅 **Date Range** - Penjadwalan kursus dengan tanggal mulai dan akhir
+- 👨‍🏫 **Teacher Assignment** - Penugasan teacher ke kursus tertentu
 
 ### 📖 Manajemen Konten
-- **Lesson Management**: Buat dan kelola lesson per course
-- **Content Organization**: Urutan lesson yang dapat diatur
-- **Rich Text Content**: Konten lesson dengan format yang kaya
-- **Progress Tracking**: Pelacakan progres pembelajaran per siswa
+- 📝 **Lesson Management** - Buat dan kelola lesson per course
+- 📋 **Content Organization** - Urutan lesson yang dapat diatur
+- ✍️ **Rich Text Content** - Konten lesson dengan format yang kaya
+- 📊 **Progress Tracking** - Pelacakan progres pembelajaran per siswa
 
 ### 📊 Dashboard & Analytics
-- **Admin Dashboard**:
-  - Statistik total users, courses, categories, dan enrollments
-  - Recent users dan courses
-  - Category management terintegrasi
-- **Teacher Dashboard**:
-  - Overview kursus yang diajar
-  - Statistik siswa dan enrollment
-- **Student Dashboard**:
-  - Kursus yang diikuti
-  - Progress tracking per course
-  - Lesson yang sudah/belum selesai
+- **👨‍💼 Admin Dashboard**:
+  - 📈 Statistik total users, courses, categories, dan enrollments
+  - 👥 Recent users dan courses
+  - 🏷️ Category management terintegrasi
+- **👨‍🏫 Teacher Dashboard**:
+  - 📚 Overview kursus yang diajar
+  - 📊 Statistik siswa dan enrollment
+- **👨‍🎓 Student Dashboard**:
+  - 📖 Kursus yang diikuti
+  - 📈 Progress tracking per course
+  - ✅ Lesson yang sudah/belum selesai
 
 ### 🎓 Fitur Pembelajaran
-- **Enrollment System**: Siswa dapat mendaftar ke kursus
-- **Progress Tracking**: Otomatis melacak progres pembelajaran
-- **Mark as Done**: Siswa dapat menandai lesson sebagai selesai
-- **Lesson Navigation**: Navigasi mudah antar lesson
-- **Course Catalog**: Katalog kursus dengan filter dan pencarian
+- 🎫 **Enrollment System** - Siswa dapat mendaftar ke kursus
+- 📈 **Progress Tracking** - Otomatis melacak progres pembelajaran
+- ✅ **Mark as Done** - Siswa dapat menandai lesson sebagai selesai
+- 🔄 **Lesson Navigation** - Navigasi mudah antar lesson
+- 🔍 **Course Catalog** - Katalog kursus dengan filter dan pencarian
 
 ### 🎨 UI/UX Modern
-- **Responsive Design**: Optimal di semua perangkat
-- **Card-based Layout**: Tampilan modern dengan card layout
-- **Tailwind CSS**: Styling dengan utility-first CSS framework
-- **Smooth Animations**: Transisi dan animasi yang halus
-- **Accessibility**: Aksesibilitas tinggi untuk semua pengguna
+- 📱 **Responsive Design** - Optimal di semua perangkat
+- 🎴 **Card-based Layout** - Tampilan modern dengan card layout
+- 🎨 **Tailwind CSS** - Styling dengan utility-first CSS framework
+- ✨ **Smooth Animations** - Transisi dan animasi yang halus
+- ♿ **Accessibility** - Aksesibilitas tinggi untuk semua pengguna
 
 ---
 
 ## 🛠 Teknologi yang Digunakan
 
-### Backend
-- **Laravel 12.0** - PHP Framework
-- **PHP 8.2+** - Programming Language
-- **MySQL** - Database Management System
-- **Eloquent ORM** - Database Abstraction Layer
+### 🔧 Backend
 
-### Frontend
-- **Blade Templates** - Templating Engine
-- **Tailwind CSS** - Utility-first CSS Framework
-- **Alpine.js** - Lightweight JavaScript Framework
-- **Vite** - Build Tool dan Development Server
+![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel 12.0** - PHP Framework
 
-### Development Tools
-- **Laravel Breeze** - Authentication Scaffolding
-- **Laravel Pint** - Code Style Fixer
-- **PHPUnit** - Testing Framework
-- **Laravel Sail** - Docker Development Environment
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white) **PHP 8.2+** - Programming Language
+
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white) **MySQL** - Database Management System
+
+![Eloquent](https://img.shields.io/badge/Eloquent-ORM-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Eloquent ORM** - Database Abstraction Layer
+
+### 🎨 Frontend
+
+![Blade](https://img.shields.io/badge/Blade-Templates-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Blade Templates** - Templating Engine
+
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) **Tailwind CSS** - Utility-first CSS Framework
+
+![Alpine.js](https://img.shields.io/badge/Alpine.js-3.4-77C1D5?style=flat-square&logo=alpine.js&logoColor=white) **Alpine.js** - Lightweight JavaScript Framework
+
+![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite&logoColor=white) **Vite** - Build Tool dan Development Server
+
+### 🛠️ Development Tools
+
+![Laravel Breeze](https://img.shields.io/badge/Breeze-Auth-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel Breeze** - Authentication Scaffolding
+
+![Laravel Pint](https://img.shields.io/badge/Pint-Code%20Style-FF2D20?style=flat-square&logo=laravel&logoColor=white) **Laravel Pint** - Code Style Fixer
+
+![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-3EAAAF?style=flat-square&logo=phpunit&logoColor=white) **PHPUnit** - Testing Framework
+
 
 ---
 
 ## 💻 Persyaratan Sistem
 
-- **PHP**: >= 8.2
-- **Composer**: >= 2.0
-- **Node.js**: >= 18.x
-- **NPM**: >= 9.x
-- **MySQL**: >= 8.0 atau **PostgreSQL**: >= 13
-- **Web Server**: Apache/Nginx (untuk production)
+![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4?style=flat-square&logo=php&logoColor=white) **PHP**: >= 8.2
+
+![Composer](https://img.shields.io/badge/Composer-%3E%3D%202.0-885630?style=flat-square&logo=composer&logoColor=white) **Composer**: >= 2.0
+
+![Node.js](https://img.shields.io/badge/Node.js-%3E%3D%2018.x-339933?style=flat-square&logo=node.js&logoColor=white) **Node.js**: >= 18.x
+
+![NPM](https://img.shields.io/badge/NPM-%3E%3D%209.x-CB3837?style=flat-square&logo=npm&logoColor=white) **NPM**: >= 9.x
+
+![MySQL](https://img.shields.io/badge/MySQL-%3E%3D%208.0-4479A1?style=flat-square&logo=mysql&logoColor=white) **MySQL**: >= 8.0
+
+![Apache](https://img.shields.io/badge/Apache-D22128?style=flat-square&logo=apache&logoColor=white) **Apache**
 
 ---
 
 ## 🚀 Instalasi
 
-### 1. Clone Repository
+### 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/yourusername/edutrack-lms.git
 cd edutrack-lms
 ```
 
-### 2. Install Dependencies
+### 2️⃣ Install Dependencies
 
 ```bash
 # Install PHP dependencies
@@ -176,7 +205,7 @@ composer install
 npm install
 ```
 
-### 3. Setup Environment
+### 3️⃣ Setup Environment
 
 ```bash
 # Copy environment file
@@ -186,7 +215,7 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-### 4. Konfigurasi Database
+### 4️⃣ Konfigurasi Database
 
 Edit file `.env` dan sesuaikan konfigurasi database:
 
@@ -199,7 +228,7 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-### 5. Jalankan Migration dan Seeder
+### 5️⃣ Jalankan Migration dan Seeder
 
 ```bash
 # Run migrations
@@ -209,7 +238,7 @@ php artisan migrate
 php artisan db:seed
 ```
 
-### 6. Build Assets
+### 6️⃣ Build Assets
 
 ```bash
 # Development
@@ -219,7 +248,7 @@ npm run dev
 npm run build
 ```
 
-### 7. Jalankan Server
+### 7️⃣ Jalankan Server
 
 ```bash
 # Development server
@@ -229,27 +258,27 @@ php artisan serve
 composer run dev
 ```
 
-Akses aplikasi di: `http://localhost:8000`
+🌐 Akses aplikasi di: `http://localhost:8000`
 
 ---
 
 ## ⚙️ Konfigurasi
 
-### Default Credentials
+### 🔑 Default Credentials
 
 Setelah menjalankan seeder, Anda dapat login dengan:
 
-**Admin:**
-- Email: `admin@edutrack.com`
-- Password: `password`
+**👨‍💼 Admin:**
+- ![Email](https://img.shields.io/badge/Email-admin%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `admin@edutrack.com`
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
 
-**Teacher:**
-- Email: `teacher@edutrack.com`
-- Password: `password`
+**👨‍🏫 Teacher:**
+- ![Email](https://img.shields.io/badge/Email-teacher%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `teacher@edutrack.com`
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
 
-**Student:**
-- Email: `student@edutrack.com`
-- Password: `password`
+**👨‍🎓 Student:**
+- ![Email](https://img.shields.io/badge/Email-student%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white) `student@edutrack.com`
+- ![Password](https://img.shields.io/badge/Password-password-black?style=flat-square&logo=keycdn&logoColor=white) `password`
 
 ### Environment Variables
 
@@ -278,6 +307,20 @@ MAIL_PORT=1025
 ---
 
 ## 📁 Struktur Proyek
+
+![Structure](https://img.shields.io/badge/📁-Struktur%20Proyek-FF6B6B?style=for-the-badge&logo=folder&logoColor=white)
+
+### 📂 Direktori Utama
+
+![app](https://img.shields.io/badge/app-PHP%20Application-777BB4?style=flat-square&logo=php&logoColor=white) **app/** - Aplikasi utama Laravel
+
+![database](https://img.shields.io/badge/database-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) **database/** - Migrasi dan seeder database
+
+![resources](https://img.shields.io/badge/resources-Views%20%26%20Assets-38B2AC?style=flat-square&logo=file-code&logoColor=white) **resources/** - Views, CSS, dan assets
+
+![routes](https://img.shields.io/badge/routes-Routing-646CFF?style=flat-square&logo=route&logoColor=white) **routes/** - Definisi route aplikasi
+
+![tests](https://img.shields.io/badge/tests-Testing-3EAAAF?style=flat-square&logo=phpunit&logoColor=white) **tests/** - Unit dan feature tests
 
 ```
 edutrack-lms/
@@ -329,33 +372,41 @@ edutrack-lms/
 └── README.md
 ```
 
+### 📄 File Penting
+
+![composer.json](https://img.shields.io/badge/composer.json-PHP%20Dependencies-885630?style=flat-square&logo=composer&logoColor=white) **composer.json** - Dependencies PHP
+
+![package.json](https://img.shields.io/badge/package.json-Node%20Dependencies-CB3837?style=flat-square&logo=npm&logoColor=white) **package.json** - Dependencies Node.js
+
+![.env.example](https://img.shields.io/badge/.env.example-Configuration-FF6B6B?style=flat-square&logo=gear&logoColor=white) **.env.example** - Template konfigurasi environment
+
 ---
 
 ## 📖 Penggunaan
 
-### Untuk Admin
+### 👨‍💼 Untuk Admin
 
-1. **Login** sebagai admin
-2. **Dashboard**: Lihat statistik platform
-3. **User Management**: Kelola semua pengguna (Admin, Teacher, Student)
-4. **Course Management**: Buat, edit, dan hapus kursus
-5. **Category Management**: Kelola kategori kursus
+1. 🔐 **Login** sebagai admin
+2. 📊 **Dashboard** - Lihat statistik platform
+3. 👥 **User Management** - Kelola semua pengguna (Admin, Teacher, Student)
+4. 📚 **Course Management** - Buat, edit, dan hapus kursus
+5. 🏷️ **Category Management** - Kelola kategori kursus
 
-### Untuk Teacher
+### 👨‍🏫 Untuk Teacher
 
-1. **Login** sebagai teacher
-2. **Dashboard**: Lihat kursus yang diajar
-3. **Create Course**: Buat kursus baru
-4. **Manage Lessons**: Tambah dan kelola lesson dalam kursus
-5. **View Students**: Lihat siswa yang terdaftar di kursus
+1. 🔐 **Login** sebagai teacher
+2. 📊 **Dashboard** - Lihat kursus yang diajar
+3. ➕ **Create Course** - Buat kursus baru
+4. 📝 **Manage Lessons** - Tambah dan kelola lesson dalam kursus
+5. 👥 **View Students** - Lihat siswa yang terdaftar di kursus
 
-### Untuk Student
+### 👨‍🎓 Untuk Student
 
-1. **Register/Login** sebagai student
-2. **Browse Courses**: Jelajahi katalog kursus
-3. **Enroll**: Daftar ke kursus yang diminati
-4. **Learn**: Akses lesson dan pelajari materi
-5. **Track Progress**: Lihat progres pembelajaran
+1. 🔐 **Register/Login** sebagai student
+2. 🔍 **Browse Courses** - Jelajahi katalog kursus
+3. 🎫 **Enroll** - Daftar ke kursus yang diminati
+4. 📖 **Learn** - Akses lesson dan pelajari materi
+5. 📈 **Track Progress** - Lihat progres pembelajaran
 
 ---
 
@@ -372,13 +423,17 @@ php artisan test --filter TestClassName
 php artisan test --coverage
 ```
 
-### Test Coverage
+### 📊 Test Coverage
 
-- ✅ Authentication Tests
-- ✅ Authorization Tests
-- ✅ Enrollment Tests
-- ✅ Course Management Tests
-- ✅ Lesson Management Tests
+![Auth Tests](https://img.shields.io/badge/Authentication-Tests-green?style=flat-square&logo=shield-check&logoColor=white) ✅ Authentication Tests
+
+![Authz Tests](https://img.shields.io/badge/Authorization-Tests-blue?style=flat-square&logo=shield-lock&logoColor=white) ✅ Authorization Tests
+
+![Enrollment Tests](https://img.shields.io/badge/Enrollment-Tests-purple?style=flat-square&logo=user-check&logoColor=white) ✅ Enrollment Tests
+
+![Course Tests](https://img.shields.io/badge/Course%20Management-Tests-orange?style=flat-square&logo=book-open&logoColor=white) ✅ Course Management Tests
+
+![Lesson Tests](https://img.shields.io/badge/Lesson%20Management-Tests-red?style=flat-square&logo=document-text&logoColor=white) ✅ Lesson Management Tests
 
 ---
 
@@ -386,47 +441,49 @@ php artisan test --coverage
 
 Kontribusi sangat diterima! Untuk berkontribusi:
 
-1. **Fork** repository
-2. **Create** feature branch (`git checkout -b feature/AmazingFeature`)
-3. **Commit** perubahan (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** ke branch (`git push origin feature/AmazingFeature`)
-5. **Open** Pull Request
+1. 🍴 **Fork** repository
+2. 🌿 **Create** feature branch (`git checkout -b feature/AmazingFeature`)
+3. 💾 **Commit** perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 **Push** ke branch (`git push origin feature/AmazingFeature`)
+5. 🔄 **Open** Pull Request
 
-### Coding Standards
+### 📋 Coding Standards
 
-- Ikuti [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard
-- Gunakan Laravel Pint untuk code formatting
-- Tulis test untuk fitur baru
-- Update dokumentasi jika diperlukan
-
----
-
-## 📝 License
-
-Proyek ini menggunakan lisensi [MIT License](LICENSE).
+- 📐 Ikuti [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard
+- 🎨 Gunakan Laravel Pint untuk code formatting
+- 🧪 Tulis test untuk fitur baru
+- 📝 Update dokumentasi jika diperlukan
 
 ---
+
 
 ## 👤 Kontak
 
-**Developer** - [@ShinZeleo](https://github.com/ShinZeleo)
+![GitHub](https://img.shields.io/badge/GitHub-ShinZeleo-181717?style=for-the-badge&logo=github&logoColor=white) **Developer**: [@ShinZeleo](https://github.com/ShinZeleo)
 
-**Project Link**: [https://github.com/yourusername/edutrack-lms](https://github.com/yourusername/edutrack-lms)
+![Project](https://img.shields.io/badge/Project-Link-FF6B6B?style=for-the-badge&logo=link&logoColor=white) **Project Link**: [https://github.com/ShinZeleo/edutrack-lms](https://github.com/ShinZeleo/edutrack-lms)
+
 
 ---
 
 ## 🙏 Acknowledgments
 
-- [Laravel](https://laravel.com) - Framework yang luar biasa
-- [Tailwind CSS](https://tailwindcss.com) - CSS framework yang powerful
-- [Heroicons](https://heroicons.com) - Icon set yang digunakan
-- Semua kontributor dan pengguna EduTrack LMS
+Terima kasih kepada:
+
+![Laravel](https://img.shields.io/badge/Laravel-Framework-FF2D20?style=flat-square&logo=laravel&logoColor=white) [Laravel](https://laravel.com) - Framework yang luar biasa
+
+![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-Framework-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) [Tailwind CSS](https://tailwindcss.com) - CSS framework yang powerful
+
+![Heroicons](https://img.shields.io/badge/Heroicons-Icons-7C3AED?style=flat-square&logo=heroicons&logoColor=white) [Heroicons](https://heroicons.com) - Icon set yang digunakan
+
+![Contributors](https://img.shields.io/badge/Contributors-Thank%20You-FF6B6B?style=flat-square&logo=heart&logoColor=white) Semua kontributor dan pengguna EduTrack LMS
+
+![Unsplash](https://img.shields.io/badge/Unsplash-Images-000000?style=flat-square&logo=unsplash&logoColor=white) [Unsplash](https://unsplash.com) - Gambar placeholder yang digunakan
 
 ---
 
 <div align="center">
 
-**Dibuat dengan ❤️ untuk pendidikan yang lebih baik**
 
 ⭐ Jika proyek ini membantu Anda, berikan star di repository ini!
 
