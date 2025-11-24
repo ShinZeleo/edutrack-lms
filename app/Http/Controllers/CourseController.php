@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseStoreRequest;
+use App\Http\Requests\CourseUpdateRequest;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\User;
@@ -47,18 +49,9 @@ class CourseController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CourseStoreRequest $request)
     {
         $user = Auth::user();
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date|before_or_equal:end_date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'is_active' => 'boolean',
-            'category_id' => 'required|exists:categories,id',
-        ]);
 
         $teacherId = $user->isAdmin() ? $request->input('teacher_id') : $user->id;
 
@@ -97,22 +90,13 @@ class CourseController extends Controller
         }
     }
 
-    public function update(Request $request, Course $course)
+    public function update(CourseUpdateRequest $request, Course $course)
     {
         $user = Auth::user();
 
         if (!($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id))) {
             abort(403);
         }
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'start_date' => 'required|date|before_or_equal:end_date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'is_active' => 'boolean',
-            'category_id' => 'required|exists:categories,id',
-        ]);
 
         $course->update([
             'name' => $request->input('name'),

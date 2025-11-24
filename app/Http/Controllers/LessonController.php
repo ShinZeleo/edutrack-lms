@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LessonStoreRequest;
+use App\Http\Requests\LessonUpdateRequest;
 use App\Models\Lesson;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -28,17 +30,11 @@ class LessonController extends Controller
         return view('lessons.create', compact('course'));
     }
 
-    public function store(Request $request, Course $course)
+    public function store(LessonStoreRequest $request, Course $course)
     {
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'order' => 'required|integer|min:0',
-        ]);
 
         $course->lessons()->create([
             'title' => $request->input('title'),
@@ -95,7 +91,7 @@ class LessonController extends Controller
         return view('lessons.edit', compact('course', 'lesson'));
     }
 
-    public function update(Request $request, Lesson $lesson)
+    public function update(LessonUpdateRequest $request, Lesson $lesson)
     {
         $lesson->load('course');
         $course = $lesson->course;
@@ -103,12 +99,6 @@ class LessonController extends Controller
         if ($course->teacher_id !== Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
-
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'order' => 'required|integer|min:0',
-        ]);
 
         $lesson->update([
             'title' => $request->input('title'),

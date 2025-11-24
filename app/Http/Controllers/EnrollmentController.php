@@ -7,6 +7,8 @@ use App\Models\Lesson;
 use App\Models\Certificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class EnrollmentController extends Controller
 {
@@ -46,37 +48,44 @@ class EnrollmentController extends Controller
         }
 
         try {
-            \App\Models\LessonProgress::updateOrCreate(
-                [
-                    'lesson_id' => $lesson->id,
-                    'student_id' => $user->id,
-                ],
-                [
-                    'is_done' => true,
-                    'done_at' => now(),
-                ]
-            );
-
-            $course = $lesson->course;
-            $progress = $course->getProgressForUser($user);
-
-            if ($progress >= 100) {
-                Certificate::firstOrCreate(
+            return DB::transaction(function () use ($lesson, $user) {
+                \App\Models\LessonProgress::updateOrCreate(
                     [
+                        'lesson_id' => $lesson->id,
                         'student_id' => $user->id,
-                        'course_id' => $course->id,
                     ],
                     [
-                        'certificate_number' => 'CERT-' . strtoupper(uniqid()),
-                        'issued_at' => now(),
+                        'is_done' => true,
+                        'done_at' => now(),
                     ]
                 );
-            }
 
-            return redirect()->route('lessons.show', [$lesson->course, $lesson])
-                            ->with('success', 'Lesson berhasil ditandai sebagai selesai.');
+                $course = $lesson->course;
+                $progress = $course->getProgressForUser($user);
+
+                if ($progress >= 100) {
+                    Certificate::firstOrCreate(
+                        [
+                            'student_id' => $user->id,
+                            'course_id' => $course->id,
+                        ],
+                        [
+                            'certificate_number' => 'CERT-' . strtoupper(uniqid()),
+                            'issued_at' => now(),
+                        ]
+                    );
+                }
+
+                return redirect()->route('lessons.show', [$lesson->course, $lesson])
+                                ->with('success', 'Lesson berhasil ditandai sebagai selesai.');
+            });
         } catch (\Exception $e) {
-            \Log::error('Error marking lesson as done: ' . $e->getMessage());
+            Log::error('Error marking lesson as done', [
+                'user_id' => $user->id,
+                'lesson_id' => $lesson->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return redirect()->route('lessons.show', [$lesson->course, $lesson])
                             ->with('error', 'Terjadi kesalahan saat menandai lesson. Silakan coba lagi.');
         }
@@ -115,7 +124,12 @@ class EnrollmentController extends Controller
             return redirect()->route('lessons.show', [$lesson->course, $lesson])
                             ->with('success', 'Lesson berhasil ditandai sebagai belum selesai.');
         } catch (\Exception $e) {
-            \Log::error('Error marking lesson as not done: ' . $e->getMessage());
+            Log::error('Error marking lesson as not done', [
+                'user_id' => $user->id,
+                'lesson_id' => $lesson->id,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
             return redirect()->route('lessons.show', [$lesson->course, $lesson])
                             ->with('error', 'Terjadi kesalahan saat mengubah status lesson. Silakan coba lagi.');
         }
