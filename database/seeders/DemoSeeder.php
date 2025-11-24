@@ -18,7 +18,7 @@ class DemoSeeder extends Seeder
     {
         // Create Admin User
         $admin = User::firstOrCreate([
-            'email' => 'admin@example.com',
+            'email' => 'admin@edutrack.com',
         ], [
             'name' => 'Super Admin',
             'username' => 'admin',
@@ -30,34 +30,34 @@ class DemoSeeder extends Seeder
         // Create Teachers
         $teachers = [
             [
-                'email' => 'john.doe@example.com',
-                'name' => 'John Doe',
-                'username' => 'johndoe',
+                'email' => 'budi@edutrack.com',
+                'name' => 'Budi Santoso',
+                'username' => 'budi',
             ],
             [
-                'email' => 'jane.smith@example.com',
-                'name' => 'Jane Smith',
-                'username' => 'janesmith',
+                'email' => 'siti@edutrack.com',
+                'name' => 'Siti Nurhaliza',
+                'username' => 'siti',
             ],
             [
-                'email' => 'michael.chen@example.com',
-                'name' => 'Michael Chen',
-                'username' => 'michaelchen',
+                'email' => 'agus@edutrack.com',
+                'name' => 'Agus Priyono',
+                'username' => 'agus',
             ],
             [
-                'email' => 'sarah.wilson@example.com',
-                'name' => 'Sarah Wilson',
-                'username' => 'sarahw',
+                'email' => 'dewi@edutrack.com',
+                'name' => 'Dewi Sari',
+                'username' => 'dewi',
             ],
             [
-                'email' => 'david.kumar@example.com',
-                'name' => 'David Kumar',
-                'username' => 'davidk',
+                'email' => 'andi@edutrack.com',
+                'name' => 'Andi Wijaya',
+                'username' => 'andi',
             ],
             [
-                'email' => 'lisa.anderson@example.com',
-                'name' => 'Lisa Anderson',
-                'username' => 'lisaa',
+                'email' => 'rini@edutrack.com',
+                'name' => 'Rini Kartika',
+                'username' => 'rini',
             ],
         ];
 
@@ -84,21 +84,21 @@ class DemoSeeder extends Seeder
 
         // Create Students
         $students = [
-            ['email' => 'alice.johnson@example.com', 'name' => 'Alice Johnson', 'username' => 'alicej'],
-            ['email' => 'bob.williams@example.com', 'name' => 'Bob Williams', 'username' => 'bobw'],
-            ['email' => 'charlie.brown@example.com', 'name' => 'Charlie Brown', 'username' => 'charlieb'],
-            ['email' => 'diana.prince@example.com', 'name' => 'Diana Prince', 'username' => 'dianap'],
-            ['email' => 'edward.miller@example.com', 'name' => 'Edward Miller', 'username' => 'edwardm'],
-            ['email' => 'fiona.garcia@example.com', 'name' => 'Fiona Garcia', 'username' => 'fionag'],
-            ['email' => 'george.taylor@example.com', 'name' => 'George Taylor', 'username' => 'georget'],
-            ['email' => 'hannah.martinez@example.com', 'name' => 'Hannah Martinez', 'username' => 'hannahm'],
-            ['email' => 'ivan.lee@example.com', 'name' => 'Ivan Lee', 'username' => 'ivanl'],
-            ['email' => 'julia.white@example.com', 'name' => 'Julia White', 'username' => 'juliaw'],
-            ['email' => 'kevin.thomas@example.com', 'name' => 'Kevin Thomas', 'username' => 'kevint'],
-            ['email' => 'luna.rodriguez@example.com', 'name' => 'Luna Rodriguez', 'username' => 'lunar'],
-            ['email' => 'marcus.davis@example.com', 'name' => 'Marcus Davis', 'username' => 'marcusd'],
-            ['email' => 'nina.moore@example.com', 'name' => 'Nina Moore', 'username' => 'ninam'],
-            ['email' => 'oscar.jackson@example.com', 'name' => 'Oscar Jackson', 'username' => 'oscarj'],
+            ['email' => 'amanda@edutrack.com', 'name' => 'Amanda Putri', 'username' => 'amanda'],
+            ['email' => 'bambang@edutrack.com', 'name' => 'Bambang Sutrisno', 'username' => 'bambang'],
+            ['email' => 'cindy@edutrack.com', 'name' => 'Cindy Ratna', 'username' => 'cindy'],
+            ['email' => 'dian@edutrack.com', 'name' => 'Dian Permatasari', 'username' => 'dian'],
+            ['email' => 'eko@edutrack.com', 'name' => 'Eko Prasetyo', 'username' => 'eko'],
+            ['email' => 'fitri@edutrack.com', 'name' => 'Fitri Ayu', 'username' => 'fitri'],
+            ['email' => 'guntur@edutrack.com', 'name' => 'Guntur Hidayat', 'username' => 'guntur'],
+            ['email' => 'hana@edutrack.com', 'name' => 'Hana Lestari', 'username' => 'hana'],
+            ['email' => 'indra@edutrack.com', 'name' => 'Indra Kurniawan', 'username' => 'indra'],
+            ['email' => 'jihan@edutrack.com', 'name' => 'Jihan Maulida', 'username' => 'jihan'],
+            ['email' => 'krisna@edutrack.com', 'name' => 'Krisna Wibowo', 'username' => 'krisna'],
+            ['email' => 'lina@edutrack.com', 'name' => 'Lina Melati', 'username' => 'lina'],
+            ['email' => 'mario@edutrack.com', 'name' => 'Mario Tanuwijaya', 'username' => 'mario'],
+            ['email' => 'nina@edutrack.com', 'name' => 'Nina Wardani', 'username' => 'nina'],
+            ['email' => 'okta@edutrack.com', 'name' => 'Okta Ramadhan', 'username' => 'okta'],
         ];
 
         $studentObjects = [];
@@ -155,29 +155,29 @@ class DemoSeeder extends Seeder
 
         // Create Courses
         $coursesData = [
-            // Teacher 1 - John Doe
+            // Teacher 1 - Budi Santoso
             ['name' => 'Introduction to Programming', 'teacher' => $teacher1, 'category' => $programmingCategory, 'description' => 'Learn the basics of programming with Python. Perfect for beginners.', 'days_ago' => 10, 'days_ahead' => 40],
             ['name' => 'Advanced Web Development', 'teacher' => $teacher1, 'category' => $webDevCategory, 'description' => 'Deep dive into modern web development techniques using React and Node.js.', 'days_ago' => 5, 'days_ahead' => 30],
             ['name' => 'Full Stack JavaScript', 'teacher' => $teacher1, 'category' => $webDevCategory, 'description' => 'Build complete web applications using JavaScript, Node.js, and MongoDB.', 'days_ago' => 3, 'days_ahead' => 60],
 
-            // Teacher 2 - Jane Smith
+            // Teacher 2 - Siti Nurhaliza
             ['name' => 'UI/UX Design Fundamentals', 'teacher' => $teacher2, 'category' => $designCategory, 'description' => 'Learn the principles of user interface and user experience design.', 'days_ago' => 15, 'days_ahead' => 35],
             ['name' => 'Data Analysis with Python', 'teacher' => $teacher2, 'category' => $dataScienceCategory, 'description' => 'Master data analysis using Python libraries like pandas and numpy.', 'days_ago' => 7, 'days_ahead' => 50],
             ['name' => 'Machine Learning Basics', 'teacher' => $teacher2, 'category' => $dataScienceCategory, 'description' => 'Introduction to machine learning algorithms and applications.', 'days_ago' => 2, 'days_ahead' => 45],
 
-            // Teacher 3 - Michael Chen
+            // Teacher 3 - Agus Priyono
             ['name' => 'React Native Mobile Development', 'teacher' => $teacher3, 'category' => $mobileCategory, 'description' => 'Build cross-platform mobile apps using React Native.', 'days_ago' => 8, 'days_ahead' => 55],
             ['name' => 'iOS App Development with Swift', 'teacher' => $teacher3, 'category' => $mobileCategory, 'description' => 'Create native iOS applications using Swift and Xcode.', 'days_ago' => 12, 'days_ahead' => 40],
 
-            // Teacher 4 - Sarah Wilson
+            // Teacher 4 - Dewi Sari
             ['name' => 'MySQL Database Design', 'teacher' => $teacher4, 'category' => $databaseCategory, 'description' => 'Learn database design, normalization, and SQL queries.', 'days_ago' => 6, 'days_ahead' => 50],
             ['name' => 'MongoDB for Developers', 'teacher' => $teacher4, 'category' => $databaseCategory, 'description' => 'Master NoSQL database with MongoDB and Mongoose.', 'days_ago' => 4, 'days_ahead' => 35],
 
-            // Teacher 5 - David Kumar
+            // Teacher 5 - Andi Wijaya
             ['name' => 'AWS Cloud Fundamentals', 'teacher' => $teacher5, 'category' => $cloudCategory, 'description' => 'Introduction to Amazon Web Services and cloud computing.', 'days_ago' => 9, 'days_ahead' => 60],
             ['name' => 'Docker and Kubernetes', 'teacher' => $teacher5, 'category' => $cloudCategory, 'description' => 'Containerization and orchestration with Docker and Kubernetes.', 'days_ago' => 1, 'days_ahead' => 45],
 
-            // Teacher 6 - Lisa Anderson
+            // Teacher 6 - Rini Kartika
             ['name' => 'Web Security Essentials', 'teacher' => $teacher6, 'category' => $securityCategory, 'description' => 'Learn about common web vulnerabilities and how to prevent them.', 'days_ago' => 11, 'days_ahead' => 50],
             ['name' => 'Ethical Hacking Basics', 'teacher' => $teacher6, 'category' => $securityCategory, 'description' => 'Introduction to ethical hacking and penetration testing.', 'days_ago' => 13, 'days_ahead' => 55],
             ['name' => 'Digital Marketing Strategy', 'teacher' => $teacher6, 'category' => $businessCategory, 'description' => 'Learn modern digital marketing techniques and strategies.', 'days_ago' => 14, 'days_ahead' => 40],
@@ -206,30 +206,30 @@ class DemoSeeder extends Seeder
         // Create lessons for courses
         $lessonsData = [
             // Course 1: Introduction to Programming
-            ['course' => $course1, 'title' => 'Variables and Data Types', 'content' => 'In this lesson, you will learn about variables, data types, and how to declare them in Python. We will cover integers, floats, strings, booleans, and type conversion.', 'order' => 1],
-            ['course' => $course1, 'title' => 'Control Structures', 'content' => 'Understanding if statements, loops (for and while), and other control structures in Python. Learn how to control the flow of your program.', 'order' => 2],
-            ['course' => $course1, 'title' => 'Functions', 'content' => 'Learn how to define and use functions in Python programming. We will cover function parameters, return values, and scope.', 'order' => 3],
-            ['course' => $course1, 'title' => 'Lists and Dictionaries', 'content' => 'Working with collections in Python: lists, dictionaries, tuples, and sets. Learn how to manipulate and iterate through collections.', 'order' => 4],
-            ['course' => $course1, 'title' => 'File Handling', 'content' => 'Reading from and writing to files in Python. Learn about different file modes and best practices.', 'order' => 5],
+            ['course' => $course1, 'title' => 'Variabel dan Tipe Data', 'content' => 'Dalam lesson ini, Anda akan mempelajari tentang variabel, tipe data, dan cara mendeklarasikannya di Python. Kita akan membahas integer, float, string, boolean, dan konversi tipe data.', 'order' => 1],
+            ['course' => $course1, 'title' => 'Struktur Kontrol', 'content' => 'Memahami pernyataan if, perulangan (for dan while), dan struktur kontrol lainnya di Python. Pelajari cara mengontrol alur program Anda.', 'order' => 2],
+            ['course' => $course1, 'title' => 'Fungsi', 'content' => 'Pelajari cara mendefinisikan dan menggunakan fungsi dalam pemrograman Python. Kita akan membahas parameter fungsi, nilai return, dan scope.', 'order' => 3],
+            ['course' => $course1, 'title' => 'List dan Dictionary', 'content' => 'Bekerja dengan koleksi data di Python: list, dictionary, tuple, dan set. Pelajari cara memanipulasi dan melakukan iterasi melalui koleksi.', 'order' => 4],
+            ['course' => $course1, 'title' => 'Penanganan File', 'content' => 'Membaca dan menulis file di Python. Pelajari tentang berbagai mode file dan praktik terbaik dalam penanganan file.', 'order' => 5],
 
             // Course 2: Advanced Web Development
-            ['course' => $course2, 'title' => 'React Fundamentals', 'content' => 'Introduction to React, JSX, and component-based architecture. Learn the core concepts of React and how to build reusable components.', 'order' => 1],
-            ['course' => $course2, 'title' => 'State Management', 'content' => 'Managing state in React applications using hooks (useState, useEffect) and context API. Learn when to use each approach.', 'order' => 2],
-            ['course' => $course2, 'title' => 'React Router', 'content' => 'Implementing client-side routing in React applications. Learn how to create multi-page applications with React Router.', 'order' => 3],
-            ['course' => $course2, 'title' => 'API Integration', 'content' => 'Connecting React applications to backend APIs. Learn about fetch, axios, and handling async operations.', 'order' => 4],
-            ['course' => $course2, 'title' => 'Node.js Backend', 'content' => 'Building RESTful APIs with Node.js and Express. Learn about middleware, routing, and database integration.', 'order' => 5],
+            ['course' => $course2, 'title' => 'Dasar-dasar React', 'content' => 'Pengenalan React, JSX, dan arsitektur berbasis komponen. Pelajari konsep inti React dan cara membangun komponen yang dapat digunakan kembali.', 'order' => 1],
+            ['course' => $course2, 'title' => 'Manajemen State', 'content' => 'Mengelola state dalam aplikasi React menggunakan hooks (useState, useEffect) dan Context API. Pelajari kapan menggunakan setiap pendekatan.', 'order' => 2],
+            ['course' => $course2, 'title' => 'React Router', 'content' => 'Mengimplementasikan routing di sisi klien dalam aplikasi React. Pelajari cara membuat aplikasi multi-halaman dengan React Router.', 'order' => 3],
+            ['course' => $course2, 'title' => 'Integrasi API', 'content' => 'Menghubungkan aplikasi React ke backend API. Pelajari tentang fetch, axios, dan menangani operasi asynchronous.', 'order' => 4],
+            ['course' => $course2, 'title' => 'Backend Node.js', 'content' => 'Membangun RESTful API dengan Node.js dan Express. Pelajari tentang middleware, routing, dan integrasi database.', 'order' => 5],
 
             // Course 3: UI/UX Design Fundamentals
-            ['course' => $course3, 'title' => 'Design Principles', 'content' => 'Understanding fundamental design principles: balance, contrast, hierarchy, and alignment. Learn how to create visually appealing interfaces.', 'order' => 1],
-            ['course' => $course3, 'title' => 'User Research', 'content' => 'Conducting user research and creating user personas. Learn how to understand your target audience and their needs.', 'order' => 2],
-            ['course' => $course3, 'title' => 'Wireframing', 'content' => 'Creating wireframes and low-fidelity prototypes. Learn how to plan your design before moving to high-fidelity mockups.', 'order' => 3],
-            ['course' => $course3, 'title' => 'Prototyping with Figma', 'content' => 'Using Figma to create interactive prototypes. Learn about components, styles, and design systems.', 'order' => 4],
+            ['course' => $course3, 'title' => 'Prinsip Desain', 'content' => 'Memahami prinsip-prinsip desain fundamental: keseimbangan, kontras, hierarki, dan alignment. Pelajari cara membuat antarmuka yang menarik secara visual.', 'order' => 1],
+            ['course' => $course3, 'title' => 'Penelitian Pengguna', 'content' => 'Melakukan penelitian pengguna dan membuat user persona. Pelajari cara memahami target audiens dan kebutuhan mereka.', 'order' => 2],
+            ['course' => $course3, 'title' => 'Wireframing', 'content' => 'Membuat wireframe dan prototipe low-fidelity. Pelajari cara merencanakan desain Anda sebelum beralih ke mockup high-fidelity.', 'order' => 3],
+            ['course' => $course3, 'title' => 'Prototyping dengan Figma', 'content' => 'Menggunakan Figma untuk membuat prototipe interaktif. Pelajari tentang komponen, style, dan design system.', 'order' => 4],
 
             // Course 4: Data Analysis with Python
-            ['course' => $course4, 'title' => 'Pandas Basics', 'content' => 'Introduction to pandas library for data manipulation. Learn about DataFrames, Series, and basic operations.', 'order' => 1],
-            ['course' => $course4, 'title' => 'Data Cleaning', 'content' => 'Cleaning and preprocessing data. Learn how to handle missing values, duplicates, and outliers.', 'order' => 2],
-            ['course' => $course4, 'title' => 'Data Visualization', 'content' => 'Creating visualizations with matplotlib and seaborn. Learn how to create charts, graphs, and dashboards.', 'order' => 3],
-            ['course' => $course4, 'title' => 'Statistical Analysis', 'content' => 'Performing statistical analysis on datasets. Learn about descriptive statistics, correlations, and hypothesis testing.', 'order' => 4],
+            ['course' => $course4, 'title' => 'Dasar-dasar Pandas', 'content' => 'Pengenalan library pandas untuk manipulasi data. Pelajari tentang DataFrame, Series, dan operasi dasar.', 'order' => 1],
+            ['course' => $course4, 'title' => 'Pembersihan Data', 'content' => 'Membersihkan dan memproses data. Pelajari cara menangani nilai yang hilang, duplikat, dan outlier.', 'order' => 2],
+            ['course' => $course4, 'title' => 'Visualisasi Data', 'content' => 'Membuat visualisasi dengan matplotlib dan seaborn. Pelajari cara membuat grafik, chart, dan dashboard.', 'order' => 3],
+            ['course' => $course4, 'title' => 'Analisis Statistik', 'content' => 'Melakukan analisis statistik pada dataset. Pelajari tentang statistik deskriptif, korelasi, dan pengujian hipotesis.', 'order' => 4],
         ];
 
         // Add lessons for remaining courses
@@ -237,12 +237,12 @@ class DemoSeeder extends Seeder
             if ($index < 4) continue; // Skip courses that already have lessons defined
 
             $lessonTitles = [
-                'Introduction and Overview',
-                'Core Concepts',
-                'Advanced Techniques',
-                'Practical Applications',
-                'Best Practices',
-                'Project Implementation',
+                'Pengenalan dan Gambaran Umum',
+                'Konsep Inti',
+                'Teknik Lanjutan',
+                'Aplikasi Praktis',
+                'Praktik Terbaik',
+                'Implementasi Proyek',
             ];
 
             foreach ($lessonTitles as $order => $title) {
@@ -250,7 +250,7 @@ class DemoSeeder extends Seeder
                     'course_id' => $course->id,
                     'title' => $title,
                 ], [
-                    'content' => "This lesson covers {$title} for {$course->name}. You will learn essential concepts and practical skills to master this topic.",
+                    'content' => "Lesson ini membahas {$title} untuk {$course->name}. Anda akan mempelajari konsep-konsep penting dan keterampilan praktis untuk menguasai topik ini.",
                     'order' => $order + 1,
                 ]);
             }
@@ -304,7 +304,7 @@ class DemoSeeder extends Seeder
         $this->command->info('- ' . Lesson::count() . ' Lessons');
         $this->command->info('');
         $this->command->info('Login credentials (all passwords: password):');
-        $this->command->info('Admin: admin@example.com');
+        $this->command->info('Admin: admin@edutrack.com');
         $this->command->info('Teachers:');
         foreach ($teacherObjects as $teacher) {
             $this->command->info('  - ' . $teacher->email);
