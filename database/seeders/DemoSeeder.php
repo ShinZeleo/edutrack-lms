@@ -70,13 +70,6 @@ class DemoSeeder extends Seeder
             $teacherObjects[] = $teacher;
         }
 
-        $teacher1 = $teacherObjects[0];
-        $teacher2 = $teacherObjects[1];
-        $teacher3 = $teacherObjects[2];
-        $teacher4 = $teacherObjects[3];
-        $teacher5 = $teacherObjects[4];
-        $teacher6 = $teacherObjects[5];
-
         $students = [
             ['email' => 'amanda@edutrack.com', 'name' => 'Amanda Putri', 'username' => 'amanda'],
             ['email' => 'bambang@edutrack.com', 'name' => 'Bambang Sutrisno', 'username' => 'bambang'],
@@ -139,24 +132,23 @@ class DemoSeeder extends Seeder
         $databaseCategory = Category::where('name', 'Database Management')->first();
         $cloudCategory = Category::where('name', 'Cloud Computing')->first();
         $securityCategory = Category::where('name', 'Cybersecurity')->first();
-        $teacher6 = $teacherObjects[5];
 
         $coursesData = [
-            ['name' => 'Introduction to Programming', 'teacher' => $teacher1, 'category' => $programmingCategory, 'description' => 'Learn the basics of programming with Python. Perfect for beginners.', 'days_ago' => 10, 'days_ahead' => 40],
-            ['name' => 'Advanced Web Development', 'teacher' => $teacher1, 'category' => $webDevCategory, 'description' => 'Deep dive into modern web development techniques using React and Node.js.', 'days_ago' => 5, 'days_ahead' => 30],
-            ['name' => 'Full Stack JavaScript', 'teacher' => $teacher1, 'category' => $webDevCategory, 'description' => 'Build complete web applications using JavaScript, Node.js, and MongoDB.', 'days_ago' => 3, 'days_ahead' => 60],
-            ['name' => 'UI/UX Design Fundamentals', 'teacher' => $teacher2, 'category' => $designCategory, 'description' => 'Learn the principles of user interface and user experience design.', 'days_ago' => 15, 'days_ahead' => 35],
-            ['name' => 'Data Analysis with Python', 'teacher' => $teacher2, 'category' => $dataScienceCategory, 'description' => 'Master data analysis using Python libraries like pandas and numpy.', 'days_ago' => 7, 'days_ahead' => 50],
-            ['name' => 'Machine Learning Basics', 'teacher' => $teacher2, 'category' => $dataScienceCategory, 'description' => 'Introduction to machine learning algorithms and applications.', 'days_ago' => 2, 'days_ahead' => 45],
-            ['name' => 'React Native Mobile Development', 'teacher' => $teacher3, 'category' => $mobileCategory, 'description' => 'Build cross-platform mobile apps using React Native.', 'days_ago' => 8, 'days_ahead' => 55],
-            ['name' => 'iOS App Development with Swift', 'teacher' => $teacher3, 'category' => $mobileCategory, 'description' => 'Create native iOS applications using Swift and Xcode.', 'days_ago' => 12, 'days_ahead' => 40],
-            ['name' => 'MySQL Database Design', 'teacher' => $teacher4, 'category' => $databaseCategory, 'description' => 'Learn database design, normalization, and SQL queries.', 'days_ago' => 6, 'days_ahead' => 50],
-            ['name' => 'MongoDB for Developers', 'teacher' => $teacher4, 'category' => $databaseCategory, 'description' => 'Master NoSQL database with MongoDB and Mongoose.', 'days_ago' => 4, 'days_ahead' => 35],
-            ['name' => 'AWS Cloud Fundamentals', 'teacher' => $teacher5, 'category' => $cloudCategory, 'description' => 'Introduction to Amazon Web Services and cloud computing.', 'days_ago' => 9, 'days_ahead' => 60],
-            ['name' => 'Docker and Kubernetes', 'teacher' => $teacher5, 'category' => $cloudCategory, 'description' => 'Containerization and orchestration with Docker and Kubernetes.', 'days_ago' => 1, 'days_ahead' => 45],
-            ['name' => 'Web Security Essentials', 'teacher' => $teacher6, 'category' => $securityCategory, 'description' => 'Learn about common web vulnerabilities and how to prevent them.', 'days_ago' => 11, 'days_ahead' => 50],
-            ['name' => 'Ethical Hacking Basics', 'teacher' => $teacher6, 'category' => $securityCategory, 'description' => 'Introduction to ethical hacking and penetration testing.', 'days_ago' => 13, 'days_ahead' => 55],
-            ['name' => 'Digital Marketing Strategy', 'teacher' => $teacher6, 'category' => $businessCategory, 'description' => 'Learn modern digital marketing techniques and strategies.', 'days_ago' => 14, 'days_ahead' => 40],
+            ['name' => 'Introduction to Programming', 'teacher' => $teacherObjects[0], 'category' => $programmingCategory, 'description' => 'Learn the basics of programming with Python. Perfect for beginners.', 'days_ago' => 10, 'days_ahead' => 40],
+            ['name' => 'Advanced Web Development', 'teacher' => $teacherObjects[0], 'category' => $webDevCategory, 'description' => 'Deep dive into modern web development techniques using React and Node.js.', 'days_ago' => 5, 'days_ahead' => 30],
+            ['name' => 'Full Stack JavaScript', 'teacher' => $teacherObjects[0], 'category' => $webDevCategory, 'description' => 'Build complete web applications using JavaScript, Node.js, and MongoDB.', 'days_ago' => 3, 'days_ahead' => 60],
+            ['name' => 'UI/UX Design Fundamentals', 'teacher' => $teacherObjects[1], 'category' => $designCategory, 'description' => 'Learn the principles of user interface and user experience design.', 'days_ago' => 15, 'days_ahead' => 35],
+            ['name' => 'Data Analysis with Python', 'teacher' => $teacherObjects[1], 'category' => $dataScienceCategory, 'description' => 'Master data analysis using Python libraries like pandas and numpy.', 'days_ago' => 7, 'days_ahead' => 50],
+            ['name' => 'Machine Learning Basics', 'teacher' => $teacherObjects[1], 'category' => $dataScienceCategory, 'description' => 'Introduction to machine learning algorithms and applications.', 'days_ago' => 2, 'days_ahead' => 45],
+            ['name' => 'React Native Mobile Development', 'teacher' => $teacherObjects[2], 'category' => $mobileCategory, 'description' => 'Build cross-platform mobile apps using React Native.', 'days_ago' => 8, 'days_ahead' => 55],
+            ['name' => 'iOS App Development with Swift', 'teacher' => $teacherObjects[2], 'category' => $mobileCategory, 'description' => 'Create native iOS applications using Swift and Xcode.', 'days_ago' => 12, 'days_ahead' => 40],
+            ['name' => 'MySQL Database Design', 'teacher' => $teacherObjects[3], 'category' => $databaseCategory, 'description' => 'Learn database design, normalization, and SQL queries.', 'days_ago' => 6, 'days_ahead' => 50],
+            ['name' => 'MongoDB for Developers', 'teacher' => $teacherObjects[3], 'category' => $databaseCategory, 'description' => 'Master NoSQL database with MongoDB and Mongoose.', 'days_ago' => 4, 'days_ahead' => 35],
+            ['name' => 'AWS Cloud Fundamentals', 'teacher' => $teacherObjects[4], 'category' => $cloudCategory, 'description' => 'Introduction to Amazon Web Services and cloud computing.', 'days_ago' => 9, 'days_ahead' => 60],
+            ['name' => 'Docker and Kubernetes', 'teacher' => $teacherObjects[4], 'category' => $cloudCategory, 'description' => 'Containerization and orchestration with Docker and Kubernetes.', 'days_ago' => 1, 'days_ahead' => 45],
+            ['name' => 'Web Security Essentials', 'teacher' => $teacherObjects[5], 'category' => $securityCategory, 'description' => 'Learn about common web vulnerabilities and how to prevent them.', 'days_ago' => 11, 'days_ahead' => 50],
+            ['name' => 'Ethical Hacking Basics', 'teacher' => $teacherObjects[5], 'category' => $securityCategory, 'description' => 'Introduction to ethical hacking and penetration testing.', 'days_ago' => 13, 'days_ahead' => 55],
+            ['name' => 'Digital Marketing Strategy', 'teacher' => $teacherObjects[5], 'category' => $businessCategory, 'description' => 'Learn modern digital marketing techniques and strategies.', 'days_ago' => 14, 'days_ahead' => 40],
         ];
 
         $courseObjects = [];

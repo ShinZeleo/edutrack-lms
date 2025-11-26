@@ -33,7 +33,7 @@ class EnrollmentController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user || !$user->isStudent()) {
+        if (!$user->isStudent()) {
             return redirect()->back()->with('error', 'Hanya siswa yang dapat menandai lesson sebagai selesai.');
         }
 
@@ -95,7 +95,7 @@ class EnrollmentController extends Controller
     {
         $user = Auth::user();
 
-        if (!$user || !$user->isStudent()) {
+        if (!$user->isStudent()) {
             return redirect()->back()->with('error', 'Hanya siswa yang dapat mengubah status lesson.');
         }
 

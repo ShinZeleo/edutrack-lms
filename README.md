@@ -13,143 +13,143 @@
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
 
-**An online learning platform designed to provide the best learning experience with comprehensive content management**
+**Platform pembelajaran online yang dirancang untuk memberikan pengalaman belajar terbaik dengan manajemen konten yang komprehensif**
 
-[![Features](https://img.shields.io/badge/📋-Features-blue?style=flat-square)](#-features) • [![Installation](https://img.shields.io/badge/🚀-Installation-green?style=flat-square)](#-installation) • [![Contributing](https://img.shields.io/badge/🤝-Contributing-orange?style=flat-square)](#-contributing)
+[![Features](https://img.shields.io/badge/📋-Fitur-blue?style=flat-square)](#-features) • [![Installation](https://img.shields.io/badge/🚀-Instalasi-green?style=flat-square)](#-installation) • [![Contributing](https://img.shields.io/badge/🤝-Kontribusi-orange?style=flat-square)](#-contributing)
 
 </div>
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshot
 
-### Homepage
+### Halaman Utama
 ![Homepage Screenshot](docs/screenshots/homepage.png)
-*Landing page with attractive hero section and platform statistics*
+*Halaman landing dengan hero section yang menarik dan statistik platform*
 
-### Admin Dashboard
+### Dashboard Admin
 ![Admin Dashboard Screenshot](docs/screenshots/admin-dashboard.png)
-*Admin dashboard with comprehensive statistics and platform management*
+*Dashboard admin dengan statistik komprehensif dan manajemen platform*
 
-### Course Catalog
+### Katalog Kursus
 ![Course Catalog Screenshot](docs/screenshots/course-catalog.png)
-*Course catalog with easy filtering and search*
+*Katalog kursus dengan filter dan pencarian yang mudah*
 
-### Lesson View
+### Tampilan Pelajaran
 ![Lesson View Screenshot](docs/screenshots/lesson-view.png)
-*Lesson view with progress tracking and intuitive navigation*
+*Tampilan pelajaran dengan pelacakan progress dan navigasi yang intuitif*
 
-### User Management
+### Manajemen Pengguna
 ![User Management Screenshot](docs/screenshots/user-management.png)
-*User management with modern card layout*
+*Manajemen pengguna dengan layout card yang modern*
 
 ---
 
-## 📋 Table of Contents
+## 📋 Daftar Isi
 
-- [🎯 About Project](#-about-project)
-- [✨ Features](#-features)
-- [🛠 Technologies Used](#-technologies-used)
-- [💻 System Requirements](#-system-requirements)
-- [🚀 Installation](#-installation)
-- [⚙️ Configuration](#-configuration)
-- [📁 Project Structure](#-project-structure)
-- [📖 Usage](#-usage)
-- [📚 Documentation](#-documentation)
-- [🧪 Testing](#-testing)
-- [🤝 Contributing](#-contributing)
-- [👤 Contact](#-contact)
-
----
-
-## 🎯 About Project
-
-EduTrack LMS is a comprehensive Learning Management System (LMS) designed to facilitate online learning processes between teachers and students. The platform provides an integrated CMS workflow with modern, responsive, and user-friendly interface.
-
-### 🎯 Goals
-- 📚 Provide complete guided learning process with content management
-- 👥 Facilitate interaction between teachers and students
-- 📊 Provide accurate learning progress tracking
-- 🎨 Deliver modern and intuitive user experience
-
-### ⭐ Core Values
-- ✅ **Integrated CMS Workflow** - Integrated content management system
-- ✅ **Clean Design** - Clear and easy-to-understand visual hierarchy
-- ✅ **Responsive & Accessible** - Optimal on all devices with high accessibility
-- ✅ **Modular Architecture** - Easy to test, develop, and maintain
-- ✅ **Code Quality** - Form Request validation, database transactions, and comprehensive error handling
+- [🎯 Tentang Proyek](#-about-project)
+- [✨ Fitur](#-features)
+- [🛠 Teknologi yang Digunakan](#-technologies-used)
+- [💻 Persyaratan Sistem](#-system-requirements)
+- [🚀 Instalasi](#-installation)
+- [⚙️ Konfigurasi](#-configuration)
+- [📁 Struktur Proyek](#-project-structure)
+- [📖 Penggunaan](#-usage)
+- [📚 Dokumentasi](#-documentation)
+- [🧪 Pengujian](#-testing)
+- [🤝 Kontribusi](#-contributing)
+- [👤 Kontak](#-contact)
 
 ---
 
-## ✨ Features
+## 🎯 Tentang Proyek
 
-### 👥 User Management
-- 🔐 **Multi-role System** - Admin, Teacher, Student, and Guest
-- 👤 **User Management** - Complete CRUD for users with filtering and search
-- 🛡️ **Role-based Access Control** - Each role has different access and features
-- ⚙️ **Profile Management** - Users can manage their own profiles
+EduTrack LMS adalah Learning Management System (LMS) yang komprehensif yang dirancang untuk memfasilitasi proses pembelajaran online antara guru dan siswa. Platform ini menyediakan workflow CMS terintegrasi dengan antarmuka yang modern, responsif, dan mudah digunakan.
 
-### 📚 Course Management
-- ➕ **Course CRUD** - Create, edit, and delete courses easily
-- 🏷️ **Category Management** - Organize courses by category
-- 🔄 **Course Status** - Active/Inactive for publication control
-- 📅 **Date Range** - Course scheduling with start and end dates
-- 👨‍🏫 **Teacher Assignment** - Assign teachers to specific courses
+### 🎯 Tujuan
+- 📚 Menyediakan proses pembelajaran terpandu yang lengkap dengan manajemen konten
+- 👥 Memfasilitasi interaksi antara guru dan siswa
+- 📊 Menyediakan pelacakan progress pembelajaran yang akurat
+- 🎨 Memberikan pengalaman pengguna yang modern dan intuitif
 
-### 📖 Content Management
-- 📝 **Lesson Management** - Create and manage lessons per course
-- 📋 **Content Organization** - Configurable lesson order
-- ✍️ **Rich Text Content** - Lesson content with rich formatting
-- 📊 **Progress Tracking** - Track learning progress per student
+### ⭐ Nilai Inti
+- ✅ **Integrated CMS Workflow** - Sistem manajemen konten terintegrasi
+- ✅ **Clean Design** - Hierarki visual yang jelas dan mudah dipahami
+- ✅ **Responsive & Accessible** - Optimal di semua perangkat dengan aksesibilitas tinggi
+- ✅ **Modular Architecture** - Mudah untuk diuji, dikembangkan, dan dipelihara
+- ✅ **Code Quality** - Validasi Form Request, database transactions, dan error handling yang komprehensif
+
+---
+
+## ✨ Fitur
+
+### 👥 Manajemen Pengguna
+- 🔐 **Sistem Multi-role** - Admin, Teacher, Student, dan Guest
+- 👤 **Manajemen Pengguna** - CRUD lengkap untuk pengguna dengan filter dan pencarian
+- 🛡️ **Role-based Access Control** - Setiap role memiliki akses dan fitur yang berbeda
+- ⚙️ **Manajemen Profil** - Pengguna dapat mengelola profil mereka sendiri
+
+### 📚 Manajemen Kursus
+- ➕ **Course CRUD** - Membuat, mengedit, dan menghapus kursus dengan mudah
+- 🏷️ **Manajemen Kategori** - Mengorganisir kursus berdasarkan kategori
+- 🔄 **Status Kursus** - Aktif/Nonaktif untuk kontrol publikasi
+- 📅 **Rentang Tanggal** - Penjadwalan kursus dengan tanggal mulai dan akhir
+- 👨‍🏫 **Penugasan Guru** - Menugaskan guru ke kursus tertentu
+
+### 📖 Manajemen Konten
+- 📝 **Manajemen Pelajaran** - Membuat dan mengelola pelajaran per kursus
+- 📋 **Organisasi Konten** - Urutan pelajaran yang dapat dikonfigurasi
+- ✍️ **Rich Text Content** - Konten pelajaran dengan format yang kaya
+- 📊 **Pelacakan Progress** - Melacak progress pembelajaran per siswa
 
 ### 📊 Dashboard & Analytics
-- **👨‍💼 Admin Dashboard**:
-  - 📈 Statistics for total users, courses, categories, and enrollments
-  - 👥 Recent users and courses
-  - 🏷️ Integrated category management
-- **👨‍🏫 Teacher Dashboard**:
-  - 📚 Overview of courses taught
-  - 📊 Student and enrollment statistics
-- **👨‍🎓 Student Dashboard**:
-  - 📖 Enrolled courses
-  - 📈 Progress tracking per course
-  - ✅ Completed/incomplete lessons
+- **👨‍💼 Dashboard Admin**:
+  - 📈 Statistik untuk total pengguna, kursus, kategori, dan pendaftaran
+  - 👥 Pengguna dan kursus terbaru
+  - 🏷️ Manajemen kategori terintegrasi
+- **👨‍🏫 Dashboard Teacher**:
+  - 📚 Ringkasan kursus yang diajarkan
+  - 📊 Statistik siswa dan pendaftaran
+- **👨‍🎓 Dashboard Student**:
+  - 📖 Kursus yang didaftarkan
+  - 📈 Pelacakan progress per kursus
+  - ✅ Pelajaran yang selesai/belum selesai
 
-### 🎓 Learning Features
-- 🎫 **Enrollment System** - Students can enroll in courses
-- 📈 **Progress Tracking** - Automatically track learning progress
-- ✅ **Mark as Done** - Students can mark lessons as completed
-- 🔄 **Lesson Navigation** - Easy navigation between lessons
-- 🔍 **Course Catalog** - Course catalog with filtering and search
-- 🏆 **Certificate Issuance** - Certificates automatically issued when course is completed (100% progress)
-- 📄 **PDF Certificate** - Download certificates in PDF format
+### 🎓 Fitur Pembelajaran
+- 🎫 **Sistem Pendaftaran** - Siswa dapat mendaftar ke kursus
+- 📈 **Pelacakan Progress** - Secara otomatis melacak progress pembelajaran
+- ✅ **Tandai Selesai** - Siswa dapat menandai pelajaran sebagai selesai
+- 🔄 **Navigasi Pelajaran** - Navigasi yang mudah antar pelajaran
+- 🔍 **Katalog Kursus** - Katalog kursus dengan filter dan pencarian
+- 🏆 **Penerbitan Sertifikat** - Sertifikat otomatis diterbitkan saat kursus selesai (progress 100%)
+- 📄 **Sertifikat PDF** - Unduh sertifikat dalam format PDF
 
-### 🎨 Modern UI/UX
-- 📱 **Responsive Design** - Optimal on all devices
-- 🎴 **Card-based Layout** - Modern card layout design
-- 🎨 **Tailwind CSS** - Utility-first CSS framework styling
-- ✨ **Smooth Animations** - Smooth transitions and animations
-- ♿ **Accessibility** - High accessibility for all users
-- 🖼️ **Dynamic Images** - Automatic image variations to avoid monotonous display
+### 🎨 UI/UX Modern
+- 📱 **Desain Responsif** - Optimal di semua perangkat
+- 🎴 **Layout Berbasis Card** - Desain layout card yang modern
+- 🎨 **Tailwind CSS** - Styling framework CSS utility-first
+- ✨ **Animasi Halus** - Transisi dan animasi yang halus
+- ♿ **Aksesibilitas** - Aksesibilitas tinggi untuk semua pengguna
+- 🖼️ **Gambar Dinamis** - Variasi gambar otomatis untuk menghindari tampilan monoton
 
-### 🔧 Technical Features
-- ✅ **Form Request Validation** - Structured validation with custom error messages
-- 💾 **Database Transactions** - Atomic operations for data integrity
-- 🛡️ **Error Handling** - Comprehensive error handling with detailed logging
-- 📝 **Code Quality** - Clean code without unused files and comments
-- 🔍 **Eager Loading** - Optimized queries to avoid N+1 problem
+### 🔧 Fitur Teknis
+- ✅ **Form Request Validation** - Validasi terstruktur dengan pesan error kustom
+- 💾 **Database Transactions** - Operasi atomik untuk integritas data
+- 🛡️ **Error Handling** - Penanganan error yang komprehensif dengan logging detail
+- 📝 **Code Quality** - Kode bersih tanpa file dan komentar yang tidak terpakai
+- 🔍 **Eager Loading** - Query yang dioptimalkan untuk menghindari masalah N+1
 
 ---
 
-## 🛠 Technologies Used
+## 🛠 Teknologi yang Digunakan
 
 ### 🔧 Backend
 
 ![Laravel](https://img.shields.io/badge/Laravel-12.0-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - PHP Framework
 
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)  - Programming Language
+![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)  - Bahasa Pemrograman
 
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)  - Database Management System
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)  - Sistem Manajemen Database
 
 ![Eloquent](https://img.shields.io/badge/Eloquent-ORM-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - Database Abstraction Layer
 
@@ -157,11 +157,11 @@ EduTrack LMS is a comprehensive Learning Management System (LMS) designed to fac
 
 ![Blade](https://img.shields.io/badge/Blade-Templates-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - Templating Engine
 
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)  - Utility-first CSS Framework
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)  - Framework CSS Utility-first
 
-![Alpine.js](https://img.shields.io/badge/Alpine.js-3.4-77C1D5?style=flat-square&logo=alpine.js&logoColor=white)  - Lightweight JavaScript Framework
+![Alpine.js](https://img.shields.io/badge/Alpine.js-3.4-77C1D5?style=flat-square&logo=alpine.js&logoColor=white)  - Framework JavaScript Ringan
 
-![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite&logoColor=white)  - Build Tool and Development Server
+![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?style=flat-square&logo=vite&logoColor=white)  - Build Tool dan Development Server
 
 ### 🛠️ Development Tools
 
@@ -169,13 +169,13 @@ EduTrack LMS is a comprehensive Learning Management System (LMS) designed to fac
 
 ![Laravel Pint](https://img.shields.io/badge/Pint-Code%20Style-FF2D20?style=flat-square&logo=laravel&logoColor=white)  - Code Style Fixer
 
-![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-3EAAAF?style=flat-square&logo=phpunit&logoColor=white)  - PHP Testing Framework
+![PHPUnit](https://img.shields.io/badge/PHPUnit-11.5-3EAAAF?style=flat-square&logo=phpunit&logoColor=white)  - Framework Testing PHP
 
-![DomPDF](https://img.shields.io/badge/DomPDF-PDF%20Generation-FF2D20?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)  - PDF Generation for Certificates
+![DomPDF](https://img.shields.io/badge/DomPDF-PDF%20Generation-FF2D20?style=flat-square&logo=adobe-acrobat-reader&logoColor=white)  - Generasi PDF untuk Sertifikat
 
 ---
 
-## 💻 System Requirements
+## 💻 Persyaratan Sistem
 
 ![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4?style=flat-square&logo=php&logoColor=white)
 
@@ -191,7 +191,7 @@ EduTrack LMS is a comprehensive Learning Management System (LMS) designed to fac
 
 ---
 
-## 🚀 Installation
+## 🚀 Instalasi
 
 ### 1️⃣ Clone Repository
 
@@ -203,26 +203,26 @@ cd edutrack-lms
 ### 2️⃣ Install Dependencies
 
 ```bash
-# Install PHP dependencies
+# Install dependensi PHP
 composer install
 
-# Install Node.js dependencies
+# Install dependensi Node.js
 npm install
 ```
 
 ### 3️⃣ Setup Environment
 
 ```bash
-# Copy environment file
+# Salin file environment
 cp .env.example .env
 
 # Generate application key
 php artisan key:generate
 ```
 
-### 4️⃣ Configure Database
+### 4️⃣ Konfigurasi Database
 
-Edit the `.env` file and adjust the database configuration:
+Edit file `.env` dan sesuaikan konfigurasi database:
 
 ```env
 DB_CONNECTION=mysql
@@ -233,13 +233,13 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-### 5️⃣ Run Migrations and Seeder
+### 5️⃣ Jalankan Migrasi dan Seeder
 
 ```bash
-# Run migrations
+# Jalankan migrasi
 php artisan migrate
 
-# Seed database with dummy data
+# Seed database dengan data dummy
 php artisan db:seed
 ```
 
@@ -253,25 +253,25 @@ npm run dev
 npm run build
 ```
 
-### 7️⃣ Run Server
+### 7️⃣ Jalankan Server
 
 ```bash
 # Development server
 php artisan serve
 
-# Or with queue and vite
+# Atau dengan queue dan vite
 composer run dev
 ```
 
-🌐 Access the application at: `http://localhost:8000`
+🌐 Akses aplikasi di: `http://localhost:8000`
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Konfigurasi
 
-### 🔑 Default Credentials
+### 🔑 Kredensial Default
 
-After running the seeder, you can login with:
+Setelah menjalankan seeder, Anda dapat login dengan:
 
 **👨‍💼 Admin:**
 - ![Email](https://img.shields.io/badge/Email-admin%40edutrack.com-red?style=flat-square&logo=gmail&logoColor=white)
@@ -287,7 +287,7 @@ After running the seeder, you can login with:
 
 ### Environment Variables
 
-Some important variables in `.env`:
+Beberapa variabel penting di `.env`:
 
 ```env
 APP_NAME="EduTrack LMS"
@@ -306,21 +306,21 @@ DB_PASSWORD=
 
 ---
 
-## 📁 Project Structure
+## 📁 Struktur Proyek
 
-![Structure](https://img.shields.io/badge/📁-Project%20Structure-FF6B6B?style=for-the-badge&logo=folder&logoColor=white)
+![Structure](https://img.shields.io/badge/📁-Struktur%20Proyek-FF6B6B?style=for-the-badge&logo=folder&logoColor=white)
 
-### 📂 Main Directories
+### 📂 Direktori Utama
 
-![app](https://img.shields.io/badge/app-PHP%20Application-777BB4?style=flat-square&logo=php&logoColor=white) **app/** - Main Laravel application
+![app](https://img.shields.io/badge/app-PHP%20Application-777BB4?style=flat-square&logo=php&logoColor=white) **app/** - Aplikasi Laravel utama
 
-![database](https://img.shields.io/badge/database-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) **database/** - Database migrations and seeders
+![database](https://img.shields.io/badge/database-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white) **database/** - Migrasi dan seeder database
 
-![resources](https://img.shields.io/badge/resources-Views%20%26%20Assets-38B2AC?style=flat-square&logo=file-code&logoColor=white) **resources/** - Views, CSS, and assets
+![resources](https://img.shields.io/badge/resources-Views%20%26%20Assets-38B2AC?style=flat-square&logo=file-code&logoColor=white) **resources/** - Views, CSS, dan assets
 
-![routes](https://img.shields.io/badge/routes-Routing-646CFF?style=flat-square&logo=route&logoColor=white) **routes/** - Application route definitions
+![routes](https://img.shields.io/badge/routes-Routing-646CFF?style=flat-square&logo=route&logoColor=white) **routes/** - Definisi route aplikasi
 
-![tests](https://img.shields.io/badge/tests-Testing-3EAAAF?style=flat-square&logo=phpunit&logoColor=white) **tests/** - Unit and feature tests
+![tests](https://img.shields.io/badge/tests-Testing-3EAAAF?style=flat-square&logo=phpunit&logoColor=white) **tests/** - Unit dan feature tests
 
 ```
 edutrack-lms/
@@ -394,79 +394,79 @@ edutrack-lms/
 └── README.md
 ```
 
-### 📄 Important Files
+### 📄 File Penting
 
-![composer.json](https://img.shields.io/badge/composer.json-PHP%20Dependencies-885630?style=flat-square&logo=composer&logoColor=white)  - PHP Dependencies
+![composer.json](https://img.shields.io/badge/composer.json-PHP%20Dependencies-885630?style=flat-square&logo=composer&logoColor=white)  - Dependensi PHP
 
-![package.json](https://img.shields.io/badge/package.json-Node%20Dependencies-CB3837?style=flat-square&logo=npm&logoColor=white)  - Node.js Dependencies
+![package.json](https://img.shields.io/badge/package.json-Node%20Dependencies-CB3837?style=flat-square&logo=npm&logoColor=white)  - Dependensi Node.js
 
-![.env.example](https://img.shields.io/badge/.env.example-Configuration-FF6B6B?style=flat-square&logo=gear&logoColor=white)  - Environment configuration template
-
----
-
-## 📖 Usage
-
-### 👨‍💼 For Admin
-
-1. 🔐 **Login** as admin
-2. 📊 **Dashboard** - View platform statistics
-3. 👥 **User Management** - Manage all users (Admin, Teacher, Student)
-4. 📚 **Course Management** - Create, edit, and delete courses
-5. 🏷️ **Category Management** - Manage course categories
-
-### 👨‍🏫 For Teacher
-
-1. 🔐 **Login** as teacher
-2. 📊 **Dashboard** - View courses being taught
-3. ➕ **Create Course** - Create new course
-4. 📝 **Manage Lessons** - Add and manage lessons within courses
-5. 👥 **View Students** - View students enrolled in courses
-
-### 👨‍🎓 For Student
-
-1. 🔐 **Register/Login** as student
-2. 🔍 **Browse Courses** - Explore course catalog
-3. 🎫 **Enroll** - Enroll in desired courses
-4. 📖 **Learn** - Access lessons and study materials
-5. 📈 **Track Progress** - View learning progress
-6. 🏆 **Download Certificate** - Download certificate after completing course (100% progress)
+![.env.example](https://img.shields.io/badge/.env.example-Configuration-FF6B6B?style=flat-square&logo=gear&logoColor=white)  - Template konfigurasi environment
 
 ---
 
-## 📚 Documentation
+## 📖 Penggunaan
 
-Complete documentation is available in the `docs/` folder to help understand the application structure and implementation:
+### 👨‍💼 Untuk Admin
 
-### 📄 Documentation Files
+1. 🔐 **Login** sebagai admin
+2. 📊 **Dashboard** - Melihat statistik platform
+3. 👥 **Manajemen Pengguna** - Mengelola semua pengguna (Admin, Teacher, Student)
+4. 📚 **Manajemen Kursus** - Membuat, mengedit, dan menghapus kursus
+5. 🏷️ **Manajemen Kategori** - Mengelola kategori kursus
 
-- **[docs/controllers.md](docs/controllers.md)** - Complete documentation of all controllers, methods, authorization, Form Requests, error handling, and best practices
-- **[docs/models.md](docs/models.md)** - Documentation of all models, relationships, scopes, methods, and database constraints
-- **[docs/database.md](docs/database.md)** - Documentation of database schema, migrations, relationships, transactions, and query optimization
-- **[docs/routes.md](docs/routes.md)** - Documentation of all routes, middleware, route model binding, and Form Request integration
-- **[docs/tests.md](docs/tests.md)** - Documentation of testing, test patterns, setup, and how to run tests
-- **[docs/views.md](docs/views.md)** - Documentation of views, layouts, components, Blade directives, and form validation display
+### 👨‍🏫 Untuk Teacher
 
-### 🎯 Documented Features
+1. 🔐 **Login** sebagai teacher
+2. 📊 **Dashboard** - Melihat kursus yang diajarkan
+3. ➕ **Buat Kursus** - Membuat kursus baru
+4. 📝 **Kelola Pelajaran** - Menambah dan mengelola pelajaran dalam kursus
+5. 👥 **Lihat Siswa** - Melihat siswa yang terdaftar di kursus
 
-- ✅ **Form Request Classes** - Structured validation with custom error messages
-- ✅ **Database Transactions** - Atomic operations for data integrity
-- ✅ **Error Handling** - Comprehensive error handling with logging
-- ✅ **Certificate System** - PDF generation and certificate issuance
-- ✅ **Progress Tracking** - Auto-generate certificate when progress reaches 100%
-- ✅ **Role-based Access Control** - Authorization for each role
+### 👨‍🎓 Untuk Student
+
+1. 🔐 **Daftar/Login** sebagai student
+2. 🔍 **Jelajahi Kursus** - Menjelajahi katalog kursus
+3. 🎫 **Daftar** - Mendaftar ke kursus yang diinginkan
+4. 📖 **Belajar** - Mengakses pelajaran dan materi pembelajaran
+5. 📈 **Lacak Progress** - Melihat progress pembelajaran
+6. 🏆 **Unduh Sertifikat** - Mengunduh sertifikat setelah menyelesaikan kursus (progress 100%)
 
 ---
 
-## 🧪 Testing
+## 📚 Dokumentasi
+
+Dokumentasi lengkap tersedia di folder `docs/` untuk membantu memahami struktur dan implementasi aplikasi:
+
+### 📄 File Dokumentasi
+
+- **[docs/controllers.md](docs/controllers.md)** - Dokumentasi lengkap semua controller, method, authorization, Form Requests, error handling, dan best practices
+- **[docs/models.md](docs/models.md)** - Dokumentasi semua model, relationships, scopes, methods, dan database constraints
+- **[docs/database.md](docs/database.md)** - Dokumentasi database schema, migrations, relationships, transactions, dan query optimization
+- **[docs/routes.md](docs/routes.md)** - Dokumentasi semua routes, middleware, route model binding, dan Form Request integration
+- **[docs/tests.md](docs/tests.md)** - Dokumentasi testing, test patterns, setup, dan cara menjalankan tests
+- **[docs/views.md](docs/views.md)** - Dokumentasi views, layouts, components, Blade directives, dan form validation display
+
+### 🎯 Fitur yang Didokumentasikan
+
+- ✅ **Form Request Classes** - Validasi terstruktur dengan pesan error kustom
+- ✅ **Database Transactions** - Operasi atomik untuk integritas data
+- ✅ **Error Handling** - Penanganan error yang komprehensif dengan logging
+- ✅ **Certificate System** - Generasi PDF dan penerbitan sertifikat
+- ✅ **Progress Tracking** - Auto-generate sertifikat saat progress mencapai 100%
+- ✅ **Role-based Access Control** - Authorization untuk setiap role
+
+---
+
+## 🧪 Pengujian
 
 ```bash
-# Run all tests
+# Jalankan semua tests
 php artisan test
 
-# Run specific test
+# Jalankan test spesifik
 php artisan test --filter TestClassName
 
-# Run with coverage
+# Jalankan dengan coverage
 php artisan test --coverage
 ```
 
@@ -486,29 +486,29 @@ php artisan test --coverage
 
 ---
 
-## 🤝 Contributing
+## 🤝 Kontribusi
 
-Contributions are welcome! To contribute:
+Kontribusi sangat diterima! Untuk berkontribusi:
 
-1. 🍴 **Fork** the repository
-2. 🌿 **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
-3. 💾 **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 **Push** to the branch (`git push origin feature/AmazingFeature`)
-5. 🔄 **Open** a Pull Request
+1. 🍴 **Fork** repository
+2. 🌿 **Buat** feature branch (`git checkout -b feature/AmazingFeature`)
+3. 💾 **Commit** perubahan Anda (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 **Push** ke branch (`git push origin feature/AmazingFeature`)
+5. 🔄 **Buka** Pull Request
 
 ### 📋 Coding Standards
 
-- 📐 Follow [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard
-- 🎨 Use Laravel Pint for code formatting
-- 🧪 Write tests for new features
-- 📝 Update documentation if needed
-- ✅ Use Form Request classes for validation
-- 🔒 Implement proper error handling and logging
-- 💾 Use database transactions for critical operations
+- 📐 Ikuti standar coding [PSR-12](https://www.php-fig.org/psr/psr-12/)
+- 🎨 Gunakan Laravel Pint untuk formatting kode
+- 🧪 Tulis tests untuk fitur baru
+- 📝 Perbarui dokumentasi jika diperlukan
+- ✅ Gunakan Form Request classes untuk validasi
+- 🔒 Implementasikan error handling dan logging yang tepat
+- 💾 Gunakan database transactions untuk operasi kritis
 
 ---
 
-## 👤 Contact
+## 👤 Kontak
 
 ![GitHub](https://img.shields.io/badge/GitHub-ShinZeleo-181717?style=for-the-badge&logo=github&logoColor=white) [@ShinZeleo](https://github.com/ShinZeleo)
 
@@ -516,25 +516,24 @@ Contributions are welcome! To contribute:
 
 ---
 
-## 🙏 Acknowledgments
+## 🙏 Ucapan Terima Kasih
 
-Thanks to:
+Terima kasih kepada:
 
-![Laravel](https://img.shields.io/badge/Laravel-Framework-FF2D20?style=flat-square&logo=laravel&logoColor=white) [Laravel](https://laravel.com) - Amazing framework
+![Laravel](https://img.shields.io/badge/Laravel-Framework-FF2D20?style=flat-square&logo=laravel&logoColor=white) [Laravel](https://laravel.com) - Framework yang luar biasa
 
-![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-Framework-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) [Tailwind CSS](https://tailwindcss.com) - Powerful CSS framework
+![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-Framework-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) [Tailwind CSS](https://tailwindcss.com) - Framework CSS yang powerful
 
-![Heroicons](https://img.shields.io/badge/Heroicons-Icons-7C3AED?style=flat-square&logo=heroicons&logoColor=white) [Heroicons](https://heroicons.com) - Icon set used
+![Heroicons](https://img.shields.io/badge/Heroicons-Icons-7C3AED?style=flat-square&logo=heroicons&logoColor=white) [Heroicons](https://heroicons.com) - Icon set yang digunakan
 
-![Contributors](https://img.shields.io/badge/Contributors-Thank%20You-FF6B6B?style=flat-square&logo=heart&logoColor=white) All contributors and users of EduTrack LMS
 
-![Unsplash](https://img.shields.io/badge/Unsplash-Images-000000?style=flat-square&logo=unsplash&logoColor=white) [Unsplash](https://unsplash.com) - Placeholder images used
+![Unsplash](https://img.shields.io/badge/Unsplash-Images-000000?style=flat-square&logo=unsplash&logoColor=white) [Unsplash](https://unsplash.com) - Placeholder images yang digunakan
 
 ---
 
 <div align="center">
 
 
-⭐ If this project helps you, please give it a star on the repository!
+⭐ Jika proyek ini membantu Anda, berikan bintang di repository!
 
 </div>
