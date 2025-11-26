@@ -103,13 +103,19 @@
 
                 <div class="flex items-center gap-2 sm:gap-3">
                     @guest
-                        <a href="{{ route('login') }}" class="text-sm text-neutral-700 px-3 sm:px-4 py-2 hover:text-emerald-600 transition font-medium">
+                        <a href="{{ route('login') }}" class="text-sm inline-flex items-center gap-2 text-neutral-700 px-3 sm:px-4 py-2 border border-neutral-300 rounded-lg hover:border-emerald-500 hover:text-emerald-600 transition font-medium">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
                             Login
                         </a>
                         <a
                             href="{{ route('register') }}"
-                            class="text-sm inline-flex items-center justify-center px-3 sm:px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm hover:shadow-md transition font-medium"
+                            class="text-sm inline-flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm hover:shadow-md transition font-medium"
                         >
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                            </svg>
                             Register
                         </a>
                     @else
@@ -251,14 +257,20 @@
                 @guest
                     <a
                         href="{{ route('login') }}"
-                        class="block w-full text-center text-sm text-neutral-700 px-3 py-2 rounded-lg hover:bg-neutral-100 font-medium"
+                        class="flex items-center justify-center gap-2 w-full text-sm text-neutral-700 px-3 py-2 border border-neutral-300 rounded-lg hover:border-emerald-500 hover:bg-neutral-50 hover:text-emerald-600 font-medium"
                     >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                        </svg>
                         Login
                     </a>
                     <a
                         href="{{ route('register') }}"
-                        class="block w-full text-center text-sm px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium"
+                        class="flex items-center justify-center gap-2 w-full text-sm px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 font-medium"
                     >
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                        </svg>
                         Register
                     </a>
                 @else
