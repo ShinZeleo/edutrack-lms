@@ -7,7 +7,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center justify-between mb-2">
                         <p class="text-sm font-medium text-neutral-600">Total User</p>
                         <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -18,7 +18,7 @@
                     </div>
                     <p class="text-3xl font-bold text-neutral-900">{{ $stats['totalUsers'] ?? 0 }}</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center justify-between mb-2">
                         <p class="text-sm font-medium text-neutral-600">Total Kursus</p>
                         <div class="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center">
@@ -29,7 +29,7 @@
                     </div>
                     <p class="text-3xl font-bold text-neutral-900">{{ $stats['totalCourses'] ?? 0 }}</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center justify-between mb-2">
                         <p class="text-sm font-medium text-neutral-600">Total Kategori</p>
                         <div class="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center">
@@ -40,7 +40,7 @@
                     </div>
                     <p class="text-3xl font-bold text-neutral-900">{{ $stats['totalCategories'] ?? 0 }}</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="400">
                     <div class="flex items-center justify-between mb-2">
                         <p class="text-sm font-medium text-neutral-600">Enrollment</p>
                         <div class="h-10 w-10 rounded-lg bg-yellow-100 flex items-center justify-center">
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8">
+            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8" data-aos="fade-up" data-aos-delay="500">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
                     <h2 class="text-xl sm:text-2xl font-bold text-neutral-900">User Management</h2>
                     <a href="{{ route('admin.users.index') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1">
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8">
+            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8" data-aos="fade-up" data-aos-delay="600">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
                     <h2 class="text-xl sm:text-2xl font-bold text-neutral-900">Course Management</h2>
                     <a href="{{ route('admin.courses.index') }}" class="text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1">
@@ -149,7 +149,7 @@
                 </div>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6">
+            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6" data-aos="fade-up" data-aos-delay="700">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-4 sm:mb-6">
                     <h2 class="text-xl sm:text-2xl font-bold text-neutral-900">Category Management</h2>
                     <a href="{{ route('categories.index') }}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold text-sm transition">

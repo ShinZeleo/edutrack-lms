@@ -7,7 +7,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Total Kursus</p>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Progress Rata-rata</p>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Kursus Selesai</p>
@@ -95,7 +95,7 @@
                             @php
                                 $progress = $course->getProgressForUser($user) ?? 0;
                             @endphp
-                            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden hover:shadow-xl transition">
+                            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden hover:shadow-xl transition" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
                                 <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
                                     <img
                                         src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
@@ -168,8 +168,8 @@
             </div>
 
             <div class="mt-6 sm:mt-8">
-                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-4 sm:mb-6">Rekomendasi Kursus</h2>
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-8 text-center">
+                <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-4 sm:mb-6" data-aos="fade-up">Rekomendasi Kursus</h2>
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-8 text-center" data-aos="fade-up" data-aos-delay="100">
                     <p class="text-neutral-600 mb-4">Temukan kursus baru yang sesuai dengan minat Anda</p>
                     <a href="{{ route('courses.catalog') }}" class="inline-flex items-center gap-2 px-6 py-3 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 font-semibold transition">
                         Lihat Semua Kursus

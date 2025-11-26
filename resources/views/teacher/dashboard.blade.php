@@ -15,7 +15,7 @@
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="100">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Total Kursus</p>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="200">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Total Siswa</p>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
 
-                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="300">
                     <div class="flex items-center justify-between">
                         <div>
                             <p class="text-sm font-medium text-neutral-600 mb-1">Kursus Aktif</p>
@@ -62,7 +62,7 @@
                 <h2 class="text-xl sm:text-2xl font-bold text-neutral-900 mb-4 sm:mb-6">Kursus Saya</h2>
 
                 @if($courses->count() > 0)
-                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 overflow-hidden" data-aos="fade-up" data-aos-delay="400">
                         <div class="overflow-x-auto">
                             <table class="w-full min-w-[640px]">
                                 <thead class="bg-neutral-50 border-b border-neutral-200">
