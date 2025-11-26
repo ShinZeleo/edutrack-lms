@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12 sm:py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8">
+            <div class="mb-8" data-aos="fade-up">
                 <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 mb-4 sm:mb-6">Katalog Kursus</h1>
-                <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-4 sm:p-6">
+                <div class="bg-white border border-neutral-200 rounded-lg shadow-sm p-4 sm:p-6" data-aos="fade-up" data-aos-delay="100">
             <form method="GET" action="{{ route('courses.catalog') }}" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 items-end">
                 <div>
                     <x-input-label for="search" value="Pencarian" />
@@ -45,7 +45,7 @@
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             @forelse($courses as $index => $course)
-                <div class="p-4 sm:p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white">
+                <div class="p-4 sm:p-6 border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition bg-white" data-aos="fade-up" data-aos-delay="{{ $index * 50 }}">
                     <div class="rounded-lg h-40 w-full bg-gradient-to-br from-emerald-400 to-blue-500 mb-4 overflow-hidden">
                         <img src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}" alt="{{ $course->name }}" class="w-full h-full object-cover">
                     </div>

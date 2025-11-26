@@ -3,19 +3,19 @@
         <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="text-center lg:text-left">
-                    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-semibold text-emerald-700 mb-6">
+                <div class="text-center lg:text-left" data-aos="fade-right">
+                    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-1.5 text-xs font-semibold text-emerald-700 mb-6" data-aos="fade-up" data-aos-delay="100">
                         <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
                         Platform Kursus Daring Terpercaya
                     </p>
 
-                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-4 sm:mb-6">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 tracking-tight mb-4 sm:mb-6" data-aos="fade-up" data-aos-delay="200">
                         Belajar Skill Baru Dengan <span class="text-emerald-600">Lebih Mudah</span>
                     </h1>
 
-                    <p class="text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0 px-4 sm:px-0">
+                    <p class="text-base sm:text-lg md:text-xl text-neutral-600 leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="300">
                         Akses kursus berkualitas dari mentor ahli. Bangun portofolio dan tingkatkan karier melalui pembelajaran terstruktur.
                     </p>
 
@@ -43,15 +43,15 @@
                     </div>
 
                     <div class="grid grid-cols-3 gap-4 sm:gap-6 text-center lg:text-left px-4 sm:px-0">
-                        <div>
+                        <div data-aos="fade-up" data-aos-delay="400">
                             <div class="text-2xl font-bold text-emerald-600">{{ $stats['activeCourses'] ?? 0 }}+</div>
                             <div class="text-sm text-neutral-600">Kursus Tersedia</div>
                         </div>
-                        <div>
+                        <div data-aos="fade-up" data-aos-delay="500">
                             <div class="text-2xl font-bold text-emerald-600">{{ $stats['activeStudents'] ?? 0 }}+</div>
                             <div class="text-sm text-neutral-600">Siswa Aktif</div>
                         </div>
-                        <div>
+                        <div data-aos="fade-up" data-aos-delay="600">
                             <div class="text-2xl font-bold text-emerald-600">{{ $stats['activeTeachers'] ?? 0 }}+</div>
                             <div class="text-sm text-neutral-600">Mentor Ahli</div>
                         </div>
@@ -99,7 +99,7 @@
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 @forelse(($categories ?? [])->take(4) as $index => $category)
-                    <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition overflow-hidden flex flex-col">
+                    <div class="bg-white border border-neutral-200 rounded-lg shadow-sm hover:shadow-md transition overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
                             <img
                                 src="{{ $categoryImages[$index % count($categoryImages)] }}&sig={{ $category->id }}"
@@ -127,7 +127,7 @@
 
     <section id="featured-courses" class="py-12 sm:py-16 lg:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8 sm:mb-12">
+            <div class="text-center mb-8 sm:mb-12" data-aos="fade-up">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 mb-3 sm:mb-4">
                     Kursus Populer
                 </h2>
@@ -152,7 +152,7 @@
             @endphp
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 @forelse($courses ?? [] as $index => $course)
-                    <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                    <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                         <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden relative">
                             <img
                                 src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
@@ -216,6 +216,7 @@
                     <a
                         href="{{ route('courses.catalog') }}"
                         class="bg-white border-2 border-neutral-200 rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center justify-center p-6 sm:p-8 group hover:border-emerald-500 min-h-[400px]"
+                        data-aos="fade-up" data-aos-delay="{{ count($courses ?? []) * 100 }}"
                     >
                         <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-emerald-100 text-emerald-600 mb-4 group-hover:bg-emerald-600 group-hover:text-white transition">
                             <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
