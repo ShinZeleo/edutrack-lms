@@ -6,13 +6,13 @@
     <div class="bg-gradient-to-b from-neutral-50 to-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="mb-8">
+            <div class="mb-8" data-aos="fade-up">
                 <h1 class="text-4xl font-bold text-neutral-900 mb-2">Dashboard</h1>
                 <p class="text-lg text-neutral-600">Selamat datang, {{ $user->name }}!</p>
             </div>
 
 
-            <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-xl p-8 mb-8 text-white">
+            <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl shadow-xl p-8 mb-8 text-white" data-aos="fade-up" data-aos-delay="100">
                 <div class="flex items-center justify-between">
                     <div>
                         <h2 class="text-2xl font-bold mb-2">Selamat Datang!</h2>
@@ -29,8 +29,12 @@
 
             @if(isset($stats))
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    @foreach($stats as $label => $value)
-                        <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6">
+                    @foreach($stats as $index => $stat)
+                        @php
+                            $label = is_array($stat) ? ($stat['label'] ?? '') : array_keys($stats)[$index];
+                            $value = is_array($stat) ? ($stat['value'] ?? '') : $stat;
+                        @endphp
+                        <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-6" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
                             <p class="text-sm font-medium text-neutral-600 mb-2">{{ $label }}</p>
                             <p class="text-3xl font-bold text-emerald-600">{{ $value }}</p>
                         </div>
@@ -70,7 +74,7 @@
                             @php
                                 $progress = $course->progress_percent ?? 0;
                             @endphp
-                            <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
+                            <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                                 <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden">
                                     <img
                                         src="{{ $courseImages[$index % count($courseImages)] }}&sig={{ $course->id }}"
@@ -140,7 +144,7 @@
                     @endphp
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @forelse($teacherCourses ?? [] as $index => $course)
-                            <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
+                            <div class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden" data-aos="fade-up" data-aos-delay="{{ $index * 100 }}">
                                 <div class="aspect-video bg-gradient-to-br from-emerald-400 to-blue-500 overflow-hidden">
                                     <img
                                         src="{{ $teacherCourseImages[$index % count($teacherCourseImages)] }}&sig={{ $course->id }}"
@@ -186,7 +190,7 @@
                 <section class="space-y-6">
                     <h2 class="text-2xl font-bold text-neutral-900">Administrasi Platform</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <a href="{{ route('admin.users.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group">
+                        <a href="{{ route('admin.users.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group" data-aos="fade-up" data-aos-delay="100">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="h-12 w-12 rounded-xl bg-blue-100 group-hover:bg-blue-200 transition flex items-center justify-center">
                                     <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,7 +201,7 @@
                             </div>
                             <p class="text-neutral-600">Kelola admin, teacher, dan student.</p>
                         </a>
-                        <a href="{{ route('admin.courses.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group">
+                        <a href="{{ route('admin.courses.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group" data-aos="fade-up" data-aos-delay="200">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="h-12 w-12 rounded-xl bg-emerald-100 group-hover:bg-emerald-200 transition flex items-center justify-center">
                                     <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -208,7 +212,7 @@
                             </div>
                             <p class="text-neutral-600">Pantau dan atur seluruh kursus yang tersedia.</p>
                         </a>
-                        <a href="{{ route('categories.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group">
+                        <a href="{{ route('categories.index') }}" class="bg-white border-2 border-neutral-200 rounded-xl shadow-lg p-6 hover:border-emerald-500 hover:shadow-xl transition group" data-aos="fade-up" data-aos-delay="300">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="h-12 w-12 rounded-xl bg-purple-100 group-hover:bg-purple-200 transition flex items-center justify-center">
                                     <svg class="h-6 w-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

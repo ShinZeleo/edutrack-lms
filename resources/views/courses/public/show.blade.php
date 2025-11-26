@@ -2,7 +2,7 @@
     <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-6 sm:mb-8">
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden mb-6 sm:mb-8" data-aos="fade-up">
                 <div class="grid lg:grid-cols-3 gap-6 sm:gap-8 p-4 sm:p-6 lg:p-8">
 
                     <div class="lg:col-span-2 space-y-6">
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="lg:col-span-1">
-                        <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-4 sm:p-6 text-white shadow-xl">
+                        <div class="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-4 sm:p-6 text-white shadow-xl" data-aos="fade-left" data-aos-delay="200">
                             <p class="text-xs uppercase tracking-widest text-emerald-100 mb-2">Aksi</p>
                             <h2 class="text-2xl font-bold mb-6">{{ $isEnrolled ?? false ? 'Lanjutkan Belajar' : 'Ikuti Kursus' }}</h2>
 
@@ -159,7 +159,7 @@
             <div class="grid lg:grid-cols-3 gap-6 sm:gap-8">
 
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8">
+                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8" data-aos="fade-up" data-aos-delay="100">
                         <div class="flex items-center gap-2 mb-6">
                             <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -176,7 +176,7 @@
                                 @php
                                     $isDoneLesson = $showLessonStatus ? ($lesson->progress->first()->is_done ?? false) : false;
                                 @endphp
-                                <li class="flex items-center justify-between rounded-xl border-2 {{ $isDoneLesson ? 'border-emerald-200 bg-emerald-50' : 'border-neutral-200 bg-white' }} px-5 py-4 hover:border-emerald-400 transition">
+                                <li class="flex items-center justify-between rounded-xl border-2 {{ $isDoneLesson ? 'border-emerald-200 bg-emerald-50' : 'border-neutral-200 bg-white' }} px-5 py-4 hover:border-emerald-400 transition" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 50 }}">
                                     <div class="flex items-center gap-4">
                                         <div class="flex-shrink-0 h-10 w-10 rounded-full {{ $isDoneLesson ? 'bg-emerald-600' : 'bg-neutral-200' }} flex items-center justify-center text-sm font-bold {{ $isDoneLesson ? 'text-white' : 'text-neutral-700' }}">
                                             @if($isDoneLesson)
@@ -209,7 +209,7 @@
                 </div>
 
                 <div class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 sticky top-24">
+                    <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-6 sticky top-24" data-aos="fade-left" data-aos-delay="300">
                         <div class="flex items-center gap-2 mb-6">
                             <svg class="h-5 w-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

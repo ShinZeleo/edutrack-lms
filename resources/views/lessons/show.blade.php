@@ -24,7 +24,7 @@
             </nav>
 
             {{-- Header --}}
-            <header class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
+            <header class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8" data-aos="fade-up">
                 <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-3 sm:mb-4">
                     {{ $lesson->title }}
                 </h1>
@@ -63,7 +63,7 @@
             </header>
 
             {{-- Content --}}
-            <article class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 prose prose-lg max-w-none">
+            <article class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 prose prose-lg max-w-none" data-aos="fade-up" data-aos-delay="100">
                 <div class="text-base sm:text-lg text-neutral-700 leading-relaxed">
                     {!! nl2br(e($lesson->content)) !!}
                 </div>
@@ -83,7 +83,7 @@
             @endif
 
             {{-- Action Bar --}}
-            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6">
+            <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6" data-aos="fade-up" data-aos-delay="200">
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                     @if($isDone ?? false)
                         <form
@@ -175,6 +175,7 @@
                             class="flex items-center justify-between rounded-lg border
                                 {{ $current ? 'border-emerald-500 bg-emerald-50/60' : ($done ? 'border-emerald-200 bg-emerald-50/40' : 'border-neutral-200 bg-white') }}
                                 hover:border-emerald-400 hover:bg-emerald-50/30 px-4 py-3 text-sm transition"
+                            data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 50 }}"
                         >
                             <div class="flex items-center gap-3">
                                 <div class="h-7 w-7 flex items-center justify-center rounded-full
