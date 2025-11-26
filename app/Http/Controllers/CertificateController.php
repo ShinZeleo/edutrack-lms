@@ -79,7 +79,12 @@ class CertificateController extends Controller
 
             $pdf = Pdf::loadView('certificates.pdf', $data);
 
-            return $pdf->download('certificate-' . $certificate->course->name . '-' . $certificate->student->name . '.pdf');
+            // Sanitize filename: remove invalid characters for file names
+            $courseName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->course->name);
+            $studentName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->student->name);
+            $filename = 'certificate-' . $courseName . '-' . $studentName . '.pdf';
+
+            return $pdf->download($filename);
         } catch (\Exception $e) {
             Log::error('Error downloading certificate', [
                 'certificate_id' => $certificate->id,
