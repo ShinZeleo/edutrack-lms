@@ -44,7 +44,7 @@ class EnrollmentController extends Controller
         $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
-            return redirect()->back()->with('error', 'Anda harus terdaftar di kursus ini untuk menandai lesson sebagai selesai.');
+            abort(403, 'Anda harus terdaftar di kursus ini untuk menandai lesson sebagai selesai.');
         }
 
         try {
@@ -106,7 +106,7 @@ class EnrollmentController extends Controller
         $isEnrolled = $lesson->course->students()->where('users.id', $user->id)->exists();
 
         if (!$isEnrolled) {
-            return redirect()->back()->with('error', 'Anda harus terdaftar di kursus ini untuk mengubah status lesson.');
+            abort(403, 'Anda harus terdaftar di kursus ini untuk mengubah status lesson.');
         }
 
         try {
