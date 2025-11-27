@@ -414,6 +414,10 @@ edutrack-lms/
 
 ## 📖 Penggunaan
 
+### Diagram Alur
+![Flow Diagram](docs/screenshots/flow-diagram.png)
+
+
 ### 👨‍💼 Untuk Admin
 
 1. 🔐 **Login** sebagai admin
