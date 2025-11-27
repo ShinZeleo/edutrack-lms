@@ -459,8 +459,6 @@ Dokumentasi lengkap tersedia di folder `docs/` untuk membantu memahami struktur 
   Penjelasan workflow middleware (auth, role-based, verified), urutan eksekusi, contoh error/redirect, serta best practice fail-fast authorization.
 - **[docs/database.md](docs/database.md)**
   Dokumentasi schema database, detail tiap migration, strategi cascade delete, diagram ERD, serta tips menjalankan/rollback migration.
-- **[docs/factories.md](docs/factories.md)**
-  Cara menggunakan factory untuk generate data (termasuk nested relationships), contoh seeding (DemoSeeder), serta pattern testing dengan factories.
 - **[docs/tests.md](docs/tests.md)**
   Struktur test suite, contoh Arrange-Act-Assert, daftar assertion yang digunakan, serta panduan menjalankan test parsial maupun penuh.
 
@@ -514,15 +512,6 @@ Kontribusi sangat diterima! Untuk berkontribusi:
 4. 📤 **Push** ke branch (`git push origin feature/AmazingFeature`)
 5. 🔄 **Buka** Pull Request
 
-### 📋 Coding Standards
-
-- 📐 Ikuti standar coding [PSR-12](https://www.php-fig.org/psr/psr-12/)
-- 🎨 Gunakan Laravel Pint untuk formatting kode
-- 🧪 Tulis tests untuk fitur baru
-- 📝 Perbarui dokumentasi jika diperlukan
-- ✅ Gunakan Form Request classes untuk validasi
-- 🔒 Implementasikan error handling dan logging yang tepat
-- 💾 Gunakan database transactions untuk operasi kritis
 
 ---
 
@@ -531,21 +520,6 @@ Kontribusi sangat diterima! Untuk berkontribusi:
 ![GitHub](https://img.shields.io/badge/GitHub-ShinZeleo-181717?style=for-the-badge&logo=github&logoColor=white) [@ShinZeleo](https://github.com/ShinZeleo)
 
 ![Project](https://img.shields.io/badge/Project-Link-FF6B6B?style=for-the-badge&logo=link&logoColor=white) : [https://github.com/ShinZeleo/edutrack-lms](https://github.com/ShinZeleo/edutrack-lms)
-
----
-
-## 🙏 Ucapan Terima Kasih
-
-Terima kasih kepada:
-
-![Laravel](https://img.shields.io/badge/Laravel-Framework-FF2D20?style=flat-square&logo=laravel&logoColor=white) [Laravel](https://laravel.com) - Framework yang luar biasa
-
-![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-Framework-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white) [Tailwind CSS](https://tailwindcss.com) - Framework CSS yang powerful
-
-![Heroicons](https://img.shields.io/badge/Heroicons-Icons-7C3AED?style=flat-square&logo=heroicons&logoColor=white) [Heroicons](https://heroicons.com) - Icon set yang digunakan
-
-
-![Unsplash](https://img.shields.io/badge/Unsplash-Images-000000?style=flat-square&logo=unsplash&logoColor=white) [Unsplash](https://unsplash.com) - Placeholder images yang digunakan
 
 ---
 
