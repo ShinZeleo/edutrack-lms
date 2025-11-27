@@ -43,6 +43,14 @@
 ![User Management Screenshot](docs/screenshots/user-management.png)
 *Manajemen pengguna dengan layout card yang modern*
 
+### Dashboard Teacher
+![Teacher Dashboard Screenshot](docs/screenshots/teacher-dashboard.png)
+*Dashboard teacher dengan daftar kursus yang dibuat dan statistik siswa*
+
+### Dashboard Student
+![Student Dashboard Screenshot](docs/screenshots/student-dashboard.png)
+*Dashboard student dengan kursus yang diikuti, progress tracking, dan akses sertifikat*
+
 ---
 
 ## 📋 Daftar Isi
@@ -439,12 +447,22 @@ Dokumentasi lengkap tersedia di folder `docs/` untuk membantu memahami struktur 
 
 ### 📄 File Dokumentasi
 
-- **[docs/controllers.md](docs/controllers.md)** - Dokumentasi lengkap semua controller, method, authorization, Form Requests, error handling, dan best practices
-- **[docs/models.md](docs/models.md)** - Dokumentasi semua model, relationships, scopes, methods, dan database constraints
-- **[docs/database.md](docs/database.md)** - Dokumentasi database schema, migrations, relationships, transactions, dan query optimization
-- **[docs/routes.md](docs/routes.md)** - Dokumentasi semua routes, middleware, route model binding, dan Form Request integration
-- **[docs/tests.md](docs/tests.md)** - Dokumentasi testing, test patterns, setup, dan cara menjalankan tests
-- **[docs/views.md](docs/views.md)** - Dokumentasi views, layouts, components, Blade directives, dan form validation display
+- **[docs/controllers.md](docs/controllers.md)**
+  Ikhtisar setiap controller beserta alur request → controller → response, middleware yang digunakan, penggunaan Form Request, transaksi database, dan error handling pattern.
+- **[docs/models.md](docs/models.md)**
+  Diagram relasi antar model, penjelasan setiap relationship (hasMany, belongsTo, belongsToMany), scopes, accessor/mutator, serta contoh query yang optimal.
+- **[docs/views.md](docs/views.md)**
+  Struktur folder Blade, penjelasan layout & component, contoh Blade directive, cara menampilkan error/flash message, serta guideline Tailwind untuk styling.
+- **[docs/routes.md](docs/routes.md)**
+  Daftar lengkap routes (public, auth, admin, teacher, student), middleware stack yang melindungi tiap route, contoh route model binding, dan naming convention.
+- **[docs/middleware.md](docs/middleware.md)**
+  Penjelasan workflow middleware (auth, role-based, verified), urutan eksekusi, contoh error/redirect, serta best practice fail-fast authorization.
+- **[docs/database.md](docs/database.md)**
+  Dokumentasi schema database, detail tiap migration, strategi cascade delete, diagram ERD, serta tips menjalankan/rollback migration.
+- **[docs/factories.md](docs/factories.md)**
+  Cara menggunakan factory untuk generate data (termasuk nested relationships), contoh seeding (DemoSeeder), serta pattern testing dengan factories.
+- **[docs/tests.md](docs/tests.md)**
+  Struktur test suite, contoh Arrange-Act-Assert, daftar assertion yang digunakan, serta panduan menjalankan test parsial maupun penuh.
 
 ### 🎯 Fitur yang Didokumentasikan
 

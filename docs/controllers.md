@@ -1,11 +1,18 @@
 # Controllers Documentation
 
 ## Overview
-Controllers di EduTrack LMS menangani logika bisnis dan mengatur interaksi antara user dan sistem. Semua controller berada di `app/Http/Controllers/`.
+Controllers di EduTrack LMS menangani semua logika bisnis dan mengatur interaksi antara user dan sistem. Semua controller berada di `app/Http/Controllers/` dan mengikuti pola MVC (Model-View-Controller) dari Laravel.
+
+**Arsitektur Controller:**
+- Semua controller extends `App\Http\Controllers\Controller`
+- Menggunakan Form Request untuk validasi
+- Menggunakan Eloquent ORM untuk database operations
+- Mengimplementasikan role-based authorization
+- Error handling dengan try-catch dan logging
 
 ---
 
-## Main Controllers
+## Controller List
 
 ### 1. HomeController
 **File:** `app/Http/Controllers/HomeController.php`
@@ -13,40 +20,266 @@ Controllers di EduTrack LMS menangani logika bisnis dan mengatur interaksi antar
 **Fungsi:** Menangani halaman publik (homepage dan about page)
 
 **Methods:**
-- `index(Request $request)` - Menampilkan homepage dengan daftar course populer, statistik, dan filter
-- `about()` - Menampilkan halaman about
 
-**Fitur:**
-- Search course berdasarkan nama
-- Filter course berdasarkan kategori
-- Menampilkan 5 course terpopuler (berdasarkan jumlah student)
-- Statistik: active courses, categories, teachers, students
-- Progress tracking untuk student yang login
+#### `index(Request $request)`
+**Route:** `GET /` (name: `home`)
+
+**Middleware:** None (public access)
+
+**Fungsi:**
+Menampilkan homepage dengan daftar course populer, statistik, dan filter.
+
+**Alur Kerja:**
+1. Menerima request dengan parameter `search` dan `category_id`
+2. Query courses aktif dengan eager loading (`teacher`, `category`, `students`)
+3. Filter berdasarkan search (jika ada)
+4. Filter berdasarkan category (jika ada)
+5. Order by jumlah students (descending)
+6. Limit 5 courses terpopuler
+7. Ambil semua categories aktif
+8. Hitung statistik:
+   - Active courses count
+   - Active categories count
+   - Active teachers count
+   - Active students count
+9. Jika user login dan student, tambahkan progress dan enrollment status
+10. Return view dengan data
+
+**Contoh Request:**
+```
+GET /?search=laravel&category_id=1
+```
+
+**Response Data:**
+```php
+[
+    'courses' => Collection, // 5 courses terpopuler
+    'categories' => Collection, // Semua categories aktif
+    'stats' => [
+        'activeCourses' => int,
+        'activeCategories' => int,
+        'activeTeachers' => int,
+        'activeStudents' => int,
+    ]
+]
+```
+
+**View:** `resources/views/home.blade.php`
+
+---
+
+#### `about()`
+**Route:** `GET /about` (name: `about`)
+
+**Middleware:** None (public access)
+
+**Fungsi:**
+Menampilkan halaman about/tentang aplikasi.
+
+**Alur Kerja:**
+1. Return view about tanpa data tambahan
+
+**View:** `resources/views/about.blade.php`
 
 ---
 
 ### 2. CourseController
 **File:** `app/Http/Controllers/CourseController.php`
 
-**Fungsi:** Mengelola course (CRUD operations)
-
-**Methods:**
-- `publicIndex()` - Menampilkan catalog semua course aktif (public)
-- `show(Course $course)` - Menampilkan detail course (public)
-- `index()` - List course untuk admin/teacher
-- `create()` - Form create course
-- `store(CourseStoreRequest $request)` - Menyimpan course baru (menggunakan Form Request)
-- `edit(Course $course)` - Form edit course
-- `update(CourseUpdateRequest $request, Course $course)` - Update course (menggunakan Form Request)
-- `destroy(Course $course)` - Hapus course
+**Fungsi:** Mengelola course (CRUD operations) untuk admin dan teacher
 
 **Authorization:**
-- Admin: Bisa mengelola semua course
-- Teacher: Hanya bisa mengelola course miliknya sendiri
+- **Admin:** Bisa mengelola semua courses
+- **Teacher:** Hanya bisa mengelola courses miliknya sendiri
+- **Student:** Hanya bisa melihat courses (public)
 
-**Form Requests:**
-- `CourseStoreRequest` - Validasi untuk create course
-- `CourseUpdateRequest` - Validasi untuk update course
+**Methods:**
+
+#### `publicIndex()`
+**Route:** `GET /courses` (name: `courses.catalog`)
+
+**Middleware:** None (public access)
+
+**Fungsi:**
+Menampilkan catalog semua course aktif untuk public view.
+
+**Alur Kerja:**
+1. Query courses aktif dengan eager loading
+2. Paginate results
+3. Return catalog view
+
+**View:** `resources/views/courses/catalog.blade.php`
+
+---
+
+#### `show(Course $course)`
+**Route:** `GET /courses/{course}` (name: `courses.public.show`)
+
+**Middleware:** None (public access)
+
+**Fungsi:**
+Menampilkan detail course untuk public view.
+
+**Alur Kerja:**
+1. Load course dengan relationships (category, teacher, students, lessons)
+2. Jika user login dan student:
+   - Check enrollment status
+   - Calculate progress
+3. Return detail view
+
+**View:** `resources/views/courses/public/show.blade.php`
+
+---
+
+#### `index()`
+**Route:**
+- `GET /admin/courses` (name: `admin.courses.index`) - Admin
+- `GET /teacher/courses` (name: `teacher.courses.index`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Fungsi:**
+List courses untuk admin atau teacher.
+
+**Alur Kerja:**
+1. Check user role
+2. **Jika Admin:**
+   - Query semua courses dengan pagination
+   - Load categories dan teachers untuk filter
+3. **Jika Teacher:**
+   - Query hanya courses milik teacher tersebut
+4. Return index view sesuai role
+
+**Views:**
+- Admin: `resources/views/courses/admin/index.blade.php`
+- Teacher: `resources/views/courses/teacher/index.blade.php`
+
+---
+
+#### `create()`
+**Route:**
+- `GET /admin/courses/create` (name: `admin.courses.create`) - Admin
+- `GET /teacher/courses/create` (name: `teacher.courses.create`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Fungsi:**
+Form create course baru.
+
+**Alur Kerja:**
+1. Check user role
+2. Load categories (dan teachers jika admin)
+3. Return create form
+
+**Views:**
+- Admin: `resources/views/courses/admin/create.blade.php`
+- Teacher: `resources/views/courses/teacher/create.blade.php`
+
+---
+
+#### `store(CourseStoreRequest $request)`
+**Route:**
+- `POST /admin/courses` (name: `admin.courses.store`) - Admin
+- `POST /teacher/courses` (name: `teacher.courses.store`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Validasi:** `CourseStoreRequest`
+
+**Fungsi:**
+Menyimpan course baru ke database.
+
+**Alur Kerja:**
+1. Validasi request (dilakukan oleh Form Request)
+2. Tentukan teacher_id:
+   - Admin: dari request input
+   - Teacher: dari authenticated user
+3. Create course dengan data dari request
+4. Redirect ke index dengan success message
+
+**Form Request Rules:**
+```php
+'name' => 'required|string|max:255',
+'description' => 'nullable|string',
+'start_date' => 'required|date',
+'end_date' => 'required|date|after_or_equal:start_date',
+'category_id' => 'required|exists:categories,id',
+'teacher_id' => 'required_if:role,admin|exists:users,id', // Hanya untuk admin
+'is_active' => 'boolean',
+```
+
+---
+
+#### `edit(Course $course)`
+**Route:**
+- `GET /admin/courses/{course}/edit` (name: `admin.courses.edit`) - Admin
+- `GET /teacher/courses/{course}/edit` (name: `teacher.courses.edit`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Fungsi:**
+Form edit course.
+
+**Authorization:**
+- Admin: bisa edit semua courses
+- Teacher: hanya bisa edit courses miliknya
+
+**Alur Kerja:**
+1. Check authorization
+2. Load course dengan relationships
+3. Load categories (dan teachers jika admin)
+4. Return edit form
+
+---
+
+#### `update(CourseUpdateRequest $request, Course $course)`
+**Route:**
+- `PUT/PATCH /admin/courses/{course}` (name: `admin.courses.update`) - Admin
+- `PUT/PATCH /teacher/courses/{course}` (name: `teacher.courses.update`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Validasi:** `CourseUpdateRequest`
+
+**Fungsi:**
+Update course yang sudah ada.
+
+**Authorization:**
+- Admin: bisa update semua courses
+- Teacher: hanya bisa update courses miliknya
+
+**Alur Kerja:**
+1. Check authorization
+2. Validasi request
+3. Update course dengan data baru
+4. Redirect dengan success message
+
+---
+
+#### `destroy(Course $course)`
+**Route:**
+- `DELETE /admin/courses/{course}` (name: `admin.courses.destroy`) - Admin
+- `DELETE /teacher/courses/{course}` (name: `teacher.courses.destroy`) - Teacher
+
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
+
+**Fungsi:**
+Hapus course dari database.
+
+**Authorization:**
+- Admin: bisa hapus semua courses
+- Teacher: hanya bisa hapus courses miliknya
+
+**Cascade Delete:**
+Karena foreign key constraints, saat course dihapus:
+- Semua lessons terkait akan terhapus
+- Semua enrollments terkait akan terhapus
+- Semua certificates terkait akan terhapus
+
+**Alur Kerja:**
+1. Check authorization
+2. Delete course (cascade akan otomatis)
+3. Redirect dengan success message
 
 ---
 
@@ -55,19 +288,93 @@ Controllers di EduTrack LMS menangani logika bisnis dan mengatur interaksi antar
 
 **Fungsi:** Mengelola kategori course
 
+**Authorization:** Hanya admin yang bisa mengelola categories
+
 **Methods:**
-- `index()` - List semua kategori
-- `create()` - Form create kategori
-- `store(CategoryStoreRequest $request)` - Menyimpan kategori baru (menggunakan Form Request)
-- `edit(Category $category)` - Form edit kategori
-- `update(CategoryUpdateRequest $request, Category $category)` - Update kategori (menggunakan Form Request)
-- `destroy(Category $category)` - Hapus kategori
 
-**Authorization:** Hanya admin yang bisa mengelola kategori
+#### `index()`
+**Route:** `GET /categories` (name: `categories.index`)
 
-**Form Requests:**
-- `CategoryStoreRequest` - Validasi untuk create category
-- `CategoryUpdateRequest` - Validasi untuk update category
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+List semua categories.
+
+**View:** `resources/views/categories/index.blade.php`
+
+---
+
+#### `create()`
+**Route:** `GET /categories/create` (name: `categories.create`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Form create category baru.
+
+**View:** `resources/views/categories/create.blade.php`
+
+---
+
+#### `store(CategoryStoreRequest $request)`
+**Route:** `POST /categories` (name: `categories.store`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Validasi:** `CategoryStoreRequest`
+
+**Fungsi:**
+Menyimpan category baru.
+
+**Form Request Rules:**
+```php
+'name' => 'required|string|max:255|unique:categories,name',
+'description' => 'nullable|string',
+'is_active' => 'boolean',
+```
+
+---
+
+#### `edit(Category $category)`
+**Route:** `GET /categories/{category}/edit` (name: `categories.edit`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Form edit category.
+
+**View:** `resources/views/categories/edit.blade.php`
+
+---
+
+#### `update(CategoryUpdateRequest $request, Category $category)`
+**Route:** `PUT/PATCH /categories/{category}` (name: `categories.update`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Validasi:** `CategoryUpdateRequest`
+
+**Fungsi:**
+Update category.
+
+**Form Request Rules:**
+```php
+'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+'description' => 'nullable|string',
+'is_active' => 'boolean',
+```
+
+---
+
+#### `destroy(Category $category)`
+**Route:** `DELETE /categories/{category}` (name: `categories.destroy`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Hapus category.
+
+**Note:** Category tidak bisa dihapus jika masih ada courses yang menggunakan category tersebut (foreign key constraint).
 
 ---
 
@@ -76,22 +383,135 @@ Controllers di EduTrack LMS menangani logika bisnis dan mengatur interaksi antar
 
 **Fungsi:** Mengelola lesson dalam course
 
+**Authorization:**
+- **Teacher:** Hanya bisa mengelola lessons di courses miliknya
+- **Student:** Hanya bisa melihat lessons di courses yang sudah di-enroll
+
 **Methods:**
-- `index(Course $course)` - List semua lesson dalam course
-- `create(Course $course)` - Form create lesson
-- `store(LessonStoreRequest $request, Course $course)` - Menyimpan lesson baru (menggunakan Form Request)
-- `show(Course $course, Lesson $lesson)` - Menampilkan detail lesson
-- `edit(Lesson $lesson)` - Form edit lesson
-- `update(LessonUpdateRequest $request, Lesson $lesson)` - Update lesson (menggunakan Form Request)
-- `destroy(Lesson $lesson)` - Hapus lesson
+
+#### `index(Course $course)`
+**Route:** `GET /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.index`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Fungsi:**
+List semua lessons dalam course.
 
 **Authorization:**
-- Teacher: Hanya bisa mengelola lesson di course miliknya
-- Student: Hanya bisa melihat lesson di course yang sudah di-enroll
+- Hanya teacher pemilik course yang bisa akses
 
-**Form Requests:**
-- `LessonStoreRequest` - Validasi untuk create lesson
-- `LessonUpdateRequest` - Validasi untuk update lesson
+**Alur Kerja:**
+1. Check apakah course milik teacher
+2. Load lessons dengan order
+3. Return index view
+
+**View:** `resources/views/lessons/index.blade.php`
+
+---
+
+#### `create(Course $course)`
+**Route:** `GET /teacher/courses/{course}/lessons/create` (name: `teacher.courses.lessons.create`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Fungsi:**
+Form create lesson baru.
+
+**Authorization:**
+- Hanya teacher pemilik course yang bisa akses
+
+**View:** `resources/views/lessons/create.blade.php`
+
+---
+
+#### `store(LessonStoreRequest $request, Course $course)`
+**Route:** `POST /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.store`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Validasi:** `LessonStoreRequest`
+
+**Fungsi:**
+Menyimpan lesson baru ke course.
+
+**Authorization:**
+- Hanya teacher pemilik course yang bisa akses
+
+**Form Request Rules:**
+```php
+'title' => 'required|string|max:255',
+'content' => 'required|string',
+'order' => 'required|integer|min:1',
+```
+
+---
+
+#### `show(Course $course, Lesson $lesson)`
+**Route:** `GET /courses/{course}/lessons/{lesson}` (name: `lessons.show`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Menampilkan detail lesson untuk student.
+
+**Authorization:**
+- Hanya student yang sudah enroll di course yang bisa akses
+
+**Alur Kerja:**
+1. Check enrollment status
+2. Load lesson dengan progress student
+3. Load semua lessons dalam course dengan progress
+4. Tentukan next dan previous lesson
+5. Calculate course progress
+6. Return lesson view
+
+**View:** `resources/views/lessons/show.blade.php`
+
+---
+
+#### `edit(Lesson $lesson)`
+**Route:** `GET /teacher/courses/{course}/lessons/{lesson}/edit` (name: `teacher.courses.lessons.edit`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Fungsi:**
+Form edit lesson.
+
+**Authorization:**
+- Hanya teacher pemilik course yang bisa akses
+
+**View:** `resources/views/lessons/edit.blade.php`
+
+---
+
+#### `update(LessonUpdateRequest $request, Lesson $lesson)`
+**Route:** `PUT/PATCH /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.update`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Validasi:** `LessonUpdateRequest`
+
+**Fungsi:**
+Update lesson.
+
+**Authorization:**
+- Hanya teacher pemilik course yang bisa akses
+
+---
+
+#### `destroy(Lesson $lesson)`
+**Route:** `DELETE /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.destroy`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Fungsi:**
+Hapus lesson.
+
+**Authorization:**
+- Hanya teacher pemilik course yang bisa akses
+
+**Cascade Delete:**
+Saat lesson dihapus, semua lesson_progress terkait akan terhapus.
 
 ---
 
@@ -100,72 +520,210 @@ Controllers di EduTrack LMS menangani logika bisnis dan mengatur interaksi antar
 
 **Fungsi:** Menangani enrollment dan progress tracking
 
-**Methods:**
-- `enroll(Course $course)` - Student mendaftar ke course
-- `markAsDone(Lesson $lesson)` - Tandai lesson sebagai selesai
-- `markAsNotDone(Lesson $lesson)` - Tandai lesson sebagai belum selesai
-
-**Fitur Khusus:**
-- **Auto-generate Certificate:** Ketika progress mencapai 100%, certificate otomatis dibuat
-- **Database Transaction:** Menggunakan `DB::transaction()` untuk memastikan atomicity saat update progress dan create certificate
-- **Error Handling:** Try-catch dengan logging yang detail
-- **Logging:** Menggunakan `Log::error()` dengan context (user_id, lesson_id, error, trace)
-
 **Authorization:** Hanya student yang bisa enroll dan track progress
 
-**Error Handling:**
+**Methods:**
+
+#### `enroll(Course $course)`
+**Route:** `POST /courses/{course}/enroll` (name: `courses.enroll`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Student mendaftar ke course.
+
+**Alur Kerja:**
+1. Check user adalah student
+2. Check course aktif
+3. Attach student ke course dengan `syncWithoutDetaching` (mencegah duplicate)
+4. Set `enrolled_at` timestamp
+5. Redirect dengan success message
+
+**Database Operation:**
 ```php
-try {
-    return DB::transaction(function () use ($lesson, $user) {
-        // Update progress + create certificate
-    });
-} catch (\Exception $e) {
-    Log::error('Error marking lesson as done', [
-        'user_id' => $user->id,
-        'lesson_id' => $lesson->id,
-        'error' => $e->getMessage(),
-        'trace' => $e->getTraceAsString(),
-    ]);
-    // Return error response
-}
+$course->students()->syncWithoutDetaching([
+    $user->id => ['enrolled_at' => now()]
+]);
 ```
+
+---
+
+#### `markAsDone(Lesson $lesson)`
+**Route:** `POST /lessons/{lesson}/mark-done` (name: `lessons.mark.done`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Tandai lesson sebagai selesai dan auto-generate certificate jika progress 100%.
+
+**Alur Kerja:**
+1. Check user adalah student
+2. Check enrollment status
+3. **Database Transaction:**
+   - Update atau create lesson_progress dengan `is_done = true`
+   - Calculate course progress
+   - **Jika progress >= 100%:**
+     - Auto-create certificate dengan `firstOrCreate`
+     - Generate certificate number: `CERT-{UNIQUE_ID}`
+4. Redirect dengan success message
+
+**Error Handling:**
+- Try-catch dengan logging
+- Return error message jika terjadi exception
+
+**Database Transaction:**
+```php
+DB::transaction(function () use ($lesson, $user) {
+    // Update progress
+    LessonProgress::updateOrCreate([...], ['is_done' => true]);
+
+    // Check progress
+    $progress = $course->getProgressForUser($user);
+
+    // Auto-generate certificate
+    if ($progress >= 100) {
+        Certificate::firstOrCreate([...], [
+            'certificate_number' => 'CERT-' . strtoupper(uniqid()),
+            'issued_at' => now(),
+        ]);
+    }
+});
+```
+
+---
+
+#### `markAsNotDone(Lesson $lesson)`
+**Route:** `POST /lessons/{lesson}/mark-not-done` (name: `lessons.mark.not.done`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Tandai lesson sebagai belum selesai.
+
+**Alur Kerja:**
+1. Check user adalah student
+2. Check enrollment status
+3. Update lesson_progress dengan `is_done = false`
+4. Redirect dengan success message
+
+**Note:** Certificate tidak dihapus otomatis saat progress < 100%. Certificate tetap ada di database.
 
 ---
 
 ### 6. CertificateController
 **File:** `app/Http/Controllers/CertificateController.php`
 
-**Fungsi:** Mengelola certificate generation dan download
+**Fungsi:** Generate, download, dan view certificate
+
+**Authorization:**
+- **Student:** Hanya bisa akses certificate miliknya
+- **Admin:** Bisa akses semua certificates
+- **Teacher:** Bisa akses certificates dari courses miliknya
 
 **Methods:**
-- `generate(Course $course)` - Generate certificate baru (jika belum ada)
-- `download(Certificate $certificate)` - Download certificate sebagai PDF
-- `view(Certificate $certificate)` - View certificate di browser
 
-**Fitur:**
-- Validasi: Hanya bisa generate jika progress 100%
-- PDF generation menggunakan `barryvdh/laravel-dompdf`
-- Authorization check: Student hanya bisa akses certificate miliknya
-- **Database Transaction:** Menggunakan `DB::transaction()` untuk create certificate
-- **Error Handling:** Try-catch untuk semua method dengan logging detail
+#### `generate(Course $course)`
+**Route:** `GET /courses/{course}/certificate` (name: `courses.certificate`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Generate certificate baru atau ambil yang sudah ada, lalu download.
+
+**Alur Kerja:**
+1. Check user adalah student
+2. Check enrollment status
+3. Check progress >= 100%
+4. **Database Transaction:**
+   - Create atau get certificate dengan `firstOrCreate`
+   - Generate certificate number jika baru
+5. Panggil method `download()` untuk download PDF
+
+**Validasi:**
+- Student harus enroll di course
+- Progress harus 100%
 
 **Error Handling:**
+- Try-catch dengan logging detail
+- Return error message jika terjadi exception
+
+---
+
+#### `download(Certificate $certificate)`
+**Route:** `GET /certificates/{certificate}/download` (name: `certificates.download`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Download certificate sebagai PDF file.
+
+**Authorization:**
+- Student: hanya certificate miliknya
+- Admin: semua certificates
+- Teacher: certificates dari courses miliknya
+
+**Alur Kerja:**
+1. Check authorization
+2. Load certificate dengan relationships (student, course, teacher)
+3. Prepare data untuk PDF:
+   - Student name
+   - Course title
+   - Issue date (formatted)
+   - Instructor name
+   - Certificate number
+4. Generate PDF dari view `certificates.pdf`
+5. **Sanitize filename:**
+   - Replace invalid characters (`/`, `\`, `:`, `*`, `?`, `"`, `<`, `>`, `|`) dengan `-`
+   - Format: `certificate-{courseName}-{studentName}.pdf`
+6. Return PDF download response
+
+**PDF Generation:**
 ```php
-try {
-    $certificate = DB::transaction(function () use ($user, $course) {
-        return Certificate::firstOrCreate(...);
-    });
-    return $this->download($certificate);
-} catch (\Exception $e) {
-    Log::error('Error generating certificate', [
-        'user_id' => $user->id,
-        'course_id' => $course->id,
-        'error' => $e->getMessage(),
-        'trace' => $e->getTraceAsString(),
-    ]);
-    // Return error response
-}
+$pdf = Pdf::loadView('certificates.pdf', $data);
+return $pdf->download($filename);
 ```
+
+**Filename Sanitization:**
+```php
+$courseName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->course->name);
+$studentName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->student->name);
+$filename = 'certificate-' . $courseName . '-' . $studentName . '.pdf';
+```
+
+**Error Handling:**
+- Try-catch dengan logging
+- Return error message jika terjadi exception
+
+---
+
+#### `view(Certificate $certificate)`
+**Route:** `GET /certificates/{certificate}/view` (name: `certificates.view`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+View certificate di browser (stream, tidak download).
+
+**Authorization:**
+- Student: hanya certificate miliknya
+- Admin: semua certificates
+- Teacher: certificates dari courses miliknya
+
+**Alur Kerja:**
+1. Check authorization
+2. Load certificate dengan relationships
+3. Prepare data untuk PDF
+4. Generate PDF
+5. Return PDF stream response
+
+**PDF Stream:**
+```php
+return $pdf->stream('certificate-' . $certificate->certificate_number . '.pdf');
+```
+
+**Perbedaan dengan Download:**
+- `download()`: File akan terdownload ke komputer user
+- `stream()`: PDF ditampilkan langsung di browser
 
 ---
 
@@ -174,15 +732,50 @@ try {
 
 **Fungsi:** Mengelola profile user
 
+**Authorization:** User hanya bisa mengelola profile sendiri
+
 **Methods:**
-- `edit()` - Form edit profile
-- `update(ProfileUpdateRequest $request)` - Update profile (menggunakan Form Request)
-- `destroy(Request $request)` - Hapus akun
 
-**Authorization:** Semua user yang login bisa mengelola profile sendiri
+#### `edit()`
+**Route:** `GET /profile` (name: `profile.edit`)
 
-**Form Requests:**
-- `ProfileUpdateRequest` - Validasi untuk update profile
+**Middleware:** `auth`
+
+**Fungsi:**
+Form edit profile.
+
+**View:** `resources/views/profile/edit.blade.php`
+
+---
+
+#### `update(ProfileUpdateRequest $request)`
+**Route:** `PATCH /profile` (name: `profile.update`)
+
+**Middleware:** `auth`
+
+**Validasi:** `ProfileUpdateRequest`
+
+**Fungsi:**
+Update profile user.
+
+**Form Request Rules:**
+```php
+'name' => 'required|string|max:255',
+'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+'username' => 'nullable|string|max:255|unique:users,username,' . auth()->id(),
+```
+
+---
+
+#### `destroy()`
+**Route:** `DELETE /profile` (name: `profile.destroy`)
+
+**Middleware:** `auth`
+
+**Fungsi:**
+Hapus akun user.
+
+**Note:** Menggunakan soft delete atau hard delete tergantung implementasi.
 
 ---
 
@@ -191,15 +784,28 @@ try {
 
 **Fungsi:** Dashboard dan statistik untuk admin
 
-**Methods:**
-- `dashboard()` - Menampilkan dashboard admin dengan statistik lengkap
+**Authorization:** Hanya admin
 
-**Statistik yang ditampilkan:**
-- Total users (admin, teacher, student)
-- Total courses (active, inactive)
+**Methods:**
+
+#### `dashboard()`
+**Route:** `GET /admin/dashboard` (name: `admin.dashboard`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Menampilkan dashboard admin dengan statistik dan data terbaru.
+
+**Data yang Ditampilkan:**
+- Total users
+- Total courses
 - Total categories
-- Total lessons
 - Total enrollments
+- Recent users (5 terbaru)
+- Recent courses (5 terbaru dengan student count)
+- All categories
+
+**View:** `resources/views/admin/dashboard.blade.php`
 
 ---
 
@@ -208,8 +814,24 @@ try {
 
 **Fungsi:** Dashboard untuk teacher
 
+**Authorization:** Hanya teacher
+
 **Methods:**
-- `dashboard()` - Menampilkan dashboard teacher dengan course miliknya
+
+#### `dashboard()`
+**Route:** `GET /teacher/dashboard` (name: `teacher.dashboard`)
+
+**Middleware:** `auth`, `role:teacher`
+
+**Fungsi:**
+Menampilkan dashboard teacher dengan courses miliknya.
+
+**Data yang Ditampilkan:**
+- Courses milik teacher (paginated, 12 per page)
+- Dengan category dan teacher info
+- Student count per course
+
+**View:** `resources/views/teacher/dashboard.blade.php`
 
 ---
 
@@ -218,157 +840,293 @@ try {
 
 **Fungsi:** Dashboard untuk student
 
+**Authorization:** Hanya student
+
 **Methods:**
-- `dashboard()` - Menampilkan dashboard student dengan course yang di-enroll dan progress
+
+#### `dashboard()`
+**Route:** `GET /student/dashboard` (name: `student.dashboard`)
+
+**Middleware:** `auth`, `role:student`
+
+**Fungsi:**
+Menampilkan dashboard student dengan enrolled courses dan progress.
+
+**Data yang Ditampilkan:**
+- User info
+- Enrolled courses dengan:
+  - Teacher info
+  - Category info
+  - Progress percentage per course
+
+**View:** `resources/views/profile/student.blade.php`
 
 ---
 
-### 11. UserController (Admin)
+### 11. Admin\UserController
 **File:** `app/Http/Controllers/Admin/UserController.php`
 
-**Fungsi:** Mengelola user (hanya admin)
+**Fungsi:** User management untuk admin
+
+**Authorization:** Hanya admin
 
 **Methods:**
-- `index(Request $request)` - List semua user dengan filter dan search
-- `create()` - Form create user
-- `store(UserStoreRequest $request)` - Menyimpan user baru (menggunakan Form Request)
-- `edit(User $user)` - Form edit user
-- `update(UserUpdateRequest $request, User $user)` - Update user (menggunakan Form Request)
-- `destroy(User $user)` - Hapus user
 
-**Fitur:**
-- Search berdasarkan name atau email
-- Filter berdasarkan role
-- Pagination (15 per page)
-- Validasi: Admin tidak bisa hapus akun sendiri
+#### `index()`
+**Route:** `GET /admin/users` (name: `admin.users.index`)
 
-**Form Requests:**
-- `UserStoreRequest` - Validasi untuk create user
-- `UserUpdateRequest` - Validasi untuk update user
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+List semua users dengan pagination.
+
+**View:** `resources/views/users/admin/index.blade.php`
 
 ---
 
-## Auth Controllers
+#### `create()`
+**Route:** `GET /admin/users/create` (name: `admin.users.create`)
 
-Semua controller authentication berada di `app/Http/Controllers/Auth/`:
+**Middleware:** `auth`, `role:admin`
 
-- `AuthenticatedSessionController` - Login/logout
-- `RegisteredUserController` - Registration
-- `PasswordResetLinkController` - Request password reset
-- `NewPasswordController` - Reset password
-- `EmailVerificationPromptController` - Email verification prompt
-- `VerifyEmailController` - Verify email
-- `ConfirmablePasswordController` - Confirm password
-- `PasswordController` - Update password
+**Fungsi:**
+Form create user baru.
+
+**View:** `resources/views/users/admin/create.blade.php`
 
 ---
 
-## Form Request Classes
+#### `store(UserStoreRequest $request)`
+**Route:** `POST /admin/users` (name: `admin.users.store`)
 
-Semua Form Request classes berada di `app/Http/Requests/`:
+**Middleware:** `auth`, `role:admin`
 
-### Course Requests
-- `CourseStoreRequest` - Validasi untuk create course
-- `CourseUpdateRequest` - Validasi untuk update course
+**Validasi:** `UserStoreRequest`
 
-### Lesson Requests
-- `LessonStoreRequest` - Validasi untuk create lesson
-- `LessonUpdateRequest` - Validasi untuk update lesson
+**Fungsi:**
+Menyimpan user baru.
 
-### Category Requests
-- `CategoryStoreRequest` - Validasi untuk create category
-- `CategoryUpdateRequest` - Validasi untuk update category
+**Form Request Rules:**
+```php
+'name' => 'required|string|max:255',
+'username' => 'nullable|string|max:255|unique:users,username',
+'email' => 'required|string|email|max:255|unique:users,email',
+'password' => 'required|confirmed|min:8',
+'role' => 'required|in:admin,teacher,student',
+'is_active' => 'boolean',
+```
 
-### User Requests
-- `UserStoreRequest` - Validasi untuk create user
-- `UserUpdateRequest` - Validasi untuk update user
-
-### Auth Requests
-- `LoginRequest` - Validasi untuk login (dengan rate limiting)
-
-### Profile Requests
-- `ProfileUpdateRequest` - Validasi untuk update profile
-
-**Manfaat Form Request:**
-- Validasi terpusat dan reusable
-- Custom error messages dalam bahasa Indonesia
-- Authorization logic bisa dipisah
-- Code lebih clean dan maintainable
+**Password Hashing:**
+```php
+'password' => Hash::make($request->password),
+```
 
 ---
 
-## Common Patterns
+#### `show(User $user)`
+**Route:** `GET /admin/users/{user}` (name: `admin.users.show`)
 
-### 1. Authorization Check
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Show user detail (redirects to edit).
+
+---
+
+#### `edit(User $user)`
+**Route:** `GET /admin/users/{user}/edit` (name: `admin.users.edit`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Form edit user.
+
+**View:** `resources/views/users/admin/edit.blade.php`
+
+---
+
+#### `update(UserUpdateRequest $request, User $user)`
+**Route:** `PUT/PATCH /admin/users/{user}` (name: `admin.users.update`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Validasi:** `UserUpdateRequest`
+
+**Fungsi:**
+Update user.
+
+**Form Request Rules:**
 ```php
-if (!$user->isStudent()) {
-    abort(403, 'Only students can enroll in courses.');
-}
+'name' => 'required|string|max:255',
+'username' => 'nullable|string|max:255|unique:users,username,' . $user->id,
+'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+'password' => 'nullable|confirmed|min:8', // Optional
+'role' => 'required|in:admin,teacher,student',
+'is_active' => 'boolean',
 ```
 
-### 2. Role-based Access
-```php
-if ($user->isAdmin() || ($user->isTeacher() && $course->teacher_id === $user->id)) {
-    // Allow access
-}
+**Password Update:**
+- Password hanya di-update jika diisi (nullable)
+
+---
+
+#### `destroy(User $user)`
+**Route:** `DELETE /admin/users/{user}` (name: `admin.users.destroy`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Fungsi:**
+Hapus user.
+
+**Cascade Delete:**
+Saat user dihapus:
+- Jika teacher: semua courses miliknya akan terhapus
+- Jika student: semua enrollments, progress, dan certificates akan terhapus
+
+---
+
+## Request Flow Diagram
+
+```
+User Request
+    ↓
+Route (web.php / auth.php)
+    ↓
+Middleware (auth, role, verified)
+    ↓
+Controller Method
+    ↓
+Form Request Validation (jika ada)
+    ↓
+Business Logic
+    ↓
+Database Operation (Eloquent ORM)
+    ↓
+Response (View / Redirect / JSON)
 ```
 
-### 3. Database Transaction
-```php
-DB::transaction(function () {
-    // Multiple database operations
-    // All succeed or all fail
-});
-```
+---
 
-### 4. Error Handling dengan Logging
+## Error Handling Pattern
+
+Semua controller menggunakan pattern error handling yang konsisten:
+
 ```php
 try {
-    // Operation
+    // Business logic
+    DB::transaction(function () {
+        // Database operations
+    });
+
+    return redirect()->back()->with('success', 'Success message');
 } catch (\Exception $e) {
-    Log::error('Error message', [
+    Log::error('Error description', [
         'user_id' => $user->id,
+        'context' => 'additional data',
         'error' => $e->getMessage(),
         'trace' => $e->getTraceAsString(),
     ]);
-    return redirect()->back()->with('error', 'User-friendly message');
-}
-```
 
-### 5. Form Request Usage
-```php
-public function store(CourseStoreRequest $request)
-{
-    // Validation sudah dilakukan di Form Request
-    // Langsung gunakan $request->input()
+    return redirect()->back()
+        ->with('error', 'User-friendly error message');
 }
-```
-
-### 6. Redirect with Message
-```php
-return redirect()->back()->with('success', 'Operation successful.');
 ```
 
 ---
 
-## Middleware Usage
+## Authorization Pattern
 
-- `auth` - User harus login
-- `verified` - Email harus terverifikasi
-- `role:admin` - Hanya admin
-- `role:teacher` - Hanya teacher
-- `role:student` - Hanya student
+Authorization dilakukan di beberapa level:
+
+1. **Route Level:** Middleware `role:admin`, `role:teacher`, `role:student`
+2. **Controller Level:** Manual check dengan `abort(403)`
+3. **Model Level:** Policy (jika ada)
+
+**Contoh Authorization Check:**
+```php
+// Route level
+Route::middleware(['auth', 'role:admin'])->group(...);
+
+// Controller level
+if (!$user->isAdmin()) {
+    abort(403, 'Unauthorized access.');
+}
+
+// Resource ownership
+if ($course->teacher_id !== $user->id) {
+    abort(403, 'Unauthorized access to this course.');
+}
+```
+
+---
+
+## Form Request Validation
+
+Semua input validation dilakukan melalui Form Request classes:
+
+**Location:** `app/Http/Requests/`
+
+**Form Requests:**
+- `CategoryStoreRequest` / `CategoryUpdateRequest`
+- `CourseStoreRequest` / `CourseUpdateRequest`
+- `LessonStoreRequest` / `LessonUpdateRequest`
+- `ProfileUpdateRequest`
+- `UserStoreRequest` / `UserUpdateRequest`
+- `Auth/LoginRequest`
+
+**Benefits:**
+- Separation of concerns
+- Reusable validation rules
+- Custom error messages
+- Automatic validation before controller method execution
+
+---
+
+## Database Transactions
+
+Beberapa operations menggunakan database transactions untuk atomicity:
+
+1. **EnrollmentController::markAsDone()**
+   - Update progress
+   - Auto-generate certificate (jika progress 100%)
+
+2. **CertificateController::generate()**
+   - Create/get certificate
+
+**Transaction Pattern:**
+```php
+DB::transaction(function () use ($data) {
+    // Multiple database operations
+    // All or nothing
+});
+```
+
+---
+
+## Logging
+
+Semua error di-log dengan context yang detail:
+
+```php
+Log::error('Error description', [
+    'user_id' => $user->id,
+    'course_id' => $course->id,
+    'error' => $e->getMessage(),
+    'trace' => $e->getTraceAsString(),
+]);
+```
+
+**Log Location:** `storage/logs/laravel.log`
 
 ---
 
 ## Best Practices
 
-1. **Authorization:** Selalu cek authorization sebelum akses resource
-2. **Validation:** Gunakan Form Request classes untuk validasi
-3. **Error Handling:** Gunakan try-catch untuk operasi yang bisa gagal
-4. **Transaction:** Gunakan transaction untuk multiple database operations
-5. **Logging:** Log errors dengan context yang detail
-6. **Eager Loading:** Gunakan `with()` untuk menghindari N+1 query problem
-7. **Response:** Return appropriate HTTP status codes
-8. **Code Organization:** Pisahkan logic ke Form Request dan Service classes jika perlu
-
+1. **Eager Loading:** Gunakan `with()` untuk menghindari N+1 query problem
+2. **Pagination:** Gunakan `paginate()` untuk list data besar
+3. **Form Request:** Validasi di Form Request, bukan di controller
+4. **Error Handling:** Selalu gunakan try-catch untuk database operations
+5. **Authorization:** Check authorization di awal method
+6. **Transaction:** Gunakan transaction untuk multiple related operations
+7. **Logging:** Log semua errors dengan context yang detail
+8. **Response Messages:** Gunakan flash messages untuk user feedback

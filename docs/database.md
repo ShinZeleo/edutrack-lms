@@ -1,190 +1,340 @@
 # Database Documentation
 
 ## Overview
-Database schema EduTrack LMS menggunakan Laravel Migrations. Semua migration files berada di `database/migrations/`.
+Database schema EduTrack LMS menggunakan Laravel Migrations. Semua migration files berada di `database/migrations/`. Database menggunakan MySQL dengan InnoDB engine untuk foreign key constraints dan transactions.
+
+**Database Features:**
+- Foreign key constraints dengan CASCADE on delete
+- Unique constraints untuk data integrity
+- Indexes untuk query optimization
+- Timestamps untuk audit trail
+- Soft deletes (jika diperlukan)
 
 ---
 
 ## Database Tables
 
 ### 1. users
-**Migration:** `0001_01_01_000000_create_users_table.php` + `2025_11_16_105229_add_username_role_and_is_active_to_users_table.php`
+**Migration:**
+- `0001_01_01_000000_create_users_table.php` (base table)
+- `2025_11_16_105229_add_username_role_and_is_active_to_users_table.php` (additions)
+
+**Purpose:** Menyimpan data user (admin, teacher, student)
 
 **Fields:**
-- `id` - Primary key (bigint)
-- `name` - Nama user (string)
-- `username` - Username unik (string, unique)
-- `email` - Email unik (string, unique)
-- `email_verified_at` - Waktu verifikasi email (timestamp, nullable)
-- `password` - Password hashed (string)
-- `role` - Role: admin, teacher, student (string)
-- `is_active` - Status aktif (boolean, default: true)
-- `remember_token` - Remember token (string, nullable)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | User ID |
+| `name` | varchar(255) | NOT NULL | Nama lengkap user |
+| `username` | varchar(255) | UNIQUE, NULLABLE | Username unik (optional) |
+| `email` | varchar(255) | UNIQUE, NOT NULL | Email unik |
+| `email_verified_at` | timestamp | NULLABLE | Waktu verifikasi email |
+| `password` | varchar(255) | NOT NULL | Password (hashed) |
+| `role` | enum | NOT NULL, DEFAULT 'student' | Role: 'admin', 'teacher', 'student' |
+| `is_active` | boolean | NOT NULL, DEFAULT true | Status aktif/nonaktif |
+| `remember_token` | varchar(100) | NULLABLE | Remember token untuk "remember me" |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
-- Unique: `email`, `username`
+- PRIMARY KEY: `id`
+- UNIQUE: `email`
+- UNIQUE: `username`
+- INDEX: `email` (for quick lookups)
+
+**Relationships:**
+- `hasMany` → `courses` (as teacher)
+- `belongsToMany` → `courses` (as student, pivot: `course_student`)
+- `hasMany` → `lesson_progress`
+- `hasMany` → `certificates` (as student)
+
+**Cascade Delete:**
+- Jika user (teacher) dihapus → semua courses miliknya terhapus
+- Jika user (student) dihapus → semua enrollments, progress, dan certificates terhapus
 
 ---
 
 ### 2. categories
 **Migration:** `2025_11_16_112054_create_categories_table.php`
 
+**Purpose:** Menyimpan kategori course
+
 **Fields:**
-- `id` - Primary key (bigint)
-- `name` - Nama kategori (string)
-- `description` - Deskripsi (text, nullable)
-- `is_active` - Status aktif (boolean, default: true)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Category ID |
+| `name` | varchar(255) | NOT NULL | Nama kategori |
+| `description` | text | NULLABLE | Deskripsi kategori |
+| `is_active` | boolean | NOT NULL, DEFAULT true | Status aktif/nonaktif |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
+- PRIMARY KEY: `id`
+
+**Relationships:**
+- `hasMany` → `courses`
+
+**Cascade Delete:**
+- Jika category dihapus → semua courses dengan category tersebut terhapus
+
+**Note:** Category tidak bisa dihapus jika masih ada courses yang menggunakan category tersebut (foreign key constraint).
 
 ---
 
 ### 3. courses
 **Migration:** `2025_11_16_113059_create_courses_table.php`
 
+**Purpose:** Menyimpan data course
+
 **Fields:**
-- `id` - Primary key (bigint)
-- `name` - Nama course (string)
-- `description` - Deskripsi course (text, nullable)
-- `start_date` - Tanggal mulai (date)
-- `end_date` - Tanggal selesai (date)
-- `is_active` - Status aktif (boolean, default: true)
-- `category_id` - Foreign key ke categories (bigint)
-- `teacher_id` - Foreign key ke users (bigint)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Course ID |
+| `name` | varchar(255) | NOT NULL | Nama course |
+| `description` | text | NULLABLE | Deskripsi course |
+| `start_date` | date | NOT NULL | Tanggal mulai course |
+| `end_date` | date | NOT NULL | Tanggal selesai course |
+| `is_active` | boolean | NOT NULL, DEFAULT true | Status aktif/nonaktif |
+| `category_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke categories |
+| `teacher_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke users (teacher) |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
-- Foreign key: `category_id` → `categories.id` (CASCADE on delete)
-- Foreign key: `teacher_id` → `users.id` (CASCADE on delete)
+- PRIMARY KEY: `id`
+- FOREIGN KEY: `category_id` → `categories.id` (CASCADE on delete)
+- FOREIGN KEY: `teacher_id` → `users.id` (CASCADE on delete)
 
 **Constraints:**
-- `end_date` harus >= `start_date` (validated di Form Request)
+- `end_date` harus >= `start_date` (validated di Form Request, bukan di database level)
+
+**Relationships:**
+- `belongsTo` → `category`
+- `belongsTo` → `teacher` (User)
+- `belongsToMany` → `students` (User, pivot: `course_student`)
+- `hasMany` → `lessons`
+- `hasMany` → `certificates`
+
+**Cascade Delete:**
+- Jika course dihapus → semua lessons, enrollments, dan certificates terkait terhapus
 
 ---
 
 ### 4. lessons
 **Migration:** `2025_11_16_113811_create_lessons_table.php`
 
+**Purpose:** Menyimpan data lesson dalam course
+
 **Fields:**
-- `id` - Primary key (bigint)
-- `course_id` - Foreign key ke courses (bigint)
-- `title` - Judul lesson (string)
-- `content` - Konten lesson (text)
-- `order` - Urutan lesson (integer)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Lesson ID |
+| `course_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke courses |
+| `title` | varchar(255) | NOT NULL | Judul lesson |
+| `content` | longtext | NOT NULL | Konten lesson (HTML/text) |
+| `order` | integer | NOT NULL, DEFAULT 0 | Urutan lesson dalam course |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
-- Foreign key: `course_id` → `courses.id` (CASCADE on delete)
+- PRIMARY KEY: `id`
+- FOREIGN KEY: `course_id` → `courses.id` (CASCADE on delete)
+
+**Relationships:**
+- `belongsTo` → `course`
+- `hasMany` → `lesson_progress`
+
+**Cascade Delete:**
+- Jika lesson dihapus → semua lesson_progress terkait terhapus
+
+**Ordering:**
+- Lessons di-ordered berdasarkan field `order` (ascending)
 
 ---
 
 ### 5. course_student (Pivot Table)
 **Migration:** `2025_11_16_114659_create_course_student_table.php`
 
+**Purpose:** Menyimpan relasi many-to-many antara courses dan students (enrollment)
+
 **Fields:**
-- `course_id` - Foreign key ke courses (bigint)
-- `student_id` - Foreign key ke users (bigint)
-- `enrolled_at` - Waktu enroll (timestamp)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Pivot ID |
+| `course_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke courses |
+| `student_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke users (student) |
+| `enrolled_at` | timestamp | NULLABLE | Waktu enrollment |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: composite (`course_id`, `student_id`)
-- Foreign key: `course_id` → `courses.id` (CASCADE on delete)
-- Foreign key: `student_id` → `users.id` (CASCADE on delete)
+- PRIMARY KEY: `id`
+- UNIQUE: `(course_id, student_id)` - Mencegah duplicate enrollment
+- FOREIGN KEY: `course_id` → `courses.id` (CASCADE on delete)
+- FOREIGN KEY: `student_id` → `users.id` (CASCADE on delete)
 
-**Purpose:** Many-to-many relationship untuk enrollment
+**Relationships:**
+- Pivot table untuk `Course` ↔ `User` (student) many-to-many relationship
+
+**Cascade Delete:**
+- Jika course dihapus → semua enrollments terkait terhapus
+- Jika student dihapus → semua enrollments terkait terhapus
+
+**Unique Constraint:**
+- Satu student tidak bisa enroll dua kali ke course yang sama
 
 ---
 
 ### 6. lesson_progress
 **Migration:** `2025_11_16_114708_create_lesson_progress_table.php`
 
+**Purpose:** Menyimpan progress lesson untuk setiap student
+
 **Fields:**
-- `id` - Primary key (bigint)
-- `lesson_id` - Foreign key ke lessons (bigint)
-- `student_id` - Foreign key ke users (bigint)
-- `is_done` - Status selesai (boolean, default: false)
-- `done_at` - Waktu selesai (timestamp, nullable)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Progress ID |
+| `lesson_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke lessons |
+| `student_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke users (student) |
+| `is_done` | boolean | NOT NULL, DEFAULT false | Status selesai/belum |
+| `done_at` | timestamp | NULLABLE | Waktu selesai |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
-- Unique: composite (`lesson_id`, `student_id`)
-- Foreign key: `lesson_id` → `lessons.id` (CASCADE on delete)
-- Foreign key: `student_id` → `users.id` (CASCADE on delete)
+- PRIMARY KEY: `id`
+- UNIQUE: `(lesson_id, student_id)` - Satu student hanya punya satu progress per lesson
+- FOREIGN KEY: `lesson_id` → `lessons.id` (CASCADE on delete)
+- FOREIGN KEY: `student_id` → `users.id` (CASCADE on delete)
 
-**Purpose:** Track progress student per lesson
+**Relationships:**
+- `belongsTo` → `lesson`
+- `belongsTo` → `student` (User)
+
+**Cascade Delete:**
+- Jika lesson dihapus → semua progress terkait terhapus
+- Jika student dihapus → semua progress terkait terhapus
+
+**Unique Constraint:**
+- Satu student hanya punya satu progress record per lesson
+
+**Usage:**
+- Track completion status untuk setiap lesson
+- Calculate course progress: `(done lessons / total lessons) * 100`
 
 ---
 
 ### 7. certificates
 **Migration:** `2025_11_24_114718_create_certificates_table.php`
 
+**Purpose:** Menyimpan certificate yang dikeluarkan untuk student yang menyelesaikan course
+
 **Fields:**
-- `id` - Primary key (bigint)
-- `student_id` - Foreign key ke users (bigint)
-- `course_id` - Foreign key ke courses (bigint)
-- `certificate_number` - Nomor sertifikat (string, unique)
-- `issued_at` - Waktu dikeluarkan (timestamp)
-- `created_at`, `updated_at` - Timestamps
+
+| Column | Type | Attributes | Description |
+|--------|------|------------|-------------|
+| `id` | bigint unsigned | PRIMARY KEY, AUTO_INCREMENT | Certificate ID |
+| `student_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke users (student) |
+| `course_id` | bigint unsigned | FOREIGN KEY, NOT NULL | Foreign key ke courses |
+| `certificate_number` | varchar(255) | UNIQUE, NOT NULL | Nomor sertifikat (format: CERT-{UNIQUE_ID}) |
+| `issued_at` | date | NOT NULL | Tanggal dikeluarkan |
+| `created_at` | timestamp | NULLABLE | Waktu dibuat |
+| `updated_at` | timestamp | NULLABLE | Waktu diupdate |
 
 **Indexes:**
-- Primary key: `id`
-- Unique: `certificate_number`
-- Unique: composite (`student_id`, `course_id`)
-- Foreign key: `student_id` → `users.id` (CASCADE on delete)
-- Foreign key: `course_id` → `courses.id` (CASCADE on delete)
+- PRIMARY KEY: `id`
+- UNIQUE: `certificate_number` - Nomor sertifikat harus unik
+- UNIQUE: `(student_id, course_id)` - Satu student hanya punya satu certificate per course
+- FOREIGN KEY: `student_id` → `users.id` (CASCADE on delete)
+- FOREIGN KEY: `course_id` → `courses.id` (CASCADE on delete)
 
-**Purpose:** Menyimpan certificate yang dikeluarkan untuk student yang menyelesaikan course
+**Relationships:**
+- `belongsTo` → `student` (User)
+- `belongsTo` → `course`
+
+**Cascade Delete:**
+- Jika student dihapus → semua certificates terkait terhapus
+- Jika course dihapus → semua certificates terkait terhapus
+
+**Unique Constraints:**
+- Satu student hanya bisa punya satu certificate per course
+- Certificate number harus unik
+
+**Certificate Generation:**
+- Auto-generated saat student menyelesaikan course (progress = 100%)
+- Format: `CERT-{UNIQUE_ID}` (uppercase)
+- Example: `CERT-67890ABCDEF123`
 
 ---
 
 ## System Tables (Laravel Default)
 
-### cache
-**Migration:** `0001_01_01_000001_create_cache_table.php`
+### password_reset_tokens
+**Migration:** `0001_01_01_000000_create_users_table.php`
 
-**Purpose:** Laravel cache storage
+**Purpose:** Menyimpan password reset tokens (Laravel default)
+
+**Fields:**
+- `email` (PRIMARY KEY)
+- `token`
+- `created_at`
+
+**Note:** Fitur password reset saat ini disabled (coming soon).
 
 ---
 
-### jobs
-**Migration:** `0001_01_01_000002_create_jobs_table.php`
+### sessions
+**Migration:** `0001_01_01_000000_create_users_table.php`
 
-**Purpose:** Laravel queue jobs
+**Purpose:** Menyimpan session data (Laravel default)
+
+**Fields:**
+- `id` (PRIMARY KEY)
+- `user_id` (FOREIGN KEY, nullable)
+- `ip_address`
+- `user_agent`
+- `payload`
+- `last_activity`
 
 ---
 
 ## Database Relationships
 
-### Entity Relationship Diagram (Simplified)
+### Entity Relationship Diagram (ERD)
 
 ```
 users (Teacher)
   │
-  └─── courses
+  └─── hasMany ───> courses
         │
-        ├─── categories
+        ├─── belongsTo ───> categories
         │
-        ├─── lessons
+        ├─── belongsTo ───> users (Teacher)
+        │
+        ├─── belongsToMany ───> users (Student) [pivot: course_student]
         │      │
-        │      └─── lesson_progress
+        │      └─── enrolled_at (pivot column)
+        │
+        ├─── hasMany ───> lessons
+        │      │
+        │      └─── hasMany ───> lesson_progress
         │             │
-        │             └─── users (Student)
+        │             ├─── belongsTo ───> lessons
+        │             │
+        │             └─── belongsTo ───> users (Student)
         │
-        ├─── course_student (pivot)
-        │      │
-        │      └─── users (Student)
-        │
-        └─── certificates
+        └─── hasMany ───> certificates
                │
-               └─── users (Student)
+               ├─── belongsTo ───> users (Student)
+               │
+               └─── belongsTo ───> courses
 ```
 
 ---
@@ -194,156 +344,216 @@ users (Teacher)
 ### CASCADE on Delete
 Semua foreign keys menggunakan `onDelete('cascade')`, artinya:
 - Jika parent dihapus, child juga terhapus
-- Contoh: Jika course dihapus, semua lessons, enrollments, dan certificates terkait juga terhapus
+- Memastikan data integrity
+- Mencegah orphaned records
 
 ### Foreign Keys:
-1. `courses.category_id` → `categories.id`
-2. `courses.teacher_id` → `users.id`
-3. `lessons.course_id` → `courses.id`
-4. `course_student.course_id` → `courses.id`
-5. `course_student.student_id` → `users.id`
-6. `lesson_progress.lesson_id` → `lessons.id`
-7. `lesson_progress.student_id` → `users.id`
-8. `certificates.student_id` → `users.id`
-9. `certificates.course_id` → `courses.id`
+
+1. **courses.category_id** → `categories.id`
+   - Jika category dihapus → semua courses dengan category tersebut terhapus
+
+2. **courses.teacher_id** → `users.id`
+   - Jika teacher dihapus → semua courses miliknya terhapus
+
+3. **lessons.course_id** → `courses.id`
+   - Jika course dihapus → semua lessons dalam course tersebut terhapus
+
+4. **course_student.course_id** → `courses.id`
+   - Jika course dihapus → semua enrollments terkait terhapus
+
+5. **course_student.student_id** → `users.id`
+   - Jika student dihapus → semua enrollments terkait terhapus
+
+6. **lesson_progress.lesson_id** → `lessons.id`
+   - Jika lesson dihapus → semua progress terkait terhapus
+
+7. **lesson_progress.student_id** → `users.id`
+   - Jika student dihapus → semua progress terkait terhapus
+
+8. **certificates.student_id** → `users.id`
+   - Jika student dihapus → semua certificates terkait terhapus
+
+9. **certificates.course_id** → `courses.id`
+   - Jika course dihapus → semua certificates terkait terhapus
 
 ---
 
 ## Unique Constraints
 
-1. **users.email** - Email harus unik
-2. **users.username** - Username harus unik
-3. **certificates.certificate_number** - Nomor sertifikat harus unik
-4. **certificates (student_id, course_id)** - Satu student hanya bisa punya satu certificate per course
-5. **lesson_progress (lesson_id, student_id)** - Satu student hanya punya satu progress per lesson
-6. **course_student (course_id, student_id)** - Satu student hanya bisa enroll sekali per course
+### Single Column Unique:
+- `users.email` - Email harus unik
+- `users.username` - Username harus unik (nullable)
+- `certificates.certificate_number` - Nomor sertifikat harus unik
+
+### Composite Unique:
+- `course_student(course_id, student_id)` - Satu student tidak bisa enroll dua kali ke course yang sama
+- `lesson_progress(lesson_id, student_id)` - Satu student hanya punya satu progress per lesson
+- `certificates(student_id, course_id)` - Satu student hanya punya satu certificate per course
 
 ---
 
 ## Indexes
 
-### Primary Keys
-Semua tabel memiliki `id` sebagai primary key (bigint, auto increment)
+### Primary Keys:
+- Semua tables memiliki `id` sebagai PRIMARY KEY (bigint unsigned, auto increment)
 
-### Foreign Key Indexes
-Semua foreign key fields otomatis ter-index untuk performa query
+### Foreign Key Indexes:
+- Semua foreign keys otomatis ter-index untuk query optimization
 
-### Composite Indexes
-- `course_student`: (`course_id`, `student_id`)
-- `lesson_progress`: (`lesson_id`, `student_id`)
-- `certificates`: (`student_id`, `course_id`)
+### Unique Indexes:
+- `users.email`
+- `users.username`
+- `certificates.certificate_number`
+- Composite unique indexes untuk pivot tables
 
 ---
 
 ## Data Types
 
-### Common Types:
-- **bigint** - ID dan foreign keys
-- **string** - Nama, email, username (max 255 chars)
-- **text** - Deskripsi, konten (unlimited)
-- **boolean** - Status flags (is_active, is_done)
-- **date** - Tanggal (start_date, end_date)
-- **timestamp** - Waktu (created_at, updated_at, enrolled_at, done_at, issued_at)
-- **integer** - Urutan (order)
+### String Types:
+- `varchar(255)` - Untuk nama, email, title (variable length)
+- `text` - Untuk description (longer text)
+- `longtext` - Untuk lesson content (very long text)
+
+### Numeric Types:
+- `bigint unsigned` - Untuk IDs dan foreign keys
+- `integer` - Untuk order, counts
+- `boolean` - Untuk flags (is_active, is_done)
+
+### Date/Time Types:
+- `date` - Untuk start_date, end_date, issued_at
+- `timestamp` - Untuk created_at, updated_at, done_at, enrolled_at
+- `timestamp nullable` - Untuk optional timestamps
+
+### Enum Types:
+- `enum('admin', 'teacher', 'student')` - Untuk user role
 
 ---
 
-## Database Transactions
+## Migration Execution Order
 
-### Usage in Controllers
+Migrations dijalankan berdasarkan timestamp:
 
-**EnrollmentController::markAsDone()**
-```php
-DB::transaction(function () use ($lesson, $user) {
-    // Update lesson progress
-    // Create certificate if progress 100%
-});
-```
-
-**CertificateController::generate()**
-```php
-DB::transaction(function () use ($user, $course) {
-    // Create certificate
-});
-```
-
-**Manfaat:**
-- Atomicity: Semua operasi berhasil atau semua gagal
-- Data consistency: Mencegah data tidak konsisten
-- Error handling: Rollback otomatis jika ada error
+1. `0001_01_01_000000_create_users_table.php` - Base users table
+2. `2025_11_16_105229_add_username_role_and_is_active_to_users_table.php` - Add fields to users
+3. `2025_11_16_112054_create_categories_table.php` - Categories
+4. `2025_11_16_113059_create_courses_table.php` - Courses (depends on categories and users)
+5. `2025_11_16_113811_create_lessons_table.php` - Lessons (depends on courses)
+6. `2025_11_16_114659_create_course_student_table.php` - Enrollment pivot (depends on courses and users)
+7. `2025_11_16_114708_create_lesson_progress_table.php` - Progress (depends on lessons and users)
+8. `2025_11_24_114718_create_certificates_table.php` - Certificates (depends on courses and users)
 
 ---
 
-## Migration Best Practices
-
-1. **Naming:** Format: `YYYY_MM_DD_HHMMSS_description.php`
-2. **Up/Down:** Selalu implement `up()` dan `down()` methods
-3. **Foreign Keys:** Gunakan `constrained()` untuk foreign keys
-4. **Cascade:** Pertimbangkan `onDelete('cascade')` untuk data integrity
-5. **Indexes:** Tambahkan indexes untuk fields yang sering di-query
-6. **Defaults:** Set default values untuk fields yang perlu
-7. **Unique Constraints:** Tambahkan unique constraints untuk data integrity
-
----
-
-## Seeding
+## Database Seeding
 
 **Seeder:** `database/seeders/DemoSeeder.php`
 
-**Data yang di-seed:**
-- 1 Admin user
-- Multiple Teacher users
-- Multiple Student users
-- Multiple Categories
-- Multiple Courses dengan Lessons
-- Sample Enrollments
-- Sample Lesson Progress
+**Purpose:** Generate dummy data untuk development dan testing
 
-**Command:**
+**Data Generated:**
+- Users (admin, teachers, students)
+- Categories
+- Courses dengan lessons
+- Enrollments
+- Progress data
+- Certificates (auto-generated saat progress 100%)
+
+**Usage:**
 ```bash
-php artisan db:seed
+php artisan db:seed --class=DemoSeeder
 ```
-
----
-
-## Database Configuration
-
-**File:** `config/database.php`
-
-**Default Connection:** SQLite (development)
-**Production:** MySQL/MariaDB (configure di `.env`)
-
-**Environment Variables:**
-- `DB_CONNECTION` - Database driver (sqlite, mysql, etc.)
-- `DB_DATABASE` - Database name
-- `DB_HOST` - Database host
-- `DB_USERNAME` - Database username
-- `DB_PASSWORD` - Database password
 
 ---
 
 ## Query Optimization
 
 ### Eager Loading
-```php
-// Good: Eager load relationships
-Course::with(['teacher', 'category', 'students'])->get();
+Gunakan eager loading untuk menghindari N+1 queries:
 
-// Bad: N+1 query problem
+```php
+// Bad: N+1 queries
 $courses = Course::all();
 foreach ($courses as $course) {
-    $course->teacher; // Query executed for each course
+    echo $course->teacher->name; // Query per course
+}
+
+// Good: Single query
+$courses = Course::with('teacher')->get();
+foreach ($courses as $course) {
+    echo $course->teacher->name; // No additional queries
 }
 ```
 
-### Query Scopes
+### Indexes
+Semua foreign keys dan unique columns sudah ter-index untuk optimal performance.
+
+### Pagination
+Gunakan pagination untuk large datasets:
+
 ```php
-// Use scopes for common queries
-Course::active()->byCategory($categoryId)->get();
+$courses = Course::paginate(10);
 ```
 
-### Indexes
-- Foreign keys sudah ter-index otomatis
-- Composite indexes untuk unique constraints
-- Consider adding indexes untuk frequently queried fields
+---
 
+## Best Practices
+
+1. **Always use migrations** untuk schema changes
+2. **Use foreign key constraints** untuk data integrity
+3. **Use unique constraints** untuk prevent duplicates
+4. **Use indexes** untuk query optimization
+5. **Use CASCADE on delete** untuk automatic cleanup
+6. **Use timestamps** untuk audit trail
+7. **Use transactions** untuk atomic operations
+8. **Use eager loading** untuk avoid N+1 queries
+9. **Use pagination** untuk large datasets
+10. **Backup database** regularly
+
+---
+
+## Database Backup & Restore
+
+### Backup:
+```bash
+mysqldump -u username -p database_name > backup.sql
+```
+
+### Restore:
+```bash
+mysql -u username -p database_name < backup.sql
+```
+
+---
+
+## Migration Commands
+
+### Run Migrations:
+```bash
+php artisan migrate
+```
+
+### Rollback Last Migration:
+```bash
+php artisan migrate:rollback
+```
+
+### Rollback All Migrations:
+```bash
+php artisan migrate:reset
+```
+
+### Refresh Database:
+```bash
+php artisan migrate:refresh
+```
+
+### Fresh Migration (Drop All & Recreate):
+```bash
+php artisan migrate:fresh
+```
+
+### Fresh Migration with Seeding:
+```bash
+php artisan migrate:fresh --seed
+```
