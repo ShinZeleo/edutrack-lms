@@ -1,4 +1,8 @@
 <section>
+    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
+        @csrf
+    </form>
+
     <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
         @csrf
         @method('patch')
@@ -33,9 +37,6 @@
             @endif
         </div>
 
-        <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-            @csrf
-        </form>
 
         <div class="flex items-center gap-4 pt-4 border-t border-neutral-200">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
