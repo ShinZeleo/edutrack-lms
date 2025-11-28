@@ -49,6 +49,7 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        $category->courses()->update(['category_id' => null]);
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
     }

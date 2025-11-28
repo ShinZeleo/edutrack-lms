@@ -18,7 +18,10 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_active')->default(true);
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+                        $table->foreignId('category_id')
+                            ->nullable()
+                            ->constrained('categories')
+                            ->nullOnDelete();
             $table->foreignId('teacher_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
