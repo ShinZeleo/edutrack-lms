@@ -64,12 +64,20 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
+        $isLastActiveAdmin = $this->isLastActiveAdmin($user);
+        $newRole = $request->role;
+        $newIsActive = $request->has('is_active');
+
+        if ($isLastActiveAdmin && ($newRole !== 'admin' || !$newIsActive)) {
+            return back()->with('error', 'At least one active admin user is required.');
+        }
+
         $data = [
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
             'role' => $request->role,
-            'is_active' => $request->has('is_active'),
+            'is_active' => $newIsActive,
         ];
 
         if ($request->filled('password')) {
@@ -91,8 +99,23 @@ class UserController extends Controller
             return back()->with('error', 'You cannot delete your own account.');
         }
 
+        if ($this->isLastActiveAdmin($user)) {
+            return back()->with('error', 'At least one active admin user is required.');
+        }
+
         $user->delete();
 
         return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+    }
+
+    private function isLastActiveAdmin(User $user): bool
+    {
+        if ($user->role !== 'admin' || !$user->is_active) {
+            return false;
+        }
+
+        return User::where('role', 'admin')
+            ->where('is_active', true)
+            ->count() === 1;
     }
 }

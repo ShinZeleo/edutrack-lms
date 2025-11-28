@@ -44,17 +44,23 @@
 
                     <div>
                         <x-input-label for="role" :value="__('Role')" />
-                        <select
-                            name="role"
-                            id="role"
-                            class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
-                            required
-                        >
-                            <option value="student" @selected(old('role', $user->role) == 'student')>Student</option>
-                            <option value="teacher" @selected(old('role', $user->role) == 'teacher')>Teacher</option>
-                            <option value="admin" @selected(old('role', $user->role) == 'admin')>Admin</option>
-                        </select>
-                        <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                        @if($user->isAdmin())
+                            <div class="block w-full rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm font-semibold text-neutral-700">
+                                Admin (locked)
+                            </div>
+                            <input type="hidden" name="role" value="admin">
+                        @else
+                            <select
+                                name="role"
+                                id="role"
+                                class="block w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-20 transition"
+                                required
+                            >
+                                <option value="student" @selected(old('role', $user->role) == 'student')>Student</option>
+                                <option value="teacher" @selected(old('role', $user->role) == 'teacher')>Teacher</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                        @endif
                     </div>
 
                     <div>
