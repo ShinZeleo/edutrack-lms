@@ -50,10 +50,10 @@
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-3">
-                                            <a href="{{ route('teacher.courses.lessons.edit', [$course, $lesson]) }}" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
+                                            <a href="{{ route('teacher.courses.lessons.edit',  $lesson) }}" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
                                                 Edit
                                             </a>
-                                            <form action="{{ route('teacher.courses.lessons.destroy', [$course, $lesson]) }}" method="POST" class="inline" onsubmit="return confirm('Hapus lesson ini?')">
+                                            <form action="{{ route('teacher.courses.lessons.destroy',  $lesson) }}" method="POST" class="inline" onsubmit="return confirm('Hapus lesson ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition">

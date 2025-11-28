@@ -13,7 +13,7 @@ class LessonController extends Controller
 {
     public function index(Course $course)
     {
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
 
@@ -23,7 +23,7 @@ class LessonController extends Controller
 
     public function create(Course $course)
     {
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
 
@@ -32,7 +32,7 @@ class LessonController extends Controller
 
     public function store(LessonStoreRequest $request, Course $course)
     {
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this course.');
         }
 
@@ -84,7 +84,7 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 
@@ -96,7 +96,7 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 
@@ -115,7 +115,7 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ($course->teacher_id !== Auth::id()) {
+        if ((string) $course->teacher_id !== (string) Auth::id()) {
             abort(403, 'Unauthorized access to this lesson.');
         }
 

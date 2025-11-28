@@ -7,7 +7,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
-                <form action="{{ route('teacher.courses.lessons.update', [$course, $lesson]) }}" method="POST" class="space-y-6">
+                <form action="{{ route('teacher.courses.lessons.update',  $lesson) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
 
