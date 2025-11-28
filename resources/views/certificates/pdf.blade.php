@@ -18,7 +18,7 @@
             -webkit-print-color-adjust: exact;
         }
 
-        /* -- FRAME DEKORASI (Tetap dipertahankan karena sudah bagus) -- */
+        /* -- FRAME DEKORASI -- */
         .border-left { position: absolute; top: 0; bottom: 0; left: 0; width: 25px; background-color: #E76F51; z-index: 10; }
         .border-top { position: absolute; top: 0; left: 0; right: 0; height: 15px; background-color: #E76F51; z-index: 10; }
         .border-right { position: absolute; top: 0; bottom: 0; right: 0; width: 5px; background-color: #264653; z-index: 10; }
@@ -26,24 +26,25 @@
 
         .inner-frame {
             position: absolute; top: 25px; left: 40px; right: 15px; bottom: 15px;
-            border: 3px double #2A9D8F; /* Ganti jadi double line biar classic */
+            border: 3px double #2A9D8F;
             background-color: #fff; z-index: 1;
         }
 
-        /* -- WATERMARK BACKGROUND -- */
+        /* -- WATERMARK (Luna bikin lebih soft lagi warnanya) -- */
         .watermark {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 100px;
+            font-size: 80px; /* Sedikit dikecilkan biar ga nabrak parah */
             font-weight: bold;
-            color: rgba(42, 157, 143, 0.05); /* Transparan banget */
-            z-index: 0; /* Paling belakang */
+            /* Opacity diturunkan jadi 0.03 biar super samar */
+            color: rgba(42, 157, 143, 0.03); 
+            z-index: 0;
             white-space: nowrap;
             text-transform: uppercase;
             font-family: 'Georgia', serif;
             pointer-events: none;
+            letter-spacing: 10px;
         }
 
         .container {
@@ -55,35 +56,39 @@
         /* HEADER */
         .header-logo {
             font-size: 14px; letter-spacing: 5px; color: #E76F51;
-            font-weight: bold; text-transform: uppercase; margin-bottom: 15px;
+            font-weight: bold; text-transform: uppercase; margin-bottom: 5px;
         }
 
         .title {
-            font-family: 'Georgia', serif; font-size: 52px; color: #264653;
+            font-family: 'Georgia', serif; font-size: 50px; color: #264653;
             text-transform: uppercase; letter-spacing: 5px; margin-top: 0;
             margin-bottom: 5px; border-bottom: 2px solid #E76F51; display: inline-block;
-            padding-bottom: 15px; width: auto; padding-left: 40px; padding-right: 40px;
+            padding-bottom: 10px; width: auto; padding-left: 40px; padding-right: 40px;
+            line-height: 1.1; /* Jarak antar baris judul diperbaiki */
         }
 
         .subtitle {
-            margin-top: 20px; font-size: 16px; color: #666;
+            margin-top: 15px; font-size: 16px; color: #666;
             font-style: italic; font-family: 'Georgia', serif;
         }
 
         /* KONTEN TENGAH */
         .student-name {
-            font-family: 'Georgia', serif; font-size: 54px; font-weight: 700;
-            color: #2A9D8F; margin: 25px 0 10px 0; text-transform: capitalize;
-            /* Sedikit shadow tipis biar pop-up */
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+            font-family: 'Georgia', serif; font-size: 52px; font-weight: 700;
+            color: #2A9D8F; margin: 20px 0 5px 0; text-transform: capitalize;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1); 
         }
 
-        .ornament { font-size: 24px; color: #E76F51; margin-bottom: 15px; letter-spacing: 5px; }
+        /* Fix Simbol Diamond */
+        .ornament { 
+            font-size: 24px; color: #E76F51; margin-bottom: 15px; letter-spacing: 5px;
+            font-family: 'DejaVu Sans', sans-serif; /* Wajib pakai font ini buat simbol */
+        }
 
         .description { font-size: 16px; color: #555; margin-bottom: 5px; letter-spacing: 0.5px; }
 
         .course-title {
-            font-size: 32px; font-weight: 800; color: #264653;
+            font-size: 30px; font-weight: 800; color: #264653;
             font-family: 'Helvetica', sans-serif; text-transform: uppercase;
             letter-spacing: 2px; margin: 10px 0 20px 0;
         }
@@ -96,9 +101,9 @@
         .bottom-section { width: 100%; margin-top: auto; position: relative; }
 
         .date-box {
-            display: inline-block; border: 1px solid #2A9D8F; padding: 10px 30px;
+            display: inline-block; border: 1px solid #2A9D8F; padding: 8px 30px;
             border-radius: 50px; font-size: 13px; color: #2A9D8F; font-weight: bold;
-            background: #fcfcfc; margin-bottom: 30px;
+            background: #fcfcfc; margin-bottom: 25px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
@@ -111,6 +116,7 @@
             display: inline-block; width: 220px; text-align: left; position: relative;
         }
 
+        /* Image TTD */
         .signature-img {
             height: 60px; width: auto; display: block;
             margin-bottom: -15px; margin-left: 20px;
@@ -128,32 +134,28 @@
             letter-spacing: 1px; display: block; font-weight: bold;
         }
 
-        /* -- GOLD SEAL (Stempel Mewah CSS Only) -- */
+        /* -- GOLD SEAL -- */
         .seal-container {
             display: inline-block;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px double #d4af37; /* Warna Emas */
-            padding: 5px;
-            position: relative;
-            margin-bottom: 10px;
+            width: 100px; height: 100px; border-radius: 50%;
+            border: 3px double #d4af37; padding: 5px;
+            position: relative; margin-bottom: 10px;
         }
-
+        
         .seal-inner {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 1px dashed #d4af37;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            color: #d4af37;
+            width: 100%; height: 100%; border-radius: 50%; 
+            border: 1px dashed #d4af37; display: flex;
+            align-items: center; justify-content: center;
+            flex-direction: column; color: #d4af37;
         }
 
         .seal-text { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .seal-icon { font-size: 24px; margin: 2px 0; }
+        
+        /* Fix Simbol Bintang */
+        .seal-icon { 
+            font-size: 24px; margin: 2px 0; 
+            font-family: 'DejaVu Sans', sans-serif; /* Wajib pakai font ini buat simbol */
+        }
 
         .cert-id {
             position: absolute; bottom: -10px; right: 0;
@@ -167,24 +169,24 @@
     <div class="border-top"></div>
     <div class="border-right"></div>
     <div class="border-bottom"></div>
-
+    
     <div class="inner-frame">
         <div class="watermark">OFFICIAL DOCUMENT</div>
     </div>
-
+    
     <div class="inner-line"></div>
 
     <div class="container">
         <div>
             <div class="header-logo">{{ config('app.name') }}</div>
-            <div class="title">Certificate of Completion</div>
+            <div class="title">Certificate of <br> Completion</div>
             <div class="subtitle">This certifies that the following individual has successfully met all requirements</div>
         </div>
 
         <div>
             <div class="student-name">{{ $studentName }}</div>
             <div class="ornament">♦ ♦ ♦</div>
-
+            
             <div class="description">Has demonstrated excellence and dedication in mastering</div>
             <div class="course-title">{{ $courseTitle }}</div>
             <div class="footer-quote">"Knowledge is the gateway to opportunity."</div>
