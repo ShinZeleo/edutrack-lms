@@ -337,14 +337,19 @@ edutrack-lms/
 │   │   ├── Controllers/
 │   │   │   ├── Admin/
 │   │   │   │   └── UserController.php
+│   │   │   ├── Auth/
+│   │   │   │   └── 6 file            
 │   │   │   ├── AdminController.php
 │   │   │   ├── CategoryController.php
 │   │   │   ├── CertificateController.php
+│   │   │   ├── Controller.php
 │   │   │   ├── CourseController.php
 │   │   │   ├── EnrollmentController.php
 │   │   │   ├── HomeController.php
 │   │   │   ├── LessonController.php
-│   │   │   └── ProfileController.php
+│   │   │   ├── ProfileController.php
+│   │   │   ├── StudentController.php
+│   │   │   └── TeacherController.php
 │   │   ├── Requests/
 │   │   │   ├── Auth/
 │   │   │   │   └── LoginRequest.php
@@ -371,17 +376,26 @@ edutrack-lms/
 │       └── User.php
 ├── database/
 │   ├── migrations/
+│   │   └── 8 Files
 │   └── seeders/
 │       └── DemoSeeder.php
 ├── resources/
 │   ├── views/
 │   │   ├── admin/
 │   │   ├── auth/
+│   │   ├── categories/
 │   │   ├── certificates/
+│   │   ├── components/
 │   │   ├── courses/
 │   │   ├── lessons/
 │   │   ├── layouts/
-│   │   └── users/
+│   │   ├── users/
+│   │   ├── profile/
+│   │   ├── teacher/
+│   │   ├── vendor/
+│   │   ├── about.blade.php
+│   │   ├── dashboard.blade.php
+│   │   └── home.blade.php
 │   └── css/
 ├── routes/
 │   ├── web.php
