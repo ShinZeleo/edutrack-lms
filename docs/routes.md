@@ -357,7 +357,33 @@ Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function (
 
 ---
 
-#### Lesson Management
+#### Lesson Management (Admin)
+```php
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::resource('courses.lessons', LessonController::class)->shallow()->names('admin.courses.lessons');
+});
+```
+
+**Routes (Nested Resource):**
+- `GET /admin/courses/{course}/lessons` → `LessonController@index` (name: `admin.courses.lessons.index`)
+- `GET /admin/courses/{course}/lessons/create` → `LessonController@create` (name: `admin.courses.lessons.create`)
+- `POST /admin/courses/{course}/lessons` → `LessonController@store` (name: `admin.courses.lessons.store`)
+- `GET /admin/courses/{course}/lessons/{lesson}` → `LessonController@show` (name: `admin.courses.lessons.show`)
+- `GET /admin/courses/{course}/lessons/{lesson}/edit` → `LessonController@edit` (name: `admin.courses.lessons.edit`)
+- `PUT/PATCH /admin/courses/{course}/lessons/{lesson}` → `LessonController@update` (name: `admin.courses.lessons.update`)
+- `DELETE /admin/courses/{course}/lessons/{lesson}` → `LessonController@destroy` (name: `admin.courses.lessons.destroy`)
+
+**Middleware:** `auth`, `role:admin`
+
+**Access:** Admins only
+
+**Function:** Full CRUD operations untuk lessons dalam course
+
+**Shallow Routing:** `shallow()` membuat route untuk show, edit, update, destroy tidak memerlukan `{course}` parameter
+
+---
+
+#### Lesson Management (Teacher)
 ```php
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
     Route::resource('courses.lessons', LessonController::class)->shallow()->names('teacher.courses.lessons');
@@ -557,6 +583,10 @@ return redirect()->route('courses.catalog');
 - `role:admin` - User harus admin
 - `role:teacher` - User harus teacher
 - `role:student` - User harus student
+- `role:admin,teacher` - User harus admin atau teacher
+- `role:admin,teacher,student` - User harus salah satu dari ketiga role
+
+**Multiple Roles Support:** Role middleware mendukung multiple roles yang dipisahkan dengan koma. User akan diberikan akses jika memiliki salah satu dari role yang ditentukan.
 
 ### Other Middleware
 - `verified` - Email harus terverifikasi

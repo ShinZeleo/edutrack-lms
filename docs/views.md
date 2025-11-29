@@ -318,27 +318,35 @@ resources/views/
 ### 4. lessons/index.blade.php
 **File:** `resources/views/lessons/index.blade.php`
 
-**Purpose:** List lessons dalam course
+**Purpose:** List lessons dalam course (digunakan oleh admin dan teacher)
 
 **Features:**
 - Table dengan lessons
 - Order indicator
 - Create lesson button
 - Edit/Delete actions
+- Route prefix dinamis untuk mendukung admin dan teacher routes
+- Responsive table design
 
 **Variables:**
 - `$course` - Course model
 - `$lessons` - List of lessons
+- `$routePrefix` - Prefix route untuk admin atau teacher (nilai: 'admin' atau 'teacher')
 
 ---
 
 ### 5. lessons/create.blade.php & edit.blade.php
-**Purpose:** Form create/edit lesson
+**Purpose:** Form create/edit lesson (digunakan oleh admin dan teacher)
 
 **Fields:**
 - Title
-- Content (textarea/rich text)
+- Content (textarea)
 - Order
+
+**Features:**
+- Route prefix dinamis untuk mendukung admin dan teacher routes
+- Form validation menggunakan input components
+- Error message display
 
 **Validation:**
 - Menggunakan `LessonStoreRequest` dan `LessonUpdateRequest`

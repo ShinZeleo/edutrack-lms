@@ -131,9 +131,12 @@ $response->assertViewHas('stats');
 
 **Tests:**
 - Teacher hanya bisa akses course miliknya
+- Teacher tidak bisa akses course milik teacher lain
 - Admin bisa akses semua course
+- Admin bisa edit dan delete course milik teacher lain
 - Student tidak bisa akses course management
 - Unauthorized user tidak bisa akses course management
+- Course validation requirements (name, date validation, etc.)
 
 **Key Assertions:**
 ```php
@@ -150,8 +153,12 @@ $response->assertStatus(200);  // OK
 
 **Tests:**
 - Teacher hanya bisa manage lesson di course miliknya
-- Student hanya bisa view lesson di course yang di-enroll
-- Unauthorized user tidak bisa akses lesson
+- Teacher tidak bisa manage lesson di course milik teacher lain
+- Admin bisa manage lesson di semua course
+- Student tidak bisa akses lesson management
+- Unauthorized user tidak bisa akses lesson management
+- Lesson validation requirements (title, content, etc.)
+- Access control for lesson CRUD operations (create, read, update, delete)
 
 **Key Assertions:**
 ```php

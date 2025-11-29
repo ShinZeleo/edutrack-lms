@@ -165,7 +165,12 @@ public function handle(Request $request, Closure $next, string $role): Response
 
     $user = Auth::user();
 
-    if ($user->role !== $role) {
+    $allowedRoles = collect(explode(',', $role))
+        ->map(fn ($item) => trim($item))
+        ->filter()
+        ->values();
+
+    if (!$allowedRoles->contains($user->role)) {
         abort(403, 'Unauthorized access. Role ' . $role . ' required.');
     }
 
@@ -176,12 +181,15 @@ public function handle(Request $request, Closure $next, string $role): Response
 **Alur Kerja:**
 1. Check apakah user sudah login
 2. Jika belum login, redirect ke login page
-3. Check apakah user role sesuai dengan parameter `$role`
-4. Jika tidak sesuai, abort dengan 403 error
-5. Jika sesuai, lanjutkan request
+3. Pecah parameter `$role` menggunakan koma sebagai pemisah
+4. Filter dan sanitasi role yang diizinkan
+5. Check apakah user role terdapat dalam daftar role yang diizinkan
+6. Jika tidak sesuai, abort dengan 403 error
+7. Jika sesuai, lanjutkan request
 
 **Parameters:**
-- `$role` - Role yang diizinkan: 'admin', 'teacher', atau 'student'
+- `$role` - Role atau multiple roles yang diizinkan (dipisahkan dengan koma)
+  Contoh: 'admin', 'teacher', 'student', atau 'admin,teacher'
 
 **Usage:**
 ```php
@@ -196,6 +204,14 @@ Route::middleware(['auth', 'role:teacher'])->group(function () {
 Route::middleware(['auth', 'role:student'])->group(function () {
     // Student only routes
 });
+
+Route::middleware(['auth', 'role:admin,teacher'])->group(function () {
+    // Admin or Teacher routes
+});
+
+Route::middleware(['auth', 'role:admin,teacher,student'])->group(function () {
+    // Admin, Teacher, or Student routes
+});
 ```
 
 **Error Response:**
@@ -203,9 +219,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
 - Message: "Unauthorized access. Role {role} required."
 
 **Benefits:**
-- Flexible: bisa digunakan untuk semua role
+- Flexible: bisa digunakan untuk single atau multiple roles
 - Reusable: satu middleware untuk semua role checks
 - Consistent: error message yang konsisten
+- Multiple roles: mendukung multiple roles yang dipisahkan dengan koma
 
 ---
 

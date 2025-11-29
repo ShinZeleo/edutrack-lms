@@ -95,18 +95,42 @@ Menampilkan halaman about/tentang aplikasi.
 
 **Methods:**
 
-#### `publicIndex()`
+#### `publicIndex(Request $request)`
 **Route:** `GET /courses` (name: `courses.catalog`)
 
 **Middleware:** None (public access)
 
 **Fungsi:**
-Menampilkan catalog semua course aktif untuk public view.
+Menampilkan catalog semua course aktif untuk public view dengan fitur pencarian dan filter.
 
 **Alur Kerja:**
-1. Query courses aktif dengan eager loading
-2. Paginate results
-3. Return catalog view
+1. Menerima request dengan parameter `search`, `category_id`, dan `sort`
+2. Query courses aktif dengan eager loading (`teacher`, `category`, `students`) dan menghitung jumlah students dan lessons
+3. Filter berdasarkan search (jika ada)
+4. Filter berdasarkan category (jika ada)
+5. Jika user login dan student:
+   - Tambahkan subquery untuk student progress
+6. Sort berdasarkan parameter:
+   - `latest` (default)
+   - `popular` (berdasarkan student count)
+   - `progress` (berdasarkan student progress)
+7. Paginate results dengan query string
+8. Ambil semua categories aktif
+9. Return catalog view
+
+**Contoh Request:**
+```
+GET /courses?search=laravel&category_id=1&sort=popular
+```
+
+**Response Data:**
+```php
+[
+    'courses' => Collection, // courses dengan pagination
+    'categories' => Collection, // Semua categories aktif
+    'sort' => string, // tipe sorting
+]
+```
 
 **View:** `resources/views/courses/catalog.blade.php`
 
@@ -118,14 +142,29 @@ Menampilkan catalog semua course aktif untuk public view.
 **Middleware:** None (public access)
 
 **Fungsi:**
-Menampilkan detail course untuk public view.
+Menampilkan detail course untuk public view. Jika course tidak aktif, menampilkan 404 error.
 
 **Alur Kerja:**
-1. Load course dengan relationships (category, teacher, students, lessons)
-2. Jika user login dan student:
+1. Check apakah course aktif (jika tidak, abort 404)
+2. Load course dengan relationships:
+   - category
+   - teacher
+   - students
+   - lessons (dengan ordering dan progress untuk student jika login)
+3. Hitung jumlah students
+4. Jika user login dan student:
    - Check enrollment status
-   - Calculate progress
-3. Return detail view
+   - Hitung progress course untuk user
+5. Return detail view
+
+**Response Data:**
+```php
+[
+    'course' => Course, // Course dengan relationships
+    'isEnrolled' => boolean, // Apakah student sudah enroll
+    'studentProgress' => float, // Progress percentage (0-100), null jika belum enroll
+]
+```
 
 **View:** `resources/views/courses/public/show.blade.php`
 
@@ -384,50 +423,61 @@ Hapus category.
 **Fungsi:** Mengelola lesson dalam course
 
 **Authorization:**
+- **Admin:** Bisa mengelola lessons di semua courses
 - **Teacher:** Hanya bisa mengelola lessons di courses miliknya
 - **Student:** Hanya bisa melihat lessons di courses yang sudah di-enroll
 
 **Methods:**
 
 #### `index(Course $course)`
-**Route:** `GET /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.index`)
+**Route:**
+- `GET /admin/courses/{course}/lessons` (name: `admin.courses.lessons.index`) - Admin
+- `GET /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.index`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Fungsi:**
 List semua lessons dalam course.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa akses lessons di semua courses
+- Teacher: hanya bisa akses lessons di course miliknya
 
 **Alur Kerja:**
-1. Check apakah course milik teacher
+1. Check apakah user adalah admin atau teacher pemilik course
 2. Load lessons dengan order
-3. Return index view
+3. Return index view sesuai role
 
-**View:** `resources/views/lessons/index.blade.php`
+**Views:**
+- Admin: `resources/views/lessons/index.blade.php` (jika role:admin)
+- Teacher: `resources/views/lessons/index.blade.php` (jika role:teacher)
 
 ---
 
 #### `create(Course $course)`
-**Route:** `GET /teacher/courses/{course}/lessons/create` (name: `teacher.courses.lessons.create`)
+**Route:**
+- `GET /admin/courses/{course}/lessons/create` (name: `admin.courses.lessons.create`) - Admin
+- `GET /teacher/courses/{course}/lessons/create` (name: `teacher.courses.lessons.create`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Fungsi:**
 Form create lesson baru.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa create lessons di semua courses
+- Teacher: hanya bisa create lessons di course miliknya
 
 **View:** `resources/views/lessons/create.blade.php`
 
 ---
 
 #### `store(LessonStoreRequest $request, Course $course)`
-**Route:** `POST /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.store`)
+**Route:**
+- `POST /admin/courses/{course}/lessons` (name: `admin.courses.lessons.store`) - Admin
+- `POST /teacher/courses/{course}/lessons` (name: `teacher.courses.lessons.store`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Validasi:** `LessonStoreRequest`
 
@@ -435,7 +485,8 @@ Form create lesson baru.
 Menyimpan lesson baru ke course.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa store lessons di semua courses
+- Teacher: hanya bisa store lessons di course miliknya
 
 **Form Request Rules:**
 ```php
@@ -470,24 +521,29 @@ Menampilkan detail lesson untuk student.
 ---
 
 #### `edit(Lesson $lesson)`
-**Route:** `GET /teacher/courses/{course}/lessons/{lesson}/edit` (name: `teacher.courses.lessons.edit`)
+**Route:**
+- `GET /admin/courses/{course}/lessons/{lesson}/edit` (name: `admin.courses.lessons.edit`) - Admin
+- `GET /teacher/courses/{course}/lessons/{lesson}/edit` (name: `teacher.courses.lessons.edit`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Fungsi:**
 Form edit lesson.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa edit lessons di semua courses
+- Teacher: hanya bisa edit lessons di course miliknya
 
 **View:** `resources/views/lessons/edit.blade.php`
 
 ---
 
 #### `update(LessonUpdateRequest $request, Lesson $lesson)`
-**Route:** `PUT/PATCH /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.update`)
+**Route:**
+- `PUT/PATCH /admin/courses/{course}/lessons/{lesson}` (name: `admin.courses.lessons.update`) - Admin
+- `PUT/PATCH /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.update`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Validasi:** `LessonUpdateRequest`
 
@@ -495,20 +551,24 @@ Form edit lesson.
 Update lesson.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa update lessons di semua courses
+- Teacher: hanya bisa update lessons di course miliknya
 
 ---
 
 #### `destroy(Lesson $lesson)`
-**Route:** `DELETE /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.destroy`)
+**Route:**
+- `DELETE /admin/courses/{course}/lessons/{lesson}` (name: `admin.courses.lessons.destroy`) - Admin
+- `DELETE /teacher/courses/{course}/lessons/{lesson}` (name: `teacher.courses.lessons.destroy`) - Teacher
 
-**Middleware:** `auth`, `role:teacher`
+**Middleware:** `auth`, `role:admin` atau `role:teacher`
 
 **Fungsi:**
 Hapus lesson.
 
 **Authorization:**
-- Hanya teacher pemilik course yang bisa akses
+- Admin: bisa delete lessons di semua courses
+- Teacher: hanya bisa delete lessons di course miliknya
 
 **Cascade Delete:**
 Saat lesson dihapus, semua lesson_progress terkait akan terhapus.
@@ -1038,7 +1098,7 @@ try {
 
 Authorization dilakukan di beberapa level:
 
-1. **Route Level:** Middleware `role:admin`, `role:teacher`, `role:student`
+1. **Route Level:** Middleware `role:admin`, `role:teacher`, `role:student`, atau multiple roles seperti `role:admin,teacher`
 2. **Controller Level:** Manual check dengan `abort(403)`
 3. **Model Level:** Policy (jika ada)
 
@@ -1046,6 +1106,7 @@ Authorization dilakukan di beberapa level:
 ```php
 // Route level
 Route::middleware(['auth', 'role:admin'])->group(...);
+Route::middleware(['auth', 'role:admin,teacher'])->group(...); // Multiple roles
 
 // Controller level
 if (!$user->isAdmin()) {
@@ -1057,6 +1118,11 @@ if ($course->teacher_id !== $user->id) {
     abort(403, 'Unauthorized access to this course.');
 }
 ```
+
+**Multiple Roles Support:**
+Role middleware sekarang mendukung multiple roles yang dipisahkan dengan koma. Contoh:
+- `role:admin,teacher` - Akses diberikan ke admin atau teacher
+- `role:admin,teacher,student` - Akses diberikan ke semua tiga role
 
 ---
 
