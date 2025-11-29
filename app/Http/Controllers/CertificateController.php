@@ -79,7 +79,6 @@ class CertificateController extends Controller
 
             $pdf = Pdf::loadView('certificates.pdf', $data);
 
-            // Sanitize filename: remove invalid characters for file names
             $courseName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->course->name);
             $studentName = preg_replace('/[\/\\\\:*?"<>|]/', '-', $certificate->student->name);
             $filename = 'certificate-' . $courseName . '-' . $studentName . '.pdf';

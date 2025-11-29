@@ -6,9 +6,7 @@ use App\Models\Lesson;
 use App\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Lesson>
- */
+
 class LessonFactory extends Factory
 {
     protected $model = Lesson::class;

@@ -8,7 +8,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-// Initialize AOS
 AOS.init({
     duration: 800,
     easing: 'ease-in-out',

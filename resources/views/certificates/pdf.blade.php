@@ -18,7 +18,6 @@
             -webkit-print-color-adjust: exact;
         }
 
-        /* -- FRAME DEKORASI -- */
         .border-left { position: absolute; top: 0; bottom: 0; left: 0; width: 25px; background-color: #E76F51; z-index: 10; }
         .border-top { position: absolute; top: 0; left: 0; right: 0; height: 15px; background-color: #E76F51; z-index: 10; }
         .border-right { position: absolute; top: 0; bottom: 0; right: 0; width: 5px; background-color: #264653; z-index: 10; }
@@ -30,14 +29,12 @@
             background-color: #fff; z-index: 1;
         }
 
-        /* -- WATERMARK (Luna bikin lebih soft lagi warnanya) -- */
         .watermark {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 80px; /* Sedikit dikecilkan biar ga nabrak parah */
+            font-size: 80px; 
             font-weight: bold;
-            /* Opacity diturunkan jadi 0.03 biar super samar */
             color: rgba(42, 157, 143, 0.03); 
             z-index: 0;
             white-space: nowrap;
@@ -53,7 +50,6 @@
             text-align: center; justify-content: space-between; padding: 40px 50px;
         }
 
-        /* HEADER */
         .header-logo {
             font-size: 14px; letter-spacing: 5px; color: #E76F51;
             font-weight: bold; text-transform: uppercase; margin-bottom: 5px;
@@ -72,17 +68,15 @@
             font-style: italic; font-family: 'Georgia', serif;
         }
 
-        /* KONTEN TENGAH */
         .student-name {
             font-family: 'Georgia', serif; font-size: 52px; font-weight: 700;
             color: #2A9D8F; margin: 20px 0 5px 0; text-transform: capitalize;
             text-shadow: 1px 1px 0px rgba(0,0,0,0.1); 
         }
 
-        /* Fix Simbol Diamond */
         .ornament { 
             font-size: 24px; color: #E76F51; margin-bottom: 15px; letter-spacing: 5px;
-            font-family: 'DejaVu Sans', sans-serif; /* Wajib pakai font ini buat simbol */
+            font-family: 'DejaVu Sans', sans-serif; 
         }
 
         .description { font-size: 16px; color: #555; margin-bottom: 5px; letter-spacing: 0.5px; }
@@ -97,7 +91,6 @@
             font-size: 14px; color: #888; font-style: italic; margin-bottom: 10px;
         }
 
-        /* FOOTER & TANDA TANGAN */
         .bottom-section { width: 100%; margin-top: auto; position: relative; }
 
         .date-box {
@@ -116,7 +109,6 @@
             display: inline-block; width: 220px; text-align: left; position: relative;
         }
 
-        /* Image TTD */
         .signature-img {
             height: 60px; width: auto; display: block;
             margin-bottom: -15px; margin-left: 20px;
@@ -134,7 +126,6 @@
             letter-spacing: 1px; display: block; font-weight: bold;
         }
 
-        /* -- GOLD SEAL -- */
         .seal-container {
             display: inline-block;
             width: 100px; height: 100px; border-radius: 50%;
@@ -151,10 +142,9 @@
 
         .seal-text { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Fix Simbol Bintang */
         .seal-icon { 
             font-size: 24px; margin: 2px 0; 
-            font-family: 'DejaVu Sans', sans-serif; /* Wajib pakai font ini buat simbol */
+            font-family: 'DejaVu Sans', sans-serif; 
         }
 
         .cert-id {

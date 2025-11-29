@@ -5,7 +5,6 @@
 
     <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            {{-- Breadcrumb --}}
             <nav class="mb-6 text-sm text-neutral-600 flex flex-wrap items-center gap-2">
                 <a href="{{ route('home') }}" class="hover:text-emerald-600 transition flex items-center gap-1">
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,13 +22,11 @@
                 <span class="text-neutral-900 font-medium">Lesson</span>
             </nav>
 
-            {{-- Header --}}
             <header class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8" >
                 <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 leading-tight mb-3 sm:mb-4">
                     {{ $lesson->title }}
                 </h1>
 
-                {{-- Progress Bar --}}
                 @if(isset($position) && isset($totalLessons))
                     <div class="mb-4">
                         <div class="flex items-center justify-between text-sm text-neutral-600 mb-2">
@@ -62,14 +59,12 @@
                 </div>
             </header>
 
-            {{-- Content --}}
             <article class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8 prose prose-lg max-w-none" >
                 <div class="text-base sm:text-lg text-neutral-700 leading-relaxed">
                     {!! nl2br(e($lesson->content)) !!}
                 </div>
             </article>
 
-            {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="mb-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-800 text-sm">
                     {{ session('success') }}
@@ -82,7 +77,6 @@
                 </div>
             @endif
 
-            {{-- Action Bar --}}
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-4 sm:p-6" >
                 <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
                     @if($isDone ?? false)
@@ -147,7 +141,6 @@
                 </div>
             </div>
 
-        {{-- Daftar materi di kursus ini --}}
         @if(isset($lessons) && $lessons->count())
             <section class="pt-6 mt-2 border-t border-neutral-200 space-y-4">
                 <header class="flex items-center justify-between gap-3">
