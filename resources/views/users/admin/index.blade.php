@@ -1,0 +1,110 @@
+<x-app-layout>
+    <div class="bg-gradient-to-b from-neutral-50 to-white py-8 sm:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900">User Management</h1>
+                    <p class="text-base sm:text-lg text-neutral-600 mt-1">Kelola semua pengguna platform</p>
+                </div>
+                <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg hover:shadow-xl transition text-sm sm:text-base">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    Create User
+                </a>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 mb-6 sm:mb-8">
+                <form method="GET" action="{{ route('admin.users.index') }}" class="space-y-4 sm:space-y-0 sm:flex sm:items-center sm:gap-4">
+                    <div class="flex-1">
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </div>
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ request('search') }}"
+                                placeholder="Search by name or email..."
+                                class="block w-full pl-10 pr-3 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm"
+                            />
+                        </div>
+                    </div>
+                    <div class="md:w-48">
+                        <select name="role" class="block w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm bg-white">
+                            <option value="">All Roles</option>
+                            <option value="admin" @selected(request('role') == 'admin')>Admin</option>
+                            <option value="teacher" @selected(request('role') == 'teacher')>Teacher</option>
+                            <option value="student" @selected(request('role') == 'student')>Student</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                        <button type="submit" class="px-4 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 font-semibold transition text-sm sm:text-base shadow-sm hover:shadow-md">
+                            Filter
+                        </button>
+                        <a href="{{ route('admin.users.index') }}" class="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition text-sm sm:text-base text-center">
+                            Reset
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="space-y-4">
+                @forelse($users as $user)
+                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4 sm:p-6 hover:shadow-xl transition">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                            <div class="flex items-center gap-4 flex-1 min-w-0">
+                                <div class="h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white font-bold text-lg sm:text-xl flex-shrink-0">
+                                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                                </div>
+                                <div class="min-w-0 flex-1">
+                                    <div class="font-bold text-base sm:text-lg text-neutral-900 mb-1">{{ $user->name }}</div>
+                                    <div class="text-sm text-neutral-600 truncate">{{ $user->email }}</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                                <span class="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold {{ $user->isAdmin() ? 'bg-red-100 text-red-700' : ($user->isTeacher() ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700') }}">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                                <span class="inline-flex items-center rounded-full px-3 py-1.5 text-xs font-semibold {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-700' }}">
+                                    {{ $user->is_active ? 'Active' : 'Inactive' }}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+                                <a href="{{ route('admin.users.edit', $user) }}" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition shadow-sm hover:shadow-md text-center">
+                                    Edit
+                                </a>
+                                @unless($user->isAdmin())
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="flex-1 sm:flex-none" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition shadow-sm hover:shadow-md">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endunless
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-12 text-center">
+                        <svg class="h-16 w-16 mx-auto text-neutral-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <p class="text-neutral-500 text-lg">No users found.</p>
+                    </div>
+                @endforelse
+            </div>
+
+            @if(isset($users) && method_exists($users, 'hasPages') && $users->hasPages())
+                <div class="mt-8 flex justify-center">
+                    <div class="bg-white rounded-xl shadow-lg border border-neutral-200 p-4">
+                        {{ $users->links('vendor.pagination.tailwind') }}
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</x-app-layout>
