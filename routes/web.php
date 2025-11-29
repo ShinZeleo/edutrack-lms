@@ -27,7 +27,7 @@ Route::get('/courses/{course}', [CourseController::class, 'show'])->name('course
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::resource('courses', CourseController::class)->names('admin.courses');
