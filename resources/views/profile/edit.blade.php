@@ -67,27 +67,29 @@
                     </div>
                 </section>
 
-                <section class="bg-white border-2 border-red-200 rounded-2xl shadow-lg p-8">
-                    <header class="mb-6 flex items-center gap-3">
-                        <div class="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
-                            <svg class="h-5 w-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-red-700">
-                                Hapus Akun
-                            </h3>
-                            <p class="mt-1 text-sm text-neutral-600">
-                                Tindakan ini bersifat permanen. Semua data yang terkait akunmu akan ikut terhapus.
-                            </p>
-                        </div>
-                    </header>
+                @unless (Auth::user()->isAdmin())
+                    <section class="bg-white border-2 border-red-200 rounded-2xl shadow-lg p-8">
+                        <header class="mb-6 flex items-center gap-3">
+                            <div class="h-10 w-10 rounded-lg bg-red-100 flex items-center justify-center">
+                                <svg class="h-5 w-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-red-700">
+                                    Hapus Akun
+                                </h3>
+                                <p class="mt-1 text-sm text-neutral-600">
+                                    Tindakan ini bersifat permanen. Semua data yang terkait akunmu akan ikut terhapus.
+                                </p>
+                            </div>
+                        </header>
 
-                    <div class="max-w-2xl">
-                        @include('profile.partials.delete-user-form')
-                    </div>
-                </section>
+                        <div class="max-w-2xl">
+                            @include('profile.partials.delete-user-form')
+                        </div>
+                    </section>
+                @endunless
             </div>
         </div>
     </div>

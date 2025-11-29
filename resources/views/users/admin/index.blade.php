@@ -76,13 +76,15 @@
                                 <a href="{{ route('admin.users.edit', $user) }}" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition shadow-sm hover:shadow-md text-center">
                                     Edit
                                 </a>
-                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="flex-1 sm:flex-none" onsubmit="return confirm('Are you sure you want to delete this user?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition shadow-sm hover:shadow-md">
-                                        Delete
-                                    </button>
-                                </form>
+                                @unless($user->isAdmin())
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="flex-1 sm:flex-none" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition shadow-sm hover:shadow-md">
+                                            Delete
+                                        </button>
+                                    </form>
+                                @endunless
                             </div>
                         </div>
                     </div>
