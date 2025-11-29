@@ -16,7 +16,7 @@
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 overflow-hidden">
                 <div class="p-6 border-b border-neutral-200 flex items-center justify-between">
                     <h2 class="text-xl font-bold text-neutral-900">Daftar Lesson</h2>
-                    <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg transition">
+                    <a href="{{ route($routePrefix . '.courses.lessons.create', $course) }}" class="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 font-semibold shadow-lg transition">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
@@ -50,10 +50,10 @@
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <div class="flex items-center justify-end gap-3">
-                                            <a href="{{ route('teacher.courses.lessons.edit',  $lesson) }}" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
+                                            <a href="{{ route($routePrefix . '.courses.lessons.edit', [$course, $lesson]) }}" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition">
                                                 Edit
                                             </a>
-                                            <form action="{{ route('teacher.courses.lessons.destroy',  $lesson) }}" method="POST" class="inline" onsubmit="return confirm('Hapus lesson ini?')">
+                                             <form action="{{ route($routePrefix . '.courses.lessons.destroy', [$course, $lesson]) }}" method="POST" class="inline" onsubmit="return confirm('Hapus lesson ini?')">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-semibold transition">
@@ -70,7 +70,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
                                         <p class="mb-2">Belum ada lesson.</p>
-                                        <a href="{{ route('teacher.courses.lessons.create', $course) }}" class="text-emerald-600 hover:text-emerald-700 font-semibold">
+                                        <a href="{{ route($routePrefix . '.courses.lessons.create', $course) }}" class="text-emerald-600 hover:text-emerald-700 font-semibold">
                                             Tambahkan sekarang
                                         </a>
                                     </td>

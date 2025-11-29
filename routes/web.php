@@ -31,6 +31,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::resource('courses', CourseController::class)->names('admin.courses');
+    Route::resource('courses.lessons', LessonController::class)->shallow()->names('admin.courses.lessons');
 });
 
 Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {

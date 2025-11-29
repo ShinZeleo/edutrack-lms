@@ -7,7 +7,7 @@
             </div>
 
             <div class="bg-white rounded-2xl shadow-lg border border-neutral-200 p-8">
-                <form action="{{ route('teacher.courses.lessons.update',  $lesson) }}" method="POST" class="space-y-6">
+                <form action="{{ route($routePrefix . '.courses.lessons.update', [$course, $lesson]) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row justify-end gap-3 pt-6 border-t border-neutral-200">
-                        <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
+                        <a href="{{ route($routePrefix . '.courses.lessons.index', $course) }}" class="inline-flex items-center justify-center px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg hover:bg-neutral-50 font-semibold transition">
                             Cancel
                         </a>
                         <x-primary-button>

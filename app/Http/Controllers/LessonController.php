@@ -13,28 +13,22 @@ class LessonController extends Controller
 {
     public function index(Course $course)
     {
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this course.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
         $lessons = $course->lessons()->ordered()->get();
-        return view('lessons.index', compact('course', 'lessons'));
+        return view('lessons.index', compact('course', 'lessons', 'routePrefix'));
     }
 
     public function create(Course $course)
     {
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this course.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
-        return view('lessons.create', compact('course'));
+        return view('lessons.create', compact('course', 'routePrefix'));
     }
 
     public function store(LessonStoreRequest $request, Course $course)
     {
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this course.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
         $course->lessons()->create([
             'title' => $request->input('title'),
@@ -42,7 +36,7 @@ class LessonController extends Controller
             'order' => $request->input('order'),
         ]);
 
-        return redirect()->route('teacher.courses.lessons.index', $course)
+        return redirect()->route("{$routePrefix}.courses.lessons.index", $course)
                          ->with('success', 'Lesson created successfully.');
     }
 
@@ -84,11 +78,9 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this lesson.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
-        return view('lessons.edit', compact('course', 'lesson'));
+        return view('lessons.edit', compact('course', 'lesson', 'routePrefix'));
     }
 
     public function update(LessonUpdateRequest $request, Lesson $lesson)
@@ -96,9 +88,7 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this lesson.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
         $lesson->update([
             'title' => $request->input('title'),
@@ -106,7 +96,7 @@ class LessonController extends Controller
             'order' => $request->input('order'),
         ]);
 
-        return redirect()->route('teacher.courses.lessons.index', $course)
+        return redirect()->route("{$routePrefix}.courses.lessons.index", $course)
                          ->with('success', 'Lesson updated successfully.');
     }
 
@@ -115,13 +105,26 @@ class LessonController extends Controller
         $lesson->load('course');
         $course = $lesson->course;
 
-        if ((string) $course->teacher_id !== (string) Auth::id()) {
-            abort(403, 'Unauthorized access to this lesson.');
-        }
+        $routePrefix = $this->authorizeCourseAccess($course);
 
         $lesson->delete();
 
-        return redirect()->route('teacher.courses.lessons.index', $course)
+        return redirect()->route("{$routePrefix}.courses.lessons.index", $course)
                          ->with('success', 'Lesson deleted successfully.');
+    }
+
+    private function authorizeCourseAccess(Course $course): string
+    {
+        $user = Auth::user();
+
+        if ($user->isAdmin()) {
+            return 'admin';
+        }
+
+        if ($user->isTeacher() && (string) $course->teacher_id === (string) $user->id) {
+            return 'teacher';
+        }
+
+        abort(403, 'Unauthorized access to this course.');
     }
 }

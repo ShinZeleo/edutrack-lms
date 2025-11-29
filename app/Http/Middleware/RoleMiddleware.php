@@ -17,7 +17,12 @@ class RoleMiddleware
 
         $user = Auth::user();
 
-        if ($user->role !== $role) {
+        $allowedRoles = collect(explode(',', $role))
+            ->map(fn ($item) => trim($item))
+            ->filter()
+            ->values();
+
+        if (!$allowedRoles->contains($user->role)) {
             abort(403, 'Unauthorized access. Role ' . $role . ' required.');
         }
 

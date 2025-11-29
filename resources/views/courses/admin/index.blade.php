@@ -66,6 +66,9 @@
                                     </span>
                                 </div>
                                 <div class="flex items-center gap-2">
+                                    <a href="{{ route('admin.courses.lessons.index', $course) }}" class="flex-1 sm:flex-none px-4 py-2 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 text-sm font-semibold transition shadow-sm hover:shadow-md text-center">
+                                        Lessons
+                                    </a>
                                     <a href="{{ route('admin.courses.edit', $course) }}" class="flex-1 sm:flex-none px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-semibold transition shadow-sm hover:shadow-md text-center">
                                         Edit
                                     </a>
