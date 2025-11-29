@@ -102,7 +102,14 @@
                                                     <a href="{{ route('teacher.courses.lessons.index', $course) }}" class="px-3 py-1.5 border-2 border-emerald-600 text-emerald-700 rounded-lg hover:bg-emerald-50 text-xs sm:text-sm font-semibold transition">
                                                         Lesson
                                                     </a>
-                                                </div>
+                                                    <form action="{{ route('teacher.courses.destroy', $course) }}" method="POST" class="w-full sm:w-auto" onsubmit="return confirm('Hapus kursus ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs sm:text-sm font-semibold transition shadow-sm hover:shadow-md w-full">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </div> 
                                             </td>
                                         </tr>
                                     @endforeach
